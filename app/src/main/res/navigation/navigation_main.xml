@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/foodFragment">
+
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="it.sofk.slurp.FoodFragment"
+        android:label="fragment_food"
+        tools:layout="@layout/fragment_food" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="it.sofk.slurp.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
