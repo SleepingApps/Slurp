@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.profileFragment);
                     break;
             }
-            return false;
+            return true;
         }
     }
 }
