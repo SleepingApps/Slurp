@@ -1,12 +1,11 @@
-package it.sofk.slurp;
+package it.sofk.slurp.food;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import it.sofk.slurp.R;
 
 public class FoodFragment extends Fragment {
 
@@ -35,32 +36,30 @@ public class FoodFragment extends Fragment {
     class Holder implements BottomNavigationView.OnNavigationItemSelectedListener {
 
         BottomNavigationView navViewFood;
-        NavHostFragment navFragFood;
-        NavController navController;
+        ViewPager2 pager;
 
         Holder(View view) {
             navViewFood = view.findViewById(R.id.nav_view_food);
             navViewFood.setOnNavigationItemSelectedListener(this);
-
-            navFragFood = (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.nav_frag_food);
-            assert navFragFood != null;
-            navController = navFragFood.getNavController();
+            pager = view.findViewById(R.id.food_viewpager);
+            pager.setAdapter(new ViewPagerAdapter(FoodFragment.this.getActivity()));
         }
 
         @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch(item.getItemId()){
+            switch(item.getItemId()) {
                 case R.id.menu_daily:
-                    navController.navigate(R.id.dailyFragment);
-                    break;
+                    pager.setCurrentItem(0);
+                    return true;
                 case R.id.menu_weekly:
-                    navController.navigate(R.id.weeklyFragment);
-                    break;
+                    pager.setCurrentItem(1);
+                    return true;
                 case R.id.menu_occasionally:
-                    navController.navigate(R.id.occasionallyFragment);
-                    break;
+                    pager.setCurrentItem(2);
+                    return true;
             }
+
             return false;
         }
     }

@@ -1,12 +1,15 @@
-package it.sofk.slurp;
+package it.sofk.slurp.food.daily;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import it.sofk.slurp.R;
 
 public class DailyFragment extends Fragment {
 
@@ -26,8 +29,11 @@ public class DailyFragment extends Fragment {
     }
 
     class Holder {
-        Holder(View view){
 
+        RecyclerView recyclerView;
+
+        Holder(View view){
+            recyclerView = view.findViewById(R.id.daily_recyclerview);
         }
     }
 }
