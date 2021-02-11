@@ -1,6 +1,7 @@
 package it.sofk.slurp.entity;
 
 import java.util.Dictionary;
+import java.util.Map;
 
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
@@ -10,9 +11,9 @@ public class FoodType {
     private String name;
     private FoodGroup group;
     private Frequency frequency;
-    Dictionary<CaloricIntake, Double> portions;
+    Map<CaloricIntake, Double> portions;
 
-    public FoodType(String name, FoodGroup group, Frequency frequency ,Dictionary<CaloricIntake, Double> portions) {
+    public FoodType(String name, FoodGroup group, Frequency frequency , Map<CaloricIntake, Double> portions) {
         this.name = name;
         this.group = group;
         this.frequency = frequency;
