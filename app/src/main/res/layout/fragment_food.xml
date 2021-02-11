@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".food.FoodFragment">
-
+<!--
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view_food"
         android:layout_width="0dp"
@@ -13,13 +13,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_navigation_food" />
+        app:menu="@menu/menu_navigation_food"/> -->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/food_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <RadioGroup android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <RadioButton
+            android:id="@+id/menu_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_item_daily"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/menu_weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_item_weekly"/>
+        <RadioButton
+            android:id="@+id/menu_occasionally"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_item_occasionally"/>
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
