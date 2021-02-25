@@ -5,9 +5,9 @@ import androidx.annotation.Nullable;
 public class Food {
 
     private FoodType foodType;
-    private double portionConsumed;
+    private float portionConsumed;
 
-    public Food(FoodType foodType, double portionConsumed) {
+    public Food(FoodType foodType, float portionConsumed) {
         this.foodType = foodType;
         this.portionConsumed = portionConsumed;
     }
@@ -21,19 +21,19 @@ public class Food {
         return foodType;
     }
 
-    public double getPortionConsumed() {
+    public float getPortionConsumed() {
         return portionConsumed;
     }
 
-    public void setPortionConsumed(double portionConsumed) {
+    public void setPortionConsumed(float portionConsumed) {
         this.portionConsumed = portionConsumed;
     }
 
-    public void incrementPortionConsumed(double increment){
+    public void incrementPortionConsumed(float increment){
         this.portionConsumed += increment;
     }
 
-    public void decreasePortionConsumed(double increment){
+    public void decreasePortionConsumed(float increment){
         this.portionConsumed -= increment;
     }
 
