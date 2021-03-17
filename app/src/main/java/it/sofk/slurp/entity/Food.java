@@ -1,7 +1,9 @@
 package it.sofk.slurp.entity;
 
 import androidx.annotation.Nullable;
+import androidx.room.Entity;
 
+@Entity(tableName = "food")
 public class Food {
 
     private FoodType foodType;
@@ -39,12 +41,12 @@ public class Food {
 
     @Override
     public boolean equals(@Nullable Object obj) {
+        if(getClass() != obj.getClass()){
+            return false;
+        }
         Food food = (Food) obj;
         if (food == null) return false;
 
-        if(this.foodType == food.foodType && this.portionConsumed == food.portionConsumed)
-            return  true;
-
-        return false;
+        return this.foodType == food.foodType && this.portionConsumed == food.portionConsumed;
     }
 }
