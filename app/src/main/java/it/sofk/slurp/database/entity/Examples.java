@@ -46,5 +46,4 @@ public class Examples {
         this.example = example;
     }
 
-
 }

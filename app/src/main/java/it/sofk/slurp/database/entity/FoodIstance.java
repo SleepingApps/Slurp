@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity
+@Entity(tableName = "food_instance")
 public class FoodIstance {
     @PrimaryKey
     @NonNull

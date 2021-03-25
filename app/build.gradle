@@ -7,6 +7,13 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation": "$projectDir/schemas".toString()
+                ]
+            }
+        }
         applicationId "it.sofk.slurp"
         minSdkVersion 25
         targetSdkVersion 30
