@@ -5,10 +5,13 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(
+    primaryKeys = {
+        "foodType",
+        "example"
+})
 public class Examples {
 
-    @PrimaryKey
     @NonNull
     @ForeignKey(
             entity = FoodType.class,
@@ -19,7 +22,6 @@ public class Examples {
     )
     private String foodType;
 
-    @PrimaryKey
     @NonNull
     private String example;
 

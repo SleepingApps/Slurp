@@ -7,9 +7,12 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "food_instance")
+@Entity(tableName = "food_instance",
+        primaryKeys = {
+            "foodType",
+            "date"
+})
 public class FoodIstance {
-    @PrimaryKey
     @NonNull
     @ForeignKey(
             entity = FoodType.class,
@@ -20,7 +23,6 @@ public class FoodIstance {
     )
     private String foodType;
 
-    @PrimaryKey
     @NonNull
     private Date date;
 

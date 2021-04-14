@@ -7,10 +7,14 @@ import androidx.room.PrimaryKey;
 
 import it.sofk.slurp.enumeration.CaloricIntake;
 
-@Entity
+@Entity(
+        primaryKeys = {
+                "foodType",
+                "caloricIntake"
+        }
+)
 public class Portion {
 
-    @PrimaryKey
     @NonNull
     @ForeignKey(
             entity = FoodType.class,
@@ -21,7 +25,6 @@ public class Portion {
     )
     private String foodType;
 
-    @PrimaryKey
     @NonNull
     private CaloricIntake caloricIntake;
 

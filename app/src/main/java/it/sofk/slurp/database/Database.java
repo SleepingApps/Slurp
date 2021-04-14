@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.Date;
@@ -13,8 +14,20 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.entity.Examples;
+import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodIstance;
+import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.database.entity.Portion;
 
+@androidx.room.Database(entities = {
+        FoodIstance.class,
+        FoodType.class,
+        FoodGroup.class,
+        Examples.class,
+        Portion.class
+}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 
     public abstract FoodDao foodDao();
@@ -23,7 +36,7 @@ public abstract class Database extends RoomDatabase {
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static Database getInstance(final Context context){
+    public static Database getInstance(final Context context){
         if(INSTANCE == null){
             synchronized (Database.class){
                 if(INSTANCE == null){
