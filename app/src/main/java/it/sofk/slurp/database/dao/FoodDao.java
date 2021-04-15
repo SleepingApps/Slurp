@@ -1,5 +1,6 @@
 package it.sofk.slurp.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,6 +24,6 @@ public interface FoodDao {
     void update(FoodIstance foodIstance);
 
     @Query("SELECT * FROM food_instance")
-    List<FoodIstance> getFoods();
+    LiveData<List<FoodIstance>> getFoods();
 
 }
