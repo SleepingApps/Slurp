@@ -3,6 +3,8 @@ package it.sofk.slurp.food.daily;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -10,30 +12,33 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import it.sofk.slurp.R;
+import it.sofk.slurp.database.ViewModel;
+import it.sofk.slurp.databinding.FragmentDailyBinding;
 
 public class DailyFragment extends Fragment {
 
-    Holder holder;
+    FragmentDailyBinding binding;
+    ViewModel viewModel;
+    Adapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Adapter adapter = new Adapter();
+        ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        viewModel.getFoodIstances().observe(requireActivity(),
+                sessions -> adapter.submitData(sessions));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_daily, container, false);
+        binding = FragmentDailyBinding.inflate(inflater);
 
-        holder = new Holder(view);
-        return view;
-    }
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        layout.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.dailyRecyclerview.setLayoutManager(layout);
+        binding.dailyRecyclerview.setAdapter(adapter);
 
-    class Holder {
-
-        RecyclerView recyclerView;
-
-        Holder(View view){
-            recyclerView = view.findViewById(R.id.daily_recyclerview);
-        }
+        return binding.getRoot();
     }
 }
