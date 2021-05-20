@@ -19,6 +19,7 @@ import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodIstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
+import it.sofk.slurp.enumeration.Frequency;
 
 @androidx.room.Database(entities = {
         FoodIstance.class,
@@ -60,9 +61,15 @@ public abstract class Database extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 FoodDao dao = INSTANCE.foodDao();
 
+                FoodType foodType = new FoodType("Pasta");
+                foodType.setFrequency(Frequency.DAILY);
+                dao.insert(foodType);
+
                 FoodIstance food = new FoodIstance("Pasta", new Date());
                 food.setPortionConsumed(0);
                 dao.insert(food);
+
+
             });
         }
     };

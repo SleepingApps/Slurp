@@ -1,11 +1,14 @@
 package it.sofk.slurp.database.entity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+
+import it.sofk.slurp.entity.Food;
 
 @Entity(tableName = "food_instance",
         primaryKeys = {
