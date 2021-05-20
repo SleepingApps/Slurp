@@ -8,13 +8,15 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import it.sofk.slurp.database.entity.FoodIstance;
+import it.sofk.slurp.database.entity.FoodInstance;
+import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.enumeration.Frequency;
 
 public class ViewModel extends AndroidViewModel {
 
     private Repository repository;
 
-    private LiveData<List<FoodIstance>> foodIstances;
+    private LiveData<List<FoodInstance>> foodIstances;
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -22,11 +24,15 @@ public class ViewModel extends AndroidViewModel {
         foodIstances = repository.getFoodIstances();
     }
 
-    public LiveData<List<FoodIstance>> getFoodIstances(){
+    public LiveData<List<FoodInstance>> getFoodIstances(){
         return foodIstances;
     }
 
-    public void insert(FoodIstance foodIstance){
-        repository.insert(foodIstance);
+    public void insert(FoodInstance foodInstance){
+        repository.insert(foodInstance);
+    }
+
+    public LiveData<List<FoodType>> getFoodTypesByFrequency(Frequency frequency){
+        return repository.getFoodTypes(frequency);
     }
 }

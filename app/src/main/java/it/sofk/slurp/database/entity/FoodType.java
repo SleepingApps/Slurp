@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import it.sofk.slurp.enumeration.Frequency;
 
-@Entity
+@Entity(tableName = "food_type")
 public class FoodType {
 
     @PrimaryKey
