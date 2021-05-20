@@ -9,20 +9,19 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.Date;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.sofk.slurp.database.dao.FoodDao;
 import it.sofk.slurp.database.entity.Examples;
 import it.sofk.slurp.database.entity.FoodGroup;
-import it.sofk.slurp.database.entity.FoodIstance;
+import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.enumeration.Frequency;
 
 @androidx.room.Database(entities = {
-        FoodIstance.class,
+        FoodInstance.class,
         FoodType.class,
         FoodGroup.class,
         Examples.class,
@@ -65,7 +64,7 @@ public abstract class Database extends RoomDatabase {
                 foodType.setFrequency(Frequency.DAILY);
                 dao.insert(foodType);
 
-                FoodIstance food = new FoodIstance("Pasta", new Date());
+                FoodInstance food = new FoodInstance("Pasta", new Date());
                 food.setPortionConsumed(0);
                 dao.insert(food);
 

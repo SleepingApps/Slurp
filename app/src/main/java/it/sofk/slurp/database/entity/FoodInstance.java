@@ -15,7 +15,7 @@ import it.sofk.slurp.entity.Food;
             "foodType",
             "date"
 })
-public class FoodIstance {
+public class FoodInstance {
     @NonNull
     @ForeignKey(
             entity = FoodType.class,
@@ -31,7 +31,7 @@ public class FoodIstance {
 
     private int portionConsumed;
 
-    public FoodIstance(@NonNull String foodType, @NonNull Date date) {
+    public FoodInstance(@NonNull String foodType, @NonNull Date date) {
         this.foodType = foodType;
         this.date = date;
     }
