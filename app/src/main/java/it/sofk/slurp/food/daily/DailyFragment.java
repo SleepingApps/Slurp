@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
+import it.sofk.slurp.enumeration.Frequency;
 
 public class DailyFragment extends Fragment {
 
@@ -26,8 +27,8 @@ public class DailyFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Adapter adapter = new Adapter();
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        viewModel.getFoodIstances().observe(requireActivity(),
-                sessions -> adapter.submitData(sessions));
+        viewModel.getFoodTypesByFrequency(Frequency.DAILY).observe(requireActivity(),
+                data -> adapter.submitData(data));
     }
 
     @Override
