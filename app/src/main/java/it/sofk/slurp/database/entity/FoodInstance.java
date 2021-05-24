@@ -1,14 +1,10 @@
 package it.sofk.slurp.database.entity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import java.util.Date;
-
-import it.sofk.slurp.entity.Food;
 
 @Entity(tableName = "food_instance",
         primaryKeys = {
@@ -29,7 +25,7 @@ public class FoodInstance {
     @NonNull
     private Date date;
 
-    private int portionConsumed;
+    private double portionConsumed;
 
     public FoodInstance(@NonNull String foodType, @NonNull Date date) {
         this.foodType = foodType;
@@ -54,11 +50,11 @@ public class FoodInstance {
         this.date = date;
     }
 
-    public int getPortionConsumed() {
+    public double getPortionConsumed() {
         return portionConsumed;
     }
 
-    public void setPortionConsumed(int portionConsumed) {
+    public void setPortionConsumed(double portionConsumed) {
         this.portionConsumed = portionConsumed;
     }
 }
