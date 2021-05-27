@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 import it.sofk.slurp.database.entity.FoodInstance;
@@ -30,6 +31,9 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_instance")
     LiveData<List<FoodInstance>> getFoods();
+
+    @Query("SELECT * FROM food_instance WHERE foodType = :foodType AND date = :date")
+    LiveData<List<FoodInstance>> getFoods(FoodType foodType, Date date);
 
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     LiveData<List<FoodType>> getFoodTypes(Frequency frequency);

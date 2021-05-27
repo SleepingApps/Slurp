@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import it.sofk.slurp.database.entity.FoodInstance;
@@ -26,6 +27,10 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<List<FoodInstance>> getFoodIstances(){
         return foodIstances;
+    }
+
+    public LiveData<List<FoodInstance>> getFoodIstances(FoodType foodType, Date date){
+        return repository.getFoodInstance(foodType, date);
     }
 
     public void insert(FoodInstance foodInstance){
