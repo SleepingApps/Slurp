@@ -25,8 +25,8 @@ public class DailyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Adapter adapter = new Adapter();
-        ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        adapter = new Adapter();
+        ViewModel viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         viewModel.getFoodIstances().observe(requireActivity(), adapter::submitData);
     }
 
