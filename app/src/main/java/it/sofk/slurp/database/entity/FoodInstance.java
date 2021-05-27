@@ -1,6 +1,7 @@
 package it.sofk.slurp.database.entity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
@@ -56,5 +57,15 @@ public class FoodInstance {
 
     public void setPortionConsumed(double portionConsumed) {
         this.portionConsumed = portionConsumed;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(getClass() != obj.getClass()) return false;
+
+        FoodInstance food = (FoodInstance) obj;
+        if(food == null) return false;
+
+        return this.foodType.equals(food.foodType) && this.date == food.date && this.portionConsumed == food.portionConsumed;
     }
 }
