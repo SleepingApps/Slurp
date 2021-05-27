@@ -27,7 +27,7 @@ public class DailyFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Adapter adapter = new Adapter();
         ViewModel viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        //viewModel.getFoodTypesByFrequency(Frequency.DAILY).observe(requireActivity(), adapter::submitData;
+        viewModel.getFoodIstances().observe(requireActivity(), adapter::submitData);
     }
 
     @Override
