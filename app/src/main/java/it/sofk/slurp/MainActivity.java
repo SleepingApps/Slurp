@@ -11,44 +11,37 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+import it.sofk.slurp.databinding.ActivityMainBinding;
 
-    Holder holder;
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    ActivityMainBinding binding;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        holder = new Holder();
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        binding.navViewMain.setOnNavigationItemSelectedListener(this);
+        NavHostFragment navFragMain = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_frag_main);
+        assert navFragMain != null;
+        navController = navFragMain.getNavController();
+
+        setContentView(binding.getRoot());
     }
 
-    class Holder implements BottomNavigationView.OnNavigationItemSelectedListener {
-
-        BottomNavigationView navViewMain;
-        NavHostFragment navFragMain;
-        NavController navController;
-
-        Holder(){
-            navViewMain = findViewById(R.id.nav_view_main);
-            navViewMain.setOnNavigationItemSelectedListener(this);
-
-            navFragMain = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_frag_main);
-            assert navFragMain != null;
-            navController = navFragMain.getNavController();
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_food:
+                navController.navigate(R.id.foodFragment);
+                break;
+            case R.id.menu_profile:
+                navController.navigate(R.id.profileFragment);
+                break;
         }
-
-        @SuppressLint("NonConstantResourceId")
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.menu_food:
-                    navController.navigate(R.id.foodFragment);
-                    break;
-                case R.id.menu_profile:
-                    navController.navigate(R.id.profileFragment);
-                    break;
-            }
-            return true;
-        }
+        return true;
     }
 }
