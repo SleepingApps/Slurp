@@ -12,22 +12,24 @@ import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
 import java.util.List;
 
 import it.sofk.slurp.R;
-import it.sofk.slurp.database.entity.FoodIstance;
+import it.sofk.slurp.database.entity.FoodInstance;
+import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.DailyItemBinding;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private final AsyncListDiffer<FoodIstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodIstance>() {
+    private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
         @Override
-        public boolean areItemsTheSame(@NonNull FoodIstance oldItem, @NonNull FoodIstance newItem) {
-            return oldItem.areItemsTheSame(newItem);
+        public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
+            return oldItem == newItem;
         }
         @Override
-        public boolean areContentsTheSame(@NonNull FoodIstance oldItem, @NonNull FoodIstance newItem) {
-            return oldItem.areContentsTheSame(newItem);
+        public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
+            return oldItem.equals(newItem);
         }
     });
 
@@ -39,16 +41,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder holder, int position) {
-        FoodIstance instance = listDiffer.getCurrentList().get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        FoodInstance instance = listDiffer.getCurrentList().get(position);
         holder.binding.dailyFoodname.setText(instance.getFoodType());
-        holder.binding.ratingBar.setNumStars(instance.getPortionConsumed());
-        holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
-            instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
-        });
-        holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
-            instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
-        });
+        holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
+
+        holder.binding.dailyMinusbutton.setOnClickListener((View) ->
+                instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
+
+        holder.binding.dailyPlusbutton.setOnClickListener((View) ->
+                instance.setPortionConsumed(instance.getPortionConsumed() + 0.5));
     }
 
     @Override
@@ -56,7 +58,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return listDiffer.getCurrentList().size();
     }
 
-    public void submitData(List<FoodIstance> data) {
+    public void submitData(List<FoodInstance> data) {
         listDiffer.submitList(data);
     }
 
