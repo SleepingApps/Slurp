@@ -44,13 +44,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodInstance instance = listDiffer.getCurrentList().get(position);
         holder.binding.dailyFoodname.setText(instance.getFoodType());
-        holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
+        holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
 
-        holder.binding.dailyMinusbutton.setOnClickListener((View) ->
-                instance.setPortionConsumed(instance.getPortionConsumed() - 0.5));
+        holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
+            instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
+            holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
+        });
 
-        holder.binding.dailyPlusbutton.setOnClickListener((View) ->
-                instance.setPortionConsumed(instance.getPortionConsumed() + 0.5));
+        holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
+            instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
+            holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
+        });
     }
 
     @Override
