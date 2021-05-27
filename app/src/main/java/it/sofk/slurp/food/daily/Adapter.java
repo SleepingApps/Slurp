@@ -47,7 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
 
         holder.binding.dailyMinusbutton.setOnClickListener((View) ->
-                instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
+                instance.setPortionConsumed(instance.getPortionConsumed() - 0.5));
 
         holder.binding.dailyPlusbutton.setOnClickListener((View) ->
                 instance.setPortionConsumed(instance.getPortionConsumed() + 0.5));
