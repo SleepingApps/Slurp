@@ -31,9 +31,9 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_instance")
     LiveData<List<FoodInstance>> getFoods();
-
+    
     @Query("SELECT * FROM food_instance WHERE foodType = :foodType AND date = :date")
-    LiveData<List<FoodInstance>> getFoods(FoodType foodType, Date date);
+    LiveData<FoodInstance> getFood(String foodType, Date date);
 
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     LiveData<List<FoodType>> getFoodTypes(Frequency frequency);

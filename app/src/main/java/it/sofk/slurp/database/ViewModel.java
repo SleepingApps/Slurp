@@ -29,7 +29,7 @@ public class ViewModel extends AndroidViewModel {
         return foodIstances;
     }
 
-    public LiveData<List<FoodInstance>> getFoodIstances(FoodType foodType, Date date){
+    public LiveData<FoodInstance> getFoodIstance(String foodType, Date date){
         return repository.getFoodInstance(foodType, date);
     }
 

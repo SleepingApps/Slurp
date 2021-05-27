@@ -36,7 +36,7 @@ public class Repository {
         return foodDao.getFoodTypes(frequency);
     }
 
-    public LiveData<List<FoodInstance>> getFoodInstance(FoodType foodType, Date date){
-        return foodDao.getFoods(foodType, date);
+    public LiveData<FoodInstance> getFoodInstance(String foodType, Date date){
+        return foodDao.getFood(foodType, date);
     }
 }
