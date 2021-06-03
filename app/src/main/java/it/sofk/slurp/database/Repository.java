@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.enumeration.Frequency;
@@ -45,7 +46,7 @@ public class Repository {
     }
 
     public LiveData<List<FoodInstance>> getFoodIstances(Frequency frequency){
-        return foodDao.getFoods();
+        return foodDao.getFoods(frequency);
     }
 
     public void update(FoodInstance foodInstance){
