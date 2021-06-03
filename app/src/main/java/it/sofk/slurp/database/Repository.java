@@ -40,6 +40,14 @@ public class Repository {
         return foodDao.getFood(foodType, date);
     }
 
+    public FoodType getFoodType(String name) {
+        return foodDao.getFoodType(name);
+    }
+
+    public LiveData<List<FoodInstance>> getFoodIstances(Frequency frequency){
+        return foodDao.getFoods();
+    }
+
     public void update(FoodInstance foodInstance){
         foodDao.update(foodInstance);
     }
