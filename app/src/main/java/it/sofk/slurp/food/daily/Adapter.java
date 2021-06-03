@@ -19,6 +19,7 @@ import it.sofk.slurp.R;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.DailyItemBinding;
+import it.sofk.slurp.entity.Food;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
@@ -53,17 +54,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
 
         holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
+            if (instance.getPortionConsumed() == 5.0) return;
             instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
             holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
             if (plusClickListener != null) this.plusClickListener.onPlusClick(instance);
-            updateButton(instance, holder);
         });
 
         holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
+            if (instance.getPortionConsumed() == 0) return;
+
             instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
             holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
             if (minusClickListener != null) this.minusClickListener.onMinusClick(instance);
-            updateButton(instance, holder);
         });
     }
 
@@ -74,20 +76,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public void submitData(List<FoodInstance> data) {
         listDiffer.submitList(data);
-    }
-
-    public void updateButton(FoodInstance instance, ViewHolder holder) {
-        if (instance.getPortionConsumed() == 5.0) {
-            holder.binding.dailyPlusbutton.setEnabled(false);
-
-        }
-        else if (instance.getPortionConsumed() == 0.0) {
-            holder.binding.dailyMinusbutton.setEnabled(false);
-        }
-        else {
-            holder.binding.dailyPlusbutton.setEnabled(true);
-            holder.binding.dailyMinusbutton.setEnabled(true);
-        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
