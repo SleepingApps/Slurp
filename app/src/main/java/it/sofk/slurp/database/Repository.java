@@ -50,6 +50,6 @@ public class Repository {
     }
 
     public void update(FoodInstance foodInstance){
-        foodDao.update(foodInstance);
+        Database.databaseWriteExecutor.execute(() -> foodDao.update(foodInstance));
     }
 }
