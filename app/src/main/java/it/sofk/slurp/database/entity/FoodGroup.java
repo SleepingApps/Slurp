@@ -15,8 +15,9 @@ public class FoodGroup {
 
     private MacroGroup macroGroup;
 
-    public FoodGroup(@NonNull String name) {
+    public FoodGroup(@NonNull String name, MacroGroup macroGroup) {
         this.name = name;
+        this.macroGroup = macroGroup;
     }
 
     @NonNull

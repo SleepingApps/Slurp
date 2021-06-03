@@ -10,6 +10,13 @@ import it.sofk.slurp.enumeration.Frequency;
 @Entity(tableName = "food_type")
 public class FoodType {
 
+    public FoodType(@NonNull String name, Frequency frequency, int standardPortion, String foodGroup) {
+        this.name = name;
+        this.frequency = frequency;
+        this.standardPortion = standardPortion;
+        this.foodGroup = foodGroup;
+    }
+
     @PrimaryKey
     @NonNull
     private String name;
@@ -27,10 +34,6 @@ public class FoodType {
     )
 
     private String foodGroup;
-
-    public FoodType(@NonNull String name) {
-        this.name = name;
-    }
 
     @NonNull
     public String getName() {

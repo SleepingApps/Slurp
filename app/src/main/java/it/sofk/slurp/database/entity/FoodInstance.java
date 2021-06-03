@@ -31,6 +31,7 @@ public class FoodInstance {
     public FoodInstance(@NonNull String foodType, @NonNull Date date) {
         this.foodType = foodType;
         this.date = date;
+        portionConsumed = 0;
     }
 
     @NonNull

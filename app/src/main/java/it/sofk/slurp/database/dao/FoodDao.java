@@ -10,6 +10,7 @@ import androidx.room.Update;
 import java.util.Date;
 import java.util.List;
 
+import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.enumeration.Frequency;
@@ -22,6 +23,9 @@ public interface FoodDao {
 
     @Insert
     void insert(FoodType foodType);
+
+    @Insert
+    void insert(FoodGroup foodGroup);
 
     @Delete
     void delete(FoodInstance foodInstance);
