@@ -40,4 +40,9 @@ public class ViewModel extends AndroidViewModel {
     public LiveData<List<FoodType>> getFoodTypesByFrequency(Frequency frequency){
         return repository.getFoodTypes(frequency);
     }
+
+    public void update(FoodInstance foodInstance){
+        repository.update(foodInstance);
+    }
+
 }

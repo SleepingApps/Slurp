@@ -39,4 +39,8 @@ public class Repository {
     public LiveData<FoodInstance> getFoodInstance(String foodType, Date date){
         return foodDao.getFood(foodType, date);
     }
+
+    public void update(FoodInstance foodInstance){
+        foodDao.update(foodInstance);
+    }
 }
