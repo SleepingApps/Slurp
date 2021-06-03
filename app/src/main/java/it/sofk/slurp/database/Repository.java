@@ -52,4 +52,8 @@ public class Repository {
     public void update(FoodInstance foodInstance){
         Database.databaseWriteExecutor.execute(() -> foodDao.update(foodInstance));
     }
+
+    public FoodGroup getFoodGroupByName(String name){
+        return foodDao.getFoodGroup(name);
+    }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.Date;
 import java.util.List;
 
+import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.enumeration.Frequency;
@@ -53,4 +54,7 @@ public class ViewModel extends AndroidViewModel {
         return repository.getFoodType(name);
     }
 
+    public FoodGroup getFoodGroupByName(String name){
+        return repository.getFoodGroupByName(name);
+    }
 }
