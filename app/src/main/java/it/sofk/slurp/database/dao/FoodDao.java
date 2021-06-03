@@ -47,4 +47,7 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_type WHERE name = :name")
     FoodType getFoodType(String name);
+
+    @Query("SELECT * FROM FoodGroup WHERE name = :name")
+    FoodGroup getFoodGroup(String name);
 }
