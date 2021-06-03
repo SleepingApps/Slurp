@@ -1,49 +1,46 @@
-package it.sofk.slurp.food.daily;
+package it.sofk.slurp.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
-import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
-import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
 import it.sofk.slurp.enumeration.Frequency;
+import it.sofk.slurp.ui.adapters.DailyFragmentAdapter;
 
-public class DailyFragment extends Fragment implements Adapter.PlusClickListener, Adapter.MinusClickListener {
+public class DailyFragment extends Fragment implements DailyFragmentAdapter.ClickListener {
 
-    FragmentDailyBinding binding;
-    ViewModel viewModel;
-    Adapter adapter;
+    private FragmentDailyBinding binding;
+    private ViewModel viewModel;
+    private DailyFragmentAdapter dailyFragmentAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new Adapter();
-        adapter.setPlusClickListener(this);
-        adapter.setMinusClickListener(this);
+
+        dailyFragmentAdapter = new DailyFragmentAdapter();
+        dailyFragmentAdapter.setClickListener(this);
+
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), adapter::submitData);
+        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDailyBinding.inflate(inflater);
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
         binding.dailyRecyclerview.setLayoutManager(layout);
-        binding.dailyRecyclerview.setAdapter(adapter);
+        binding.dailyRecyclerview.setAdapter(dailyFragmentAdapter);
 
         return binding.getRoot();
     }

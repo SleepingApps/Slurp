@@ -1,30 +1,21 @@
-package it.sofk.slurp.food.daily;
+package it.sofk.slurp.ui.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Arrays;
 import java.util.List;
 
-import it.sofk.slurp.R;
 import it.sofk.slurp.database.entity.FoodInstance;
-import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.DailyItemBinding;
-import it.sofk.slurp.entity.Food;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
-    private PlusClickListener plusClickListener;
-    private MinusClickListener minusClickListener;
+    private ClickListener clickListener;
 
     private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
         @Override
@@ -41,7 +32,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @NonNull
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DailyFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         DailyItemBinding binding = DailyItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
@@ -55,9 +46,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
             if (instance.getPortionConsumed() == 5.0) return;
+
             instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
             holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
-            if (plusClickListener != null) this.plusClickListener.onPlusClick(instance);
+
+            if (clickListener != null) clickListener.onPlusClick(instance);
         });
 
         holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
@@ -65,7 +58,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
             instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
             holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
-            if (minusClickListener != null) this.minusClickListener.onMinusClick(instance);
+
+            if (clickListener != null) clickListener.onMinusClick(instance);
         });
     }
 
@@ -88,19 +82,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         }
     }
 
-    public void setPlusClickListener(PlusClickListener plusClickListener) {
-        this.plusClickListener = plusClickListener;
+
+    public void setClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
-    public void setMinusClickListener(MinusClickListener minusClickListener) {
-        this.minusClickListener = minusClickListener;
-    }
-
-    public interface PlusClickListener {
+    public interface ClickListener {
         void onPlusClick(FoodInstance foodInstance);
-    }
-
-    public interface MinusClickListener {
         void onMinusClick(FoodInstance foodInstance);
     }
 }

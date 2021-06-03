@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/dailyFragment"
-        android:name="it.sofk.slurp.food.daily.DailyFragment"
+        android:name="it.sofk.slurp.ui.fragments.DailyFragment"
         android:label="fragment_daily"
         tools:layout="@layout/fragment_daily" />
     <fragment
         android:id="@+id/weeklyFragment"
-        android:name="it.sofk.slurp.food.weekly.WeeklyFragment"
+        android:name="it.sofk.slurp.ui.fragments.WeeklyFragment"
         android:label="fragment_weekly"
         tools:layout="@layout/fragment_weekly" />
     <fragment
         android:id="@+id/occasionallyFragment"
-        android:name="it.sofk.slurp.food.occasionally.OccasionallyFragment"
+        android:name="it.sofk.slurp.ui.fragments.OccasionallyFragment"
         android:label="fragment_occasionally"
         tools:layout="@layout/fragment_occasionally" />
 </navigation>

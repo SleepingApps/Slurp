@@ -1,17 +1,17 @@
-package it.sofk.slurp.food;
+package it.sofk.slurp.ui.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import it.sofk.slurp.food.daily.DailyFragment;
-import it.sofk.slurp.food.occasionally.OccasionallyFragment;
-import it.sofk.slurp.food.weekly.WeeklyFragment;
+import it.sofk.slurp.ui.fragments.DailyFragment;
+import it.sofk.slurp.ui.fragments.OccasionallyFragment;
+import it.sofk.slurp.ui.fragments.WeeklyFragment;
 
-public class ViewPagerAdapter extends FragmentStateAdapter {
+public class FoodFragmentAdapter extends FragmentStateAdapter {
 
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public FoodFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
