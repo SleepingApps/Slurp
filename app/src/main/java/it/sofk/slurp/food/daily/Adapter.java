@@ -28,11 +28,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
         @Override
         public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem == newItem;
+            return oldItem.getDate().equals(newItem.getDate()) && oldItem.getFoodType().equals(newItem.getFoodType());
         }
         @Override
         public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem.equals(newItem);
+            return oldItem.getFoodType().equals(newItem.getFoodType())
+                    && oldItem.getDate().equals(newItem.getDate())
+                    && oldItem.getPortionConsumed() == newItem.getPortionConsumed();
         }
     });
 
