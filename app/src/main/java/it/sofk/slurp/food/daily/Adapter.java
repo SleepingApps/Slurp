@@ -22,6 +22,9 @@ import it.sofk.slurp.databinding.DailyItemBinding;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
+    private PlusClickListener plusClickListener;
+    private MinusClickListener minusClickListener;
+
     private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
         @Override
         public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
@@ -46,15 +49,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.binding.dailyFoodname.setText(instance.getFoodType());
         holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
 
-        holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
-            instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
-            holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
-            updateButton(instance, holder);
-        });
 
         holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
             instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
             holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
+            if (plusClickListener != null) this.plusClickListener.onPlusClick(instance);
+            updateButton(instance, holder);
+        });
+
+        holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
+            instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
+            holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
+            if (minusClickListener != null) this.minusClickListener.onMinusClick(instance);
             updateButton(instance, holder);
         });
     }
@@ -71,6 +77,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void updateButton(FoodInstance instance, ViewHolder holder) {
         if (instance.getPortionConsumed() == 5.0) {
             holder.binding.dailyPlusbutton.setEnabled(false);
+
         }
         else if (instance.getPortionConsumed() == 0.0) {
             holder.binding.dailyMinusbutton.setEnabled(false);
@@ -89,5 +96,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public void setPlusClickListener(PlusClickListener plusClickListener) {
+        this.plusClickListener = plusClickListener;
+    }
+
+    public void setMinusClickListener(MinusClickListener minusClickListener) {
+        this.minusClickListener = minusClickListener;
+    }
+
+    public interface PlusClickListener {
+        void onPlusClick(FoodInstance foodInstance);
+    }
+
+    public interface MinusClickListener {
+        void onMinusClick(FoodInstance foodInstance);
     }
 }
