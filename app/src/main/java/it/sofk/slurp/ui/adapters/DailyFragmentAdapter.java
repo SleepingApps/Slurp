@@ -40,7 +40,7 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodInstance instance = listDiffer.getCurrentList().get(position);
-        holder.binding.dailyFoodname.setText(instance.getFoodType());
+        holder.binding.dailyFoodname.setText(instance.getFoodType().toUpperCase());
         holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
 
 
