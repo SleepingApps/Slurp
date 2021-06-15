@@ -24,9 +24,10 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
         @Override
         public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem.getFoodType().equals(newItem.getFoodType())
+            boolean match = oldItem.getFoodType().equals(newItem.getFoodType())
                     && oldItem.getDate().equals(newItem.getDate())
                     && oldItem.getPortionConsumed() == newItem.getPortionConsumed();
+            return match;
         }
     });
 
@@ -48,8 +49,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
             if (instance.getPortionConsumed() == 5.0) return;
 
             instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
-            holder.binding.ratingBar.setRating((float)instance.getPortionConsumed());
-
             if (clickListener != null) clickListener.onPlusClick(instance);
         });
 
@@ -57,8 +56,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
             if (instance.getPortionConsumed() == 0) return;
 
             instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
-            holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
-
             if (clickListener != null) clickListener.onMinusClick(instance);
         });
     }

@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
@@ -31,7 +34,13 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
+        //viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
+        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), new Observer<List<FoodInstance>>() {
+            @Override
+            public void onChanged(List<FoodInstance> foodInstances) {
+                dailyFragmentAdapter.submitData(foodInstances);
+            }
+        });
     }
 
     @Override
