@@ -51,7 +51,6 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     @Override
     public void onPlusClick(FoodInstance foodInstance) {
         viewModel.update(foodInstance);
-
     }
 
     @Override

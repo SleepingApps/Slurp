@@ -16,7 +16,18 @@ import it.sofk.slurp.databinding.DailyItemBinding;
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
     private ClickListener clickListener;
-    private FoodInstance[] foodInstances = new FoodInstance[0];
+
+    private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
+            return oldItem.getDate().equals(newItem.getDate()) && oldItem.getFoodType().equals(newItem.getFoodType());
+        }
+        @Override
+        public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
+            return oldItem.getFoodType().equals(newItem.getFoodType())
+                    && oldItem.getDate().equals(newItem.getDate());
+        }
+    });
 
     @NonNull
     @Override
@@ -27,7 +38,7 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodInstance foodInstance = foodInstances[position];
+        FoodInstance foodInstance = listDiffer.getCurrentList().get(position);
         holder.binding.dailyFoodname.setText(foodInstance.getFoodType().toUpperCase());
         holder.binding.ratingBar.setRating((float) foodInstance.getPortionConsumed());
 
@@ -50,14 +61,11 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public int getItemCount() {
-        return foodInstances.length;
+        return listDiffer.getCurrentList().size();
     }
 
     public void submitData(List<FoodInstance> data) {
-        if (foodInstances.length == 0) {
-            foodInstances = data.toArray(foodInstances);
-            this.notifyDataSetChanged();
-        }
+        listDiffer.submitList(data);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
