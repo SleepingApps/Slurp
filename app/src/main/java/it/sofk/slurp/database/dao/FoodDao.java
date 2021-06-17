@@ -36,7 +36,7 @@ public interface FoodDao {
     @Query("SELECT * FROM food_instance")
     LiveData<List<FoodInstance>> getFoods();
 
-    @Query("SELECT DISTINCT food_instance.* FROM food_instance JOIN food_type JOIN FoodGroup WHERE frequency = :frequency ORDER BY macroGroup")
+    @Query("SELECT food_instance.* FROM food_instance, food_type WHERE frequency = :frequency AND food_instance.foodType = food_type.name")
     LiveData<List<FoodInstance>> getFoods(Frequency frequency);
     
     @Query("SELECT * FROM food_instance WHERE foodType = :foodType AND date = :date")
