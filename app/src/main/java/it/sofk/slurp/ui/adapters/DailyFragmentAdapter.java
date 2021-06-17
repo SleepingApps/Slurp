@@ -16,20 +16,7 @@ import it.sofk.slurp.databinding.DailyItemBinding;
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
     private ClickListener clickListener;
-
-    private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem.getDate().equals(newItem.getDate()) && oldItem.getFoodType().equals(newItem.getFoodType());
-        }
-        @Override
-        public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            boolean match = oldItem.getFoodType().equals(newItem.getFoodType())
-                    && oldItem.getDate().equals(newItem.getDate())
-                    && oldItem.getPortionConsumed() == newItem.getPortionConsumed();
-            return match;
-        }
-    });
+    private FoodInstance[] foodInstances = new FoodInstance[0];
 
     @NonNull
     @Override
@@ -40,33 +27,37 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodInstance instance = listDiffer.getCurrentList().get(position);
-        holder.binding.dailyFoodname.setText(instance.getFoodType().toUpperCase());
-        holder.binding.ratingBar.setRating((float) instance.getPortionConsumed());
-
+        FoodInstance foodInstance = foodInstances[position];
+        holder.binding.dailyFoodname.setText(foodInstance.getFoodType().toUpperCase());
+        holder.binding.ratingBar.setRating((float) foodInstance.getPortionConsumed());
 
         holder.binding.dailyPlusbutton.setOnClickListener((View) -> {
-            if (instance.getPortionConsumed() == 5.0) return;
+            if (foodInstance.getPortionConsumed() == 5.0) return;
 
-            instance.setPortionConsumed(instance.getPortionConsumed() + 0.5);
-            if (clickListener != null) clickListener.onPlusClick(instance);
+            foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() + 0.5);
+            holder.binding.ratingBar.setRating((float)foodInstance.getPortionConsumed());
+            if (clickListener != null) clickListener.onPlusClick(foodInstance);
         });
 
         holder.binding.dailyMinusbutton.setOnClickListener((View) -> {
-            if (instance.getPortionConsumed() == 0) return;
+            if (foodInstance.getPortionConsumed() == 0.0) return;
 
-            instance.setPortionConsumed(instance.getPortionConsumed() - 0.5);
-            if (clickListener != null) clickListener.onMinusClick(instance);
+            foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() - 0.5);
+            holder.binding.ratingBar.setRating((float)foodInstance.getPortionConsumed());
+            if (clickListener != null) clickListener.onMinusClick(foodInstance);
         });
     }
 
     @Override
     public int getItemCount() {
-        return listDiffer.getCurrentList().size();
+        return foodInstances.length;
     }
 
     public void submitData(List<FoodInstance> data) {
-        listDiffer.submitList(data);
+        if (foodInstances.length == 0) {
+            foodInstances = data.toArray(foodInstances);
+            this.notifyDataSetChanged();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -34,13 +34,7 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        //viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
-        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), new Observer<List<FoodInstance>>() {
-            @Override
-            public void onChanged(List<FoodInstance> foodInstances) {
-                dailyFragmentAdapter.submitData(foodInstances);
-            }
-        });
+        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
     }
 
     @Override
@@ -57,6 +51,7 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     @Override
     public void onPlusClick(FoodInstance foodInstance) {
         viewModel.update(foodInstance);
+
     }
 
     @Override
