@@ -15,36 +15,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/menu_navigation_food"/> -->
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/food_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
-    <RadioGroup android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/foodMenu"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <RadioButton
-            android:id="@+id/menu_daily"
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/menu_item_daily"
-            android:checked="true"/>
-        <RadioButton
-            android:id="@+id/menu_weekly"
+            android:text="Daily" />
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/menu_item_weekly"/>
-        <RadioButton
-            android:id="@+id/menu_occasionally"
+            android:text="Weekly" />
+
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/menu_item_occasionally"/>
-    </RadioGroup>
+            android:text="Occasionally" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/food_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodMenu">
+    </androidx.viewpager2.widget.ViewPager2>
 </androidx.constraintlayout.widget.ConstraintLayout>
