@@ -4,7 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import it.sofk.slurp.database.dao.FoodDao;
@@ -37,7 +37,7 @@ public class Repository {
         return foodDao.getFoodTypes(frequency);
     }
 
-    public LiveData<FoodInstance> getFoodInstance(String foodType, Date date){
+    public LiveData<FoodInstance> getFoodInstance(String foodType, LocalDate date){
         return foodDao.getFood(foodType, date);
     }
 

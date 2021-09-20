@@ -1,15 +1,17 @@
 package it.sofk.slurp.database;
 
 import android.content.Context;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -52,6 +54,7 @@ public abstract class Database extends RoomDatabase {
     }
 
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -114,7 +117,7 @@ public abstract class Database extends RoomDatabase {
 
                 for(FoodGroup foodGroup : foodGroupList) dao.insert(foodGroup);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
-                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), new Date()));
+                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
             });
         }
     };

@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public interface FoodDao {
     LiveData<List<FoodInstance>> getFoods(Frequency frequency);
     
     @Query("SELECT * FROM food_instance WHERE foodType = :foodType AND date = :date")
-    LiveData<FoodInstance> getFood(String foodType, Date date);
+    LiveData<FoodInstance> getFood(String foodType, LocalDate date);
 
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     LiveData<List<FoodType>> getFoodTypes(Frequency frequency);

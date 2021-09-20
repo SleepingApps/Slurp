@@ -1,7 +1,10 @@
 package it.sofk.slurp.database;
 
+import android.os.Build;
+
 import androidx.room.TypeConverter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import it.sofk.slurp.enumeration.CaloricIntake;
@@ -10,17 +13,20 @@ import it.sofk.slurp.enumeration.MacroGroup;
 
 public class Converters {
     @TypeConverter
-    public static Date dateFromTimestamp(Long value) {
-        return value == null ? null : new Date(value);
+    public static LocalDate dateFromString(String value) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return value == null ? null : LocalDate.parse(value);
+        }
+        return null;
     }
 
     @TypeConverter
-    public static Long dateToTimestamp(Date date) {
-        return date == null ? null : date.getTime();
+    public static String dateToTimestamp(LocalDate date) {
+        return date == null ? null : date.toString();
     }
 
     @TypeConverter
-    public static Frequency frequencyfromInteger(Integer value){
+    public static Frequency frequencyFromInteger(Integer value){
         switch (value){
             case 1: return Frequency.DAILY;
             case 2: return Frequency.WEEKLY;

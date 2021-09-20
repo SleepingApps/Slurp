@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity(tableName = "food_instance",
@@ -24,11 +25,11 @@ public class FoodInstance {
     private String foodType;
 
     @NonNull
-    private Date date;
+    private LocalDate date;
 
     private double portionConsumed;
 
-    public FoodInstance(@NonNull String foodType, @NonNull Date date) {
+    public FoodInstance(@NonNull String foodType, @NonNull LocalDate date) {
         this.foodType = foodType;
         this.date = date;
         portionConsumed = 0;
@@ -44,11 +45,11 @@ public class FoodInstance {
     }
 
     @NonNull
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NonNull Date date) {
+    public void setDate(@NonNull LocalDate date) {
         this.date = date;
     }
 
@@ -62,11 +63,9 @@ public class FoodInstance {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if(getClass() != obj.getClass()) return false;
+        if(obj == null || getClass() != obj.getClass()) return false;
 
         FoodInstance food = (FoodInstance) obj;
-        if(food == null) return false;
-
         return this.foodType.equals(food.foodType) && this.date == food.date && this.portionConsumed == food.portionConsumed;
     }
 }
