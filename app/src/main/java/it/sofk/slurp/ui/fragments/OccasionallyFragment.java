@@ -4,26 +4,54 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.sofk.slurp.R;
-import it.sofk.slurp.databinding.FragmentOccasionallyBinding;
+import it.sofk.slurp.database.ViewModel;
+import it.sofk.slurp.database.entity.FoodInstance;
+import it.sofk.slurp.databinding.FragmentWeeklyBinding;
+import it.sofk.slurp.enumeration.Frequency;
+import it.sofk.slurp.ui.adapters.OccasionallyFragmentAdapter;
 
-public class OccasionallyFragment extends Fragment {
+public class OccasionallyFragment extends Fragment implements OccasionallyFragmentAdapter.ClickListener {
 
-    private FragmentOccasionallyBinding binding;
+    private FragmentWeeklyBinding binding;
+    private ViewModel viewModel;
+    private OccasionallyFragmentAdapter occasionallyFragmentAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        occasionallyFragmentAdapter = new OccasionallyFragmentAdapter();
+        occasionallyFragmentAdapter.setClickListener(this);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
+        viewModel.getFoodIstances(Frequency.OCCASIONALLY).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentOccasionallyBinding.inflate(inflater);
+        binding = FragmentWeeklyBinding.inflate(inflater);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        layout.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.weeklyRecyclerview.setLayoutManager(layout);
+        binding.weeklyRecyclerview.setAdapter(occasionallyFragmentAdapter);
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onPlusClick(FoodInstance foodInstance) {
+        viewModel.update(foodInstance);
+    }
+
+    @Override
+    public void onMinusClick(FoodInstance foodInstance) {
+        viewModel.update(foodInstance);
     }
 }
