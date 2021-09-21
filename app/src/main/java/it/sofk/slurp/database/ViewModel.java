@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -54,8 +55,9 @@ public class ViewModel extends AndroidViewModel {
         repository.update(foodInstance);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public LiveData<List<FoodInstance>> getFoodIstances(Frequency frequency){
-        return repository.getFoodIstances(frequency);
+        return repository.getFoodIstances(frequency, LocalDate.now());
     }
 
     public FoodType getFoodTypeByName(String name){

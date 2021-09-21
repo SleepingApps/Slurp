@@ -53,8 +53,8 @@ public class Repository {
         return foodDao.getFoodType(name);
     }
 
-    public LiveData<List<FoodInstance>> getFoodIstances(Frequency frequency){
-        return foodDao.getFoods(frequency);
+    public LiveData<List<FoodInstance>> getFoodIstances(Frequency frequency, LocalDate date){
+        return foodDao.getFoods(frequency, date);
     }
 
     public void update(FoodInstance foodInstance){
