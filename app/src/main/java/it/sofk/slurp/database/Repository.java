@@ -1,7 +1,9 @@
 package it.sofk.slurp.database;
 
 import android.app.Application;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDate;
@@ -17,12 +19,14 @@ public class Repository {
 
     private FoodDao foodDao;
     private LiveData<List<FoodInstance>> foodIstances;
+    private LiveData<List<FoodType>> foodTypes;
 
 
     public Repository(Application application){
         Database database = Database.getInstance(application);
         foodDao = database.foodDao();
         foodIstances = foodDao.getFoods();
+        foodTypes = foodDao.getFoodTypes();
     }
 
     public LiveData<List<FoodInstance>> getFoodIstances(){
@@ -31,6 +35,10 @@ public class Repository {
 
     public void insert(FoodInstance foodInstance){
         Database.databaseWriteExecutor.execute(() -> foodDao.insert(foodInstance));
+    }
+
+    public LiveData<List<FoodType>> getFoodTypes() {
+        return foodTypes;
     }
 
     public LiveData<List<FoodType>> getFoodTypes(Frequency frequency) {

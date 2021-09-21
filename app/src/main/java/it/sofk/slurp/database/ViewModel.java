@@ -1,6 +1,7 @@
 package it.sofk.slurp.database;
 
 import android.app.Application;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -20,11 +21,13 @@ public class ViewModel extends AndroidViewModel {
     private Repository repository;
 
     private LiveData<List<FoodInstance>> foodIstances;
+    private LiveData<List<FoodType>> foodTypes;
 
     public ViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         foodIstances = repository.getFoodIstances();
+        foodTypes = repository.getFoodTypes();
     }
 
     public LiveData<List<FoodInstance>> getFoodIstances(){
@@ -33,6 +36,10 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<FoodInstance> getFoodIstance(String foodType, LocalDate date){
         return repository.getFoodInstance(foodType, date);
+    }
+
+    public LiveData<List<FoodType>> getFoodTypes(){
+        return foodTypes;
     }
 
     public void insert(FoodInstance foodInstance){

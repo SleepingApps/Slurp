@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -19,7 +20,7 @@ import it.sofk.slurp.enumeration.Frequency;
 @Dao
 public interface FoodDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(FoodInstance foodInstance);
 
     @Insert
@@ -45,6 +46,9 @@ public interface FoodDao {
 
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     LiveData<List<FoodType>> getFoodTypes(Frequency frequency);
+
+    @Query("SELECT * FROM food_type")
+    LiveData<List<FoodType>> getFoodTypes();
 
     @Query("SELECT * FROM food_type WHERE name = :name")
     FoodType getFoodType(String name);
