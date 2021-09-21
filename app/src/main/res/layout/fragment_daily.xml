@@ -13,5 +13,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/daily_item" />
+        tools:listitem="@layout/food_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>
