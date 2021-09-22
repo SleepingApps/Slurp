@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cereali">Cereali e derivati, Tuberi</string>
-    <string name="frutta_verdura">Frutta e Verdura</string>
+    <string-array name="food_groups">
+        <item>Cereali e derivati</item>
+        <item>Tuberi</item>
+        <item>Frutta</item>
+        <item>Verdura</item>
+        <item>Carne</item>
+        <item>Pesce e prodotti della pesca</item>
+        <item>Uova</item>
+        <item>Legumi</item>
+        <item>Latte e derivati</item>
+        <item>Oli e Grassi</item>
+        <item>Frutta secca</item>
+        <item>Acqua</item>
+    </string-array>
 </resources>
