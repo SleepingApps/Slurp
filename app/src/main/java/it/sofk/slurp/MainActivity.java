@@ -23,7 +23,6 @@ import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.ActivityMainBinding;
-import it.sofk.slurp.databinding.PopupChooseIntakeBinding;
 import it.sofk.slurp.enumeration.Frequency;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -49,13 +48,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 for(FoodType foodType : foodTypes) viewModel.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
         });
-/*
-        PopupWindow popupWindow = new PopupWindow();
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-        PopupChooseIntakeBinding binding = PopupChooseIntakeBinding.inflate(inflater);
-        popupWindow.setContentView(binding.getRoot());
-        popupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
-*/
     }
 
     @SuppressLint("NonConstantResourceId")
