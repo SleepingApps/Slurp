@@ -45,7 +45,9 @@ public abstract class Database extends RoomDatabase {
         if(INSTANCE == null){
             synchronized (Database.class){
                 if(INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class, "FoodDatabase").addCallback(callback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class, "FoodDatabase.db")
+                            .createFromAsset("FoodDatabase.db")
+                            .build();
                 }
             }
         }
@@ -58,7 +60,7 @@ public abstract class Database extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
+/*
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
@@ -119,6 +121,8 @@ public abstract class Database extends RoomDatabase {
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
                 for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
             });
+
+ */
         }
     };
 
