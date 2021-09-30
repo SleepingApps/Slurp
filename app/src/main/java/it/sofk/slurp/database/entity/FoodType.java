@@ -32,8 +32,16 @@ public class FoodType {
             onDelete = ForeignKey.SET_NULL,
             onUpdate = ForeignKey.CASCADE
     )
-
     private String foodGroup;
+
+    @ForeignKey(
+            entity = SamePortion.class,
+            parentColumns = "same_portion",
+            childColumns = "alternativeName",
+            onDelete = ForeignKey.SET_NULL,
+            onUpdate = ForeignKey.CASCADE
+    )
+    private String samePortion;
 
     @NonNull
     public String getName() {
@@ -66,5 +74,13 @@ public class FoodType {
 
     public void setFoodGroup(String foodGroup) {
         this.foodGroup = foodGroup;
+    }
+
+    public String getSamePortion() {
+        return samePortion;
+    }
+
+    public void setSamePortion(String samePortion) {
+        this.samePortion = samePortion;
     }
 }

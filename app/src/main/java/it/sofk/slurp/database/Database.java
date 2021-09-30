@@ -22,6 +22,7 @@ import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
+import it.sofk.slurp.database.entity.SamePortion;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.enumeration.MacroGroup;
 
@@ -30,7 +31,8 @@ import it.sofk.slurp.enumeration.MacroGroup;
         FoodType.class,
         FoodGroup.class,
         Examples.class,
-        Portion.class
+        Portion.class,
+        SamePortion.class
 }, version = 1)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
@@ -46,6 +48,7 @@ public abstract class Database extends RoomDatabase {
             synchronized (Database.class){
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class, "FoodDatabase.db")
+                            .addCallback(callback)
                             .createFromAsset("FoodDatabase.db")
                             .build();
                 }
@@ -60,13 +63,13 @@ public abstract class Database extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-/*
+
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-
+                /*
                 List<FoodGroup> foodGroupList = new ArrayList<>();
 
                 foodGroupList.add(new FoodGroup("Cereali e derivati",           MacroGroup.CEREALI_DERIVATI_TUBERI));
@@ -114,15 +117,44 @@ public abstract class Database extends RoomDatabase {
                 foodTypeList.add(new FoodType("Semi oleaosi",                                       Frequency.WEEKLY,   30,     "Frutta secca"));
                 foodTypeList.add(new FoodType("Acqua",                                              Frequency.DAILY,    200,    "Frutta secca"));
 
+                List<SamePortion> samePortionList = new ArrayList<>();
+
+                samePortionList.add(new SamePortion("Frutta"));
+                foodTypeList.get(6).setSamePortion("Frutta");
+                foodTypeList.get(7).setSamePortion("Frutta");
+                samePortionList.add(new SamePortion("Verdura"));
+                foodTypeList.get(8).setSamePortion("Verdura");
+                foodTypeList.get(9).setSamePortion("Verdura");
+                samePortionList.add(new SamePortion("Legumi"));
+                foodTypeList.get(15).setSamePortion("Legumi");
+                foodTypeList.get(16).setSamePortion("Legumi");
+                samePortionList.add(new SamePortion("Latte e Yogurt"));
+                foodTypeList.get(17).setSamePortion("Latte e Yogurt");
+                foodTypeList.get(18).setSamePortion("Latte e Yogurt");
+                samePortionList.add(new SamePortion("Formaggi"));
+                foodTypeList.get(19).setSamePortion("Formaggi");
+                foodTypeList.get(20).setSamePortion("Formaggi");
+                samePortionList.add(new SamePortion("Grassi"));
+                foodTypeList.get(21).setSamePortion("Grassi");
+                foodTypeList.get(22).setSamePortion("Grassi");
+                foodTypeList.get(23).setSamePortion("Grassi");
+                foodTypeList.get(24).setSamePortion("Grassi");
+                foodTypeList.get(25).setSamePortion("Grassi");
+                samePortionList.add(new SamePortion("Frutta secca"));
+                foodTypeList.get(26).setSamePortion("Frutta secca");
+                foodTypeList.get(27).setSamePortion("Frutta secca");
+
+
 
                 FoodDao dao = INSTANCE.foodDao();
 
                 for(FoodGroup foodGroup : foodGroupList) dao.insert(foodGroup);
+                for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
-                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));*/
             });
 
- */
+
         }
     };
 
