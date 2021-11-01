@@ -61,7 +61,15 @@ public class Repository {
         Database.databaseWriteExecutor.execute(() -> foodDao.update2(foodInstance));
     }
 
+    public void updateFromAlternativeName(String name){
+        Database.databaseWriteExecutor.execute(() -> foodDao.updateFromAlternativeName(name));
+    }
+
     public FoodGroup getFoodGroupByName(String name){
         return foodDao.getFoodGroup(name);
+    }
+
+    public LiveData<List<String>> getEquivalentsNames(Frequency frequency) {
+        return foodDao.getFoodNames(frequency);
     }
 }

@@ -48,7 +48,7 @@ public abstract class Database extends RoomDatabase {
             synchronized (Database.class){
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class, "FoodDatabase.db")
-                            .addCallback(callback)
+                            //.addCallback(callback)
                             .createFromAsset("FoodDatabase.db")
                             .build();
                 }
@@ -69,7 +69,7 @@ public abstract class Database extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                /*
+
                 List<FoodGroup> foodGroupList = new ArrayList<>();
 
                 foodGroupList.add(new FoodGroup("Cereali e derivati",           MacroGroup.CEREALI_DERIVATI_TUBERI));
@@ -115,9 +115,34 @@ public abstract class Database extends RoomDatabase {
                 foodTypeList.add(new FoodType("Grassi di origine vegetale",                         Frequency.DAILY,    10,     "Oli e Grassi"));
                 foodTypeList.add(new FoodType("Frutta secca a guscio",                              Frequency.WEEKLY,   30,     "Frutta secca"));
                 foodTypeList.add(new FoodType("Semi oleaosi",                                       Frequency.WEEKLY,   30,     "Frutta secca"));
-                foodTypeList.add(new FoodType("Acqua",                                              Frequency.DAILY,    200,    "Frutta secca"));
+                foodTypeList.add(new FoodType("Acqua",                                              Frequency.DAILY,    200,    "Acqua"));
 
                 List<SamePortion> samePortionList = new ArrayList<>();
+
+                samePortionList.add(new SamePortion(foodTypeList.get(1).getName()));
+                foodTypeList.get(1).setFoodGroup(foodTypeList.get(1).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(2).getName()));
+                foodTypeList.get(2).setFoodGroup(foodTypeList.get(2).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(3).getName()));
+                foodTypeList.get(3).setFoodGroup(foodTypeList.get(3).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(4).getName()));
+                foodTypeList.get(4).setFoodGroup(foodTypeList.get(4).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(5).getName()));
+                foodTypeList.get(5).setFoodGroup(foodTypeList.get(5).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(10).getName()));
+                foodTypeList.get(10).setFoodGroup(foodTypeList.get(10).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(11).getName()));
+                foodTypeList.get(11).setFoodGroup(foodTypeList.get(11).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(12).getName()));
+                foodTypeList.get(12).setFoodGroup(foodTypeList.get(12).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(13).getName()));
+                foodTypeList.get(13).setFoodGroup(foodTypeList.get(13).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(14).getName()));
+                foodTypeList.get(14).setFoodGroup(foodTypeList.get(14).getName());
+                samePortionList.add(new SamePortion(foodTypeList.get(28).getName()));
+                foodTypeList.get(28).setFoodGroup(foodTypeList.get(28).getName());
+
+
 
                 samePortionList.add(new SamePortion("Frutta"));
                 foodTypeList.get(6).setSamePortion("Frutta");
@@ -151,7 +176,7 @@ public abstract class Database extends RoomDatabase {
                 for(FoodGroup foodGroup : foodGroupList) dao.insert(foodGroup);
                 for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
-                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));*/
+                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
             });
 
 

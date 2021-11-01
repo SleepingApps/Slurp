@@ -67,4 +67,8 @@ public class ViewModel extends AndroidViewModel {
     public FoodGroup getFoodGroupByName(String name){
         return repository.getFoodGroupByName(name);
     }
+
+    public LiveData<List<String>> getEquivalentsName(Frequency frequency){
+        return repository.getEquivalentsNames(frequency);
+    }
 }

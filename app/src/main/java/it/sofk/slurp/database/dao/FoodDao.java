@@ -41,6 +41,12 @@ public abstract class FoodDao {
     public abstract void update(FoodInstance foodInstance);
 
     @Transaction
+    public void updateFromAlternativeName(String name){
+        List<FoodInstance> f = getFoodInstancesFromAlternativeName(name);
+        update2(f.get(0));
+    }
+
+    @Transaction
     public void update2(FoodInstance foodInstance){
         for(FoodInstance f : getFoodInstancesWithSamePortion(foodInstance.getFoodType(), foodInstance.getDate())) {
             f.setPortionConsumed(foodInstance.getPortionConsumed());
@@ -55,6 +61,9 @@ public abstract class FoodDao {
             "   food_instance.foodType = food_type.name")
     public abstract List<FoodInstance> getFoodInstancesWithSamePortion(String foodType, LocalDate date);
 
+    @Query("SELECT food_instance.* FROM food_instance, food_type WHERE foodType = name AND samePortion = :name")
+    public abstract List<FoodInstance> getFoodInstancesFromAlternativeName(String name);
+
     @Query("SELECT * FROM food_instance")
     public abstract LiveData<List<FoodInstance>> getFoods();
 
@@ -66,6 +75,9 @@ public abstract class FoodDao {
 
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     public abstract LiveData<List<FoodType>> getFoodTypes(Frequency frequency);
+
+    @Query("SELECT alternativeName FROM same_portion, food_type WHERE samePortion = alternativeName AND frequency = :frequency")
+    public abstract LiveData<List<String>> getFoodNames(Frequency frequency);
 
     @Query("SELECT * FROM food_type")
     public abstract LiveData<List<FoodType>> getFoodTypes();
