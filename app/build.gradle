@@ -24,7 +24,7 @@ android {
             }
         }
         applicationId "it.sofk.slurp"
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
