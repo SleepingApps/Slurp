@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.ProfileFragment">
 
-    <ImageButton
-        android:id="@+id/image_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars"
-        android:contentDescription="@string/content_descriptor_image_profile" />
-
     <TextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
@@ -24,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/height"
-        app:layout_constraintStart_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -34,39 +23,39 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/weight"
-        app:layout_constraintStart_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
         android:id="@+id/tvCalorIntk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/caloric_intake"
-        app:layout_constraintStart_toEndOf="@+id/image_profile"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/seekBar_caloricIntake"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:max="2"
         android:progress="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/tvCalorIntk" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:text="@string/low"
-        app:layout_constraintStart_toEndOf="@+id/image_profile"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/seekBar_caloricIntake" />
 
     <TextView
@@ -100,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_profile" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_history"
