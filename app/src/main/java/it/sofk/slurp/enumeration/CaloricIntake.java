@@ -9,4 +9,15 @@ public enum CaloricIntake {
     CaloricIntake(int i) {
         this.i = i;
     }
+
+    static public CaloricIntake getFromIndex(int i){
+        switch (i){
+            case 1:
+                return CAL_1500;
+            case 3:
+                return CAL_2500;
+            default:
+                return CAL_2000;
+        }
+    }
 }

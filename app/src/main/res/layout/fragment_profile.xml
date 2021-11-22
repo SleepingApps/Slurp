@@ -108,29 +108,29 @@
 
     <EditText
         android:id="@+id/editText_height"
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:autofillHints="0"
         android:ems="10"
         android:hint="@string/defaut_height"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:textAlignment="textEnd"
         app:layout_constraintStart_toEndOf="@+id/tvName"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_weight"
-        android:layout_width="40dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:autofillHints="0"
         android:ems="10"
         android:hint="@string/default_weight"
         android:inputType="numberDecimal"
         android:textAlignment="textEnd"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/tvName"
-        android:autofillHints="0" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
         android:id="@+id/textView3"

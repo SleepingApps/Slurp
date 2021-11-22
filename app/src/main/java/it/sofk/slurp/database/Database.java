@@ -17,12 +17,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.dao.UserDao;
 import it.sofk.slurp.database.entity.Examples;
 import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
+import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.enumeration.MacroGroup;
 
@@ -32,12 +35,14 @@ import it.sofk.slurp.enumeration.MacroGroup;
         FoodGroup.class,
         Examples.class,
         Portion.class,
-        SamePortion.class
+        SamePortion.class,
+        User.class
 }, version = 1)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 
     public abstract FoodDao foodDao();
+    public abstract UserDao userDao();
 
     private static volatile Database INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -48,8 +53,8 @@ public abstract class Database extends RoomDatabase {
             synchronized (Database.class){
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), Database.class, "FoodDatabase.db")
-                            //.addCallback(callback)
-                            .createFromAsset("FoodDatabase.db")
+                            .addCallback(callback)
+                            //.createFromAsset("FoodDatabase.db")
                             .build();
                 }
             }
@@ -177,6 +182,11 @@ public abstract class Database extends RoomDatabase {
                 for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
                 for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+
+                UserDao userDao = INSTANCE.userDao();
+
+                User user = new User(CaloricIntake.CAL_2000);
+                userDao.insert(user);
             });
 
 

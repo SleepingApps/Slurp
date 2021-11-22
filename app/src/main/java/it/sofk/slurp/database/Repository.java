@@ -1,32 +1,59 @@
 package it.sofk.slurp.database;
 
 import android.app.Application;
-import android.os.Build;
 
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LiveData;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.dao.UserDao;
 import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
 public class Repository {
 
     private FoodDao foodDao;
+    private UserDao userDao;
     private LiveData<List<FoodInstance>> foodIstances;
     private LiveData<List<FoodType>> foodTypes;
+    private LiveData<User> user;
 
 
     public Repository(Application application){
         Database database = Database.getInstance(application);
         foodDao = database.foodDao();
+        userDao = database.userDao();
         foodIstances = foodDao.getFoods();
         foodTypes = foodDao.getFoodTypes();
+        user = userDao.getUser();
+    }
+
+    public LiveData<User> getUser(){
+        return user;
+    }
+
+    public void updateWeight(double weight){
+        User user = getUser().getValue();
+        user.setWeight(weight);
+        Database.databaseWriteExecutor.execute(() -> userDao.update(user));
+    }
+
+    public void updateHeight(double height){
+        User user = getUser().getValue();
+        user.setHeight(height);
+        Database.databaseWriteExecutor.execute(() -> userDao.update(user));
+    }
+
+    public void updateCaloricIntake(CaloricIntake caloricIntake){
+        User user = getUser().getValue();
+        user.setCaloricIntake(caloricIntake);
+        Database.databaseWriteExecutor.execute(() -> userDao.update(user));
     }
 
     public LiveData<List<FoodInstance>> getFoodIstances(){
