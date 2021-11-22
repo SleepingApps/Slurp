@@ -9,5 +9,5 @@
         android:title="@string/menu_item_weekly" />
     <item
         android:id="@+id/menu_occasionally"
-        android:title="@string/menu_item_occasionally" />
+        android:title="Occasional" />
 </menu>
