@@ -17,6 +17,7 @@ import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.SamePortion;
+import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
 @Dao
@@ -87,4 +88,11 @@ public abstract class FoodDao {
 
     @Query("SELECT * FROM FoodGroup WHERE name = :name")
     public abstract FoodGroup getFoodGroup(String name);
+
+    @Query("SELECT Portion.numberOf " +
+            "FROM Portion, food_type, same_portion " +
+            "WHERE Portion.foodType = food_type.name AND " +
+            "food_type.samePortion = :equivalentName AND " +
+            "Portion.caloricIntake = :caloricIntake")
+    public abstract double maxPortion(String equivalentName, CaloricIntake caloricIntake);
 }

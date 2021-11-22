@@ -15,6 +15,7 @@ import java.util.List;
 import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
 public class ViewModel extends AndroidViewModel {
@@ -70,5 +71,9 @@ public class ViewModel extends AndroidViewModel {
 
     public LiveData<List<String>> getEquivalentsName(Frequency frequency){
         return repository.getEquivalentsNames(frequency);
+    }
+
+    public double maxPortion(String equivalentName, CaloricIntake caloricIntake){
+        return repository.maxPortion(equivalentName, caloricIntake);
     }
 }

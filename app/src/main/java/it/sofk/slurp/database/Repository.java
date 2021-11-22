@@ -99,4 +99,8 @@ public class Repository {
     public LiveData<List<String>> getEquivalentsNames(Frequency frequency) {
         return foodDao.getFoodNames(frequency);
     }
+
+    public double maxPortion(String equivalentName, CaloricIntake caloricIntake){
+        return foodDao.maxPortion(equivalentName, caloricIntake);
+    }
 }
