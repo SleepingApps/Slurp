@@ -16,6 +16,7 @@ import java.util.List;
 import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
@@ -28,6 +29,9 @@ public abstract class FoodDao {
 
     @Insert
     public abstract void insert(FoodType foodType);
+
+    @Insert
+    public abstract void insert(Portion portion);
 
     @Insert
     public abstract void insert(FoodGroup foodGroup);
@@ -90,9 +94,9 @@ public abstract class FoodDao {
     public abstract FoodGroup getFoodGroup(String name);
 
     @Query("SELECT Portion.numberOf " +
-            "FROM Portion, food_type, same_portion " +
+            "FROM Portion, food_type " +
             "WHERE Portion.foodType = food_type.name AND " +
             "food_type.samePortion = :equivalentName AND " +
             "Portion.caloricIntake = :caloricIntake")
-    public abstract double maxPortion(String equivalentName, CaloricIntake caloricIntake);
+    public abstract Integer maxPortion(String equivalentName, CaloricIntake caloricIntake);
 }
