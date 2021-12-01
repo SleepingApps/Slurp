@@ -3,7 +3,6 @@ package it.sofk.slurp.database.entity;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import it.sofk.slurp.enumeration.CaloricIntake;
 
@@ -28,11 +27,13 @@ public class Portion {
     @NonNull
     private CaloricIntake caloricIntake;
 
-    private int numberOf;
+    @NonNull
+    private Integer numberOf;
 
-    public Portion(@NonNull String foodType, @NonNull CaloricIntake caloricIntake) {
+    public Portion(@NonNull String foodType, @NonNull CaloricIntake caloricIntake, @NonNull Integer numberOf) {
         this.foodType = foodType;
         this.caloricIntake = caloricIntake;
+        this.numberOf = numberOf;
     }
 
     @NonNull
@@ -53,11 +54,12 @@ public class Portion {
         this.caloricIntake = caloricIntake;
     }
 
-    public int getNumberOf() {
+    @NonNull
+    public Integer getNumberOf() {
         return numberOf;
     }
 
-    public void setNumberOf(int numberOf) {
+    public void setNumberOf(@NonNull Integer numberOf) {
         this.numberOf = numberOf;
     }
 }
