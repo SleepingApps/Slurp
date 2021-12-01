@@ -97,10 +97,10 @@ public abstract class Database extends RoomDatabase {
                 foodTypeList.add(new FoodType("Sostituti del pane",                                 Frequency.WEEKLY,   30,     "Cereali e derivati"));
                 foodTypeList.add(new FoodType("Prodotti da forno dolci",                            Frequency.WEEKLY,   50,     "Cereali e derivati"));
                 foodTypeList.add(new FoodType("Cereali per la prima colazione",                     Frequency.WEEKLY,   30,     "Cereali e derivati"));
-                foodTypeList.add(new FoodType("Tuberi",                                             Frequency.WEEKLY,   200,    "Tuberi"));
+                foodTypeList.add(new FoodType("Patate",                                             Frequency.WEEKLY,   200,    "Tuberi"));
                 foodTypeList.add(new FoodType("Frutta fresca",                                      Frequency.DAILY,    150,    "Frutta"));
                 foodTypeList.add(new FoodType("Frutta essiccata/disidratata non zuccherata",        Frequency.DAILY,    30,     "Frutta"));
-                foodTypeList.add(new FoodType("Verdure fresca",                                     Frequency.DAILY,    200,    "Verdura"));
+                foodTypeList.add(new FoodType("Verdure fresche",                                     Frequency.DAILY,    200,    "Verdura"));
                 foodTypeList.add(new FoodType("Insalate a foglia",                                  Frequency.DAILY,    80,     "Verdura"));
                 foodTypeList.add(new FoodType("Carne rossa",                                        Frequency.WEEKLY,   100,    "Carne"));
                 foodTypeList.add(new FoodType("Carne bianca",                                       Frequency.WEEKLY,   100,    "Carne"));
@@ -124,28 +124,32 @@ public abstract class Database extends RoomDatabase {
 
                 List<SamePortion> samePortionList = new ArrayList<>();
 
+                //boh devi risolvere un errore qua sotto, ho cambiato un pò di cose l'altra volta per le cose della query sulle porzioni. pls ricordati
+
+                samePortionList.add(new SamePortion(foodTypeList.get(0).getName()));
+                foodTypeList.get(0).setSamePortion(foodTypeList.get(0).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(1).getName()));
-                foodTypeList.get(1).setFoodGroup(foodTypeList.get(1).getName());
+                foodTypeList.get(1).setSamePortion(foodTypeList.get(1).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(2).getName()));
-                foodTypeList.get(2).setFoodGroup(foodTypeList.get(2).getName());
+                foodTypeList.get(2).setSamePortion(foodTypeList.get(2).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(3).getName()));
-                foodTypeList.get(3).setFoodGroup(foodTypeList.get(3).getName());
+                foodTypeList.get(3).setSamePortion(foodTypeList.get(3).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(4).getName()));
-                foodTypeList.get(4).setFoodGroup(foodTypeList.get(4).getName());
+                foodTypeList.get(4).setSamePortion(foodTypeList.get(4).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(5).getName()));
-                foodTypeList.get(5).setFoodGroup(foodTypeList.get(5).getName());
+                foodTypeList.get(5).setSamePortion(foodTypeList.get(5).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(10).getName()));
-                foodTypeList.get(10).setFoodGroup(foodTypeList.get(10).getName());
+                foodTypeList.get(10).setSamePortion(foodTypeList.get(10).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(11).getName()));
-                foodTypeList.get(11).setFoodGroup(foodTypeList.get(11).getName());
+                foodTypeList.get(11).setSamePortion(foodTypeList.get(11).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(12).getName()));
-                foodTypeList.get(12).setFoodGroup(foodTypeList.get(12).getName());
+                foodTypeList.get(12).setSamePortion(foodTypeList.get(12).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(13).getName()));
-                foodTypeList.get(13).setFoodGroup(foodTypeList.get(13).getName());
+                foodTypeList.get(13).setSamePortion(foodTypeList.get(13).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(14).getName()));
-                foodTypeList.get(14).setFoodGroup(foodTypeList.get(14).getName());
+                foodTypeList.get(14).setSamePortion(foodTypeList.get(14).getName());
                 samePortionList.add(new SamePortion(foodTypeList.get(28).getName()));
-                foodTypeList.get(28).setFoodGroup(foodTypeList.get(28).getName());
+                foodTypeList.get(28).setSamePortion(foodTypeList.get(28).getName());
 
 
 
@@ -174,6 +178,123 @@ public abstract class Database extends RoomDatabase {
                 foodTypeList.get(26).setSamePortion("Frutta secca");
                 foodTypeList.get(27).setSamePortion("Frutta secca");
 
+                List<Portion> portions = new ArrayList<>();
+
+                portions.add(new Portion("Pane", CaloricIntake.CAL_1500, 5));
+                portions.add(new Portion("Pane", CaloricIntake.CAL_2000, 7));
+                portions.add(new Portion("Pane", CaloricIntake.CAL_2500, 9));
+
+                portions.add(new Portion("Pasta, riso, mais, farro, orzo, ecc.", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Pasta, riso, mais, farro, orzo, ecc.", CaloricIntake.CAL_2000, 3));
+                portions.add(new Portion("Pasta, riso, mais, farro, orzo, ecc.", CaloricIntake.CAL_2500, 3));
+
+                portions.add(new Portion("Sostituti del pane", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Sostituti del pane", CaloricIntake.CAL_2000, 2));
+                portions.add(new Portion("Sostituti del pane", CaloricIntake.CAL_2500, 2));
+
+                portions.add(new Portion("Prodotti da forno dolci", CaloricIntake.CAL_1500, 1));
+                portions.add(new Portion("Prodotti da forno dolci", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Prodotti da forno dolci", CaloricIntake.CAL_2500, 4));
+
+                portions.add(new Portion("Cereali per la prima colazione", CaloricIntake.CAL_1500, 1));
+                portions.add(new Portion("Cereali per la prima colazione", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Cereali per la prima colazione", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Patate", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Patate", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Patate", CaloricIntake.CAL_2500, 4));
+
+                portions.add(new Portion("Frutta fresca", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Frutta fresca", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Frutta fresca", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Frutta essiccata/disidratata non zuccherata", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Frutta essiccata/disidratata non zuccherata", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Frutta essiccata/disidratata non zuccherata", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Verdure fresche", CaloricIntake.CAL_1500, 5));
+                portions.add(new Portion("Verdure fresche", CaloricIntake.CAL_2000, 5));
+                portions.add(new Portion("Verdure fresche", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Insalate a foglia", CaloricIntake.CAL_1500, 5));
+                portions.add(new Portion("Insalate a foglia", CaloricIntake.CAL_2000, 5));
+                portions.add(new Portion("Insalate a foglia", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Carne rossa", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Carne rossa", CaloricIntake.CAL_2000, 2));
+                portions.add(new Portion("Carne rossa", CaloricIntake.CAL_2500, 2));
+
+                portions.add(new Portion("Carne bianca", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Carne bianca", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Carne bianca", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Pesce", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Pesce", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Pesce", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Pesce conservato", CaloricIntake.CAL_1500, 0));
+                portions.add(new Portion("Pesce conservato", CaloricIntake.CAL_2000, 2));
+                portions.add(new Portion("Pesce conservato", CaloricIntake.CAL_2500, 2));
+
+                portions.add(new Portion("Uova", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Uova", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Uova", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Legumi freschi, surgelati, ammollati o in scatola", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Legumi freschi, surgelati, ammollati o in scatola", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Legumi freschi, surgelati, ammollati o in scatola", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Legumi secchi", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Legumi secchi", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Legumi secchi", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Latte", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Latte", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Latte", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Yogurt", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Yogurt", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Yogurt", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Formaggi fino al 25% di grassi", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Formaggi fino al 25% di grassi", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Formaggi fino al 25% di grassi", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Formaggi con più del 25% di grassi", CaloricIntake.CAL_1500, 6));
+                portions.add(new Portion("Formaggi con più del 25% di grassi", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Formaggi con più del 25% di grassi", CaloricIntake.CAL_2500, 6));
+
+                portions.add(new Portion("Olio di oliva", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Olio di oliva", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Olio di oliva", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Oli vegetali", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Oli vegetali", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Oli vegetali", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Burro", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Burro", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Burro", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Grassi di origine animale", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Grassi di origine animale", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Grassi di origine animale", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Grassi di origine vegetale", CaloricIntake.CAL_1500, 4));
+                portions.add(new Portion("Grassi di origine vegetale", CaloricIntake.CAL_2000, 6));
+                portions.add(new Portion("Grassi di origine vegetale", CaloricIntake.CAL_2500, 8));
+
+                portions.add(new Portion("Frutta secca a guscio", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Frutta secca a guscio", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Frutta secca a guscio", CaloricIntake.CAL_2500, 5));
+
+                portions.add(new Portion("Semi oleaosi", CaloricIntake.CAL_1500, 2));
+                portions.add(new Portion("Semi oleaosi", CaloricIntake.CAL_2000, 4));
+                portions.add(new Portion("Semi oleaosi", CaloricIntake.CAL_2500, 5));
+
+                portions.add(new Portion("Acqua", CaloricIntake.CAL_1500, 6*2));
+                portions.add(new Portion("Acqua", CaloricIntake.CAL_2000, 8*2));
+                portions.add(new Portion("Acqua", CaloricIntake.CAL_2500, 10*2));
 
 
                 FoodDao dao = INSTANCE.foodDao();
@@ -182,6 +303,7 @@ public abstract class Database extends RoomDatabase {
                 for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
                 for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+                for(Portion portion : portions) dao.insert(portion);
 
                 UserDao userDao = INSTANCE.userDao();
 
