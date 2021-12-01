@@ -5,12 +5,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
@@ -28,7 +30,8 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        weeklyFragmentAdapter = new WeeklyFragmentAdapter();
+        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getResources().getColor(R.color.purple_200, requireActivity().getTheme()),
+                getResources().getColor(R.color.purple_500, requireActivity().getTheme()));
         weeklyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
@@ -38,9 +41,8 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentWeeklyBinding.inflate(inflater);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
-        layout.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.weeklyRecyclerview.setLayoutManager(layout);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        binding.weeklyRecyclerview.setLayoutManager(gridLayoutManager);
         binding.weeklyRecyclerview.setAdapter(weeklyFragmentAdapter);
 
         return binding.getRoot();

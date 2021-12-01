@@ -15,6 +15,9 @@ import it.sofk.slurp.databinding.FoodItemBinding;
 
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
+    private final int foregroundColor;
+    private final int backgroundColor;
+
     private ClickListener clickListener;
 
     private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
@@ -29,6 +32,11 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
     });
 
+    public DailyFragmentAdapter(int foregroundColor, int backgroundColor) {
+        this.foregroundColor = foregroundColor;
+        this.backgroundColor = backgroundColor;
+    }
+
     @NonNull
     @Override
     public DailyFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,22 +47,32 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodInstance foodInstance = listDiffer.getCurrentList().get(position);
+
+        holder.binding.progressCircle.setColors(foregroundColor, backgroundColor);
         holder.binding.foodItemTitle.setText(foodInstance.getFoodType().toUpperCase());
-        holder.binding.ratingBar.setRating((float) foodInstance.getPortionConsumed());
+
+        double progress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
+        holder.binding.progressCircle.setProgress(progress);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
-            if (foodInstance.getPortionConsumed() == 5.0) return;
-
             foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() + 0.5);
-            holder.binding.ratingBar.setRating((float)foodInstance.getPortionConsumed());
+            double newProgress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
+            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.eatenPortions.setText(String.valueOf(foodInstance.getPortionConsumed()));
+            holder.binding.maxPortions.setText("/" + foodInstance.getPortionConsumed());
+
             if (clickListener != null) clickListener.onPlusClick(foodInstance);
         });
 
         holder.binding.foodItemMinus.setOnClickListener((View) -> {
-            if (foodInstance.getPortionConsumed() == 0.0) return;
+            if (foodInstance.getPortionConsumed() == 0) return;
 
             foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() - 0.5);
-            holder.binding.ratingBar.setRating((float)foodInstance.getPortionConsumed());
+            double newProgress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
+            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.eatenPortions.setText(String.valueOf(foodInstance.getPortionConsumed()));
+            holder.binding.maxPortions.setText("/" + foodInstance.getPortionConsumed());
+
             if (clickListener != null) clickListener.onMinusClick(foodInstance);
         });
     }

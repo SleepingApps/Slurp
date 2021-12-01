@@ -9,11 +9,15 @@
         android:id="@+id/food_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
         android:text="TextView"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/progressCircle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,37 +25,56 @@
         android:id="@+id/food_item_minus"
         android:layout_width="50dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="16dp"
         android:text="-"
         android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
-        app:layout_constraintEnd_toStartOf="@+id/food_item_plus"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/progressCircle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/food_item_plus" />
 
     <Button
         android:id="@+id/food_item_plus"
         android:layout_width="50dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="16dp"
         android:text="+"
         android:textSize="26sp"
-        app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+        app:layout_constraintTop_toTopOf="@+id/progressCircle" />
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:isIndicator="true"
-        android:max="5"
-        android:rating="0"
-        android:stepSize="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/food_item_minus"
+    <it.sofk.slurp.ui.controls.Circle
+        android:id="@+id/progressCircle"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/food_item_plus"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/food_item_title" />
 
+    <TextView
+        android:id="@+id/eatenPortions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressCircle"
+        app:layout_constraintEnd_toEndOf="@+id/progressCircle"
+        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintStart_toStartOf="@+id/progressCircle"
+        app:layout_constraintTop_toTopOf="@+id/progressCircle"
+        app:layout_constraintVertical_bias="0.418" />
+
+    <TextView
+        android:id="@+id/maxPortions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/0"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/progressCircle"
+        app:layout_constraintEnd_toEndOf="@+id/progressCircle"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="@+id/progressCircle"
+        app:layout_constraintTop_toTopOf="@+id/progressCircle"
+        app:layout_constraintVertical_bias="0.714" />
 </androidx.constraintlayout.widget.ConstraintLayout>

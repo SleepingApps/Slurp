@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
@@ -30,7 +32,8 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dailyFragmentAdapter = new DailyFragmentAdapter();
+        dailyFragmentAdapter = new DailyFragmentAdapter(getResources().getColor(R.color.purple_200, requireActivity().getTheme()),
+                getResources().getColor(R.color.purple_500, requireActivity().getTheme()));
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
@@ -40,9 +43,8 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDailyBinding.inflate(inflater);
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
-        layout.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.dailyRecyclerview.setLayoutManager(layout);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        binding.dailyRecyclerview.setLayoutManager(gridLayoutManager);
         binding.dailyRecyclerview.setAdapter(dailyFragmentAdapter);
 
         return binding.getRoot();
