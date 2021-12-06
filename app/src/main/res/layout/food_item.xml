@@ -56,25 +56,32 @@
         android:id="@+id/eatenPortions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:textSize="48sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="3.5"
+        android:textSize="64dp"
+        android:letterSpacing="-0.05"
         app:layout_constraintBottom_toBottomOf="@+id/progressCircle"
         app:layout_constraintEnd_toEndOf="@+id/progressCircle"
-        app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="@+id/progressCircle"
         app:layout_constraintTop_toTopOf="@+id/progressCircle"
-        app:layout_constraintVertical_bias="0.418" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/maxPortions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="/0"
-        android:textSize="34sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="/0.5"
+        android:textSize="24sp"
+        android:letterSpacing="-0.05"
         app:layout_constraintBottom_toBottomOf="@+id/progressCircle"
         app:layout_constraintEnd_toEndOf="@+id/progressCircle"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="@+id/progressCircle"
         app:layout_constraintTop_toTopOf="@+id/progressCircle"
-        app:layout_constraintVertical_bias="0.714" />
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
