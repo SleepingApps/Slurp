@@ -46,9 +46,13 @@ public abstract class FoodDao {
     public abstract void update(FoodInstance foodInstance);
 
     @Transaction
-    public void updateFromAlternativeName(String name){
+    public void updateFromAlternativeName(String name, double number){
         List<FoodInstance> f = getFoodInstancesFromAlternativeName(name);
-        update2(f.get(0));
+        for (FoodInstance food : f) {
+            food.setPortionConsumed(number);
+            update2(food);
+        }
+
     }
 
     @Transaction

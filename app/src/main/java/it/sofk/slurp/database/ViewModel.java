@@ -78,4 +78,12 @@ public class ViewModel extends AndroidViewModel {
 
         return (double) maxPortion / 2;
     }
+
+    public void updateFromAlternativeName(String name, double number){
+        repository.updateFromAlternativeName(name, number);
+    }
+
+    public List<FoodInstance> getFoodInstancesFromAlternativeName(String name){
+        return repository.getFoodInstancesFromAlternativeName(name);
+    }
 }

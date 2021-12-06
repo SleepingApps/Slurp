@@ -88,8 +88,8 @@ public class Repository {
         Database.databaseWriteExecutor.execute(() -> foodDao.update2(foodInstance));
     }
 
-    public void updateFromAlternativeName(String name){
-        Database.databaseWriteExecutor.execute(() -> foodDao.updateFromAlternativeName(name));
+    public void updateFromAlternativeName(String name, double number){
+        Database.databaseWriteExecutor.execute(() -> foodDao.updateFromAlternativeName(name, number));
     }
 
     public FoodGroup getFoodGroupByName(String name){
@@ -105,5 +105,9 @@ public class Repository {
         if(max == null) max = 0;
 
         return max;
+    }
+
+    public List<FoodInstance> getFoodInstancesFromAlternativeName(String name){
+        return foodDao.getFoodInstancesFromAlternativeName(name);
     }
 }
