@@ -85,7 +85,7 @@ public abstract class FoodDao {
     @Query("SELECT * FROM food_type WHERE frequency = :frequency")
     public abstract LiveData<List<FoodType>> getFoodTypes(Frequency frequency);
 
-    @Query("SELECT alternativeName FROM same_portion, food_type WHERE samePortion = alternativeName AND frequency = :frequency")
+    @Query("SELECT DISTINCT alternativeName FROM same_portion, food_type WHERE samePortion = alternativeName AND frequency = :frequency")
     public abstract LiveData<List<String>> getFoodNames(Frequency frequency);
 
     @Query("SELECT * FROM food_type")
