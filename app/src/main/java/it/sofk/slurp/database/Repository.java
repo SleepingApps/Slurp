@@ -100,7 +100,10 @@ public class Repository {
         return foodDao.getFoodNames(frequency);
     }
 
-    public double maxPortion(String equivalentName, CaloricIntake caloricIntake){
-        return foodDao.maxPortion(equivalentName, caloricIntake);
+    public Integer maxPortion(String equivalentName, CaloricIntake caloricIntake){
+        Integer max = foodDao.maxPortion(equivalentName, caloricIntake);
+        if(max == null) max = 0;
+
+        return max;
     }
 }

@@ -74,6 +74,8 @@ public class ViewModel extends AndroidViewModel {
     }
 
     public double maxPortion(String equivalentName, CaloricIntake caloricIntake){
-        return repository.maxPortion(equivalentName, caloricIntake);
+        Integer maxPortion = repository.maxPortion(equivalentName, caloricIntake);
+
+        return (double) maxPortion / 2;
     }
 }
