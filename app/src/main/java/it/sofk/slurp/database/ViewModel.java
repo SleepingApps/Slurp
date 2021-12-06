@@ -69,7 +69,7 @@ public class ViewModel extends AndroidViewModel {
         return repository.getFoodGroupByName(name);
     }
 
-    public LiveData<List<String>> getEquivalentsName(Frequency frequency){
+    public LiveData<List<String>> getEquivalentNames(Frequency frequency){
         return repository.getEquivalentsNames(frequency);
     }
 
