@@ -13,6 +13,7 @@ import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
@@ -109,5 +110,13 @@ public class Repository {
 
     public List<FoodInstance> getFoodInstancesFromAlternativeName(String name){
         return foodDao.getFoodInstancesFromAlternativeName(name);
+    }
+
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate date, CaloricIntake caloricIntake){
+        return foodDao.getFoodDTO(frequency, date, caloricIntake);
+    }
+
+    public void update(FoodDTO foodDTO){
+        Database.databaseWriteExecutor.execute(() -> foodDao.updateDTO(foodDTO));
     }
 }

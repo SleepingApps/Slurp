@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,12 +21,16 @@ import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
-public class ViewModel extends AndroidViewModel {
+public class
+
+ViewModel extends AndroidViewModel {
 
     private Repository repository;
 
     private LiveData<List<FoodInstance>> foodIstances;
     private LiveData<List<FoodType>> foodTypes;
+
+    private MutableLiveData<FoodDTO> foods;
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -96,18 +101,12 @@ public class ViewModel extends AndroidViewModel {
     }
 
 
-    public List<FoodDTO> getFoods(Frequency frequency){
-        List<FoodDTO> foodList = new ArrayList<>();
-        List<String> names = repository.getEquivalentsNames(frequency).getValue();
-        for (String name : names) {
-            List<FoodInstance> foodInstances = getFoodInstancesFromAlternativeName(name);
-            FoodInstance foodInstance = foodInstances.get(0);
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency) {
+        return repository.getFoods(frequency, LocalDate.now(),repository.getUser().getValue().getCaloricIntake());
+    }
 
-            FoodDTO food = new FoodDTO(name, foodInstance.getPortionConsumed(), maxPortion(name, repository.getUser().getValue().getCaloricIntake()));
-
-            foodList.add(food);
-        }
-        return foodList;
+    public void update(FoodDTO food){
+        repository.update(food);
     }
 
     public void updateEatenPortionFromName(String name, double number){

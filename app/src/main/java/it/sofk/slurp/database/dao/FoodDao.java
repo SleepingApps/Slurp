@@ -10,6 +10,7 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,11 +19,27 @@ import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
+import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
 @Dao
 public abstract class FoodDao {
+
+    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions " +
+            "FROM same_portion, food_type, food_instance, Portion " +
+            "WHERE food_type.samePortion = same_portion.alternativeName " +
+            "AND Portion.foodType = food_type.name " +
+            "AND food_type.name = food_instance.foodType " +
+            "AND food_type.frequency = :frequency " +
+            "AND food_instance.date = :date " +
+            "AND Portion.caloricIntake = :caloricIntake")
+    public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate date, CaloricIntake caloricIntake);
+
+    @Transaction
+    public void updateDTO(FoodDTO food){
+        updateFromAlternativeName(food.getName(), food.getEatenPortions());
+    }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract void insert(FoodInstance foodInstance);
