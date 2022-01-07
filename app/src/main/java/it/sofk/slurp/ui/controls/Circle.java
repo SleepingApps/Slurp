@@ -11,7 +11,7 @@ import android.view.animation.Transformation;
 
 public class Circle extends View {
 
-    private int strokeWidth = 20;
+    private int strokeWidth = 25;
     private Paint foregroundPaint, backgroundPaint, outOfBoundsPaint;
     private float angle;
     private boolean isOutOfBounds;
@@ -41,8 +41,6 @@ public class Circle extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        int strokeWidth = 20;
 
         if (isOutOfBounds) {
             canvas.drawArc(strokeWidth, strokeWidth,

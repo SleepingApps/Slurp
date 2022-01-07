@@ -25,6 +25,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
             return oldItem.getDate().equals(newItem.getDate()) && oldItem.getFoodType().equals(newItem.getFoodType());
         }
+
         @Override
         public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
             return oldItem.getFoodType().equals(newItem.getFoodType())

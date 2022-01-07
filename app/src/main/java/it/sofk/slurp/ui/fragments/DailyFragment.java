@@ -19,6 +19,7 @@ import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
+import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.ui.adapters.DailyFragmentAdapter;
 
@@ -37,26 +38,26 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoodIstances(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDailyBinding.inflate(inflater);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        binding.dailyRecyclerview.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        binding.dailyRecyclerview.setLayoutManager(layout);
         binding.dailyRecyclerview.setAdapter(dailyFragmentAdapter);
 
         return binding.getRoot();
     }
 
     @Override
-    public void onPlusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onPlusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 
     @Override
-    public void onMinusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onMinusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 }
