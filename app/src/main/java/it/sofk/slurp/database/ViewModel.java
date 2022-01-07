@@ -102,7 +102,7 @@ ViewModel extends AndroidViewModel {
 
 
     public LiveData<List<FoodDTO>> getFoods(Frequency frequency) {
-        return repository.getFoods(frequency, LocalDate.now(),repository.getUser().getValue().getCaloricIntake());
+        return repository.getFoods(frequency, LocalDate.now(), CaloricIntake.CAL_2000);
     }
 
     public void update(FoodDTO food){
