@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
-public class Circle extends View {
+public class ProgressRing extends View {
 
     private int strokeWidth = 25;
     private Paint foregroundPaint, backgroundPaint, outOfBoundsPaint;
     private float angle;
     private boolean isOutOfBounds;
 
-    public Circle(Context context, AttributeSet attrs) {
+    public ProgressRing(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         foregroundPaint = new Paint();
@@ -84,8 +84,9 @@ public class Circle extends View {
 
     private float validateBoundary(double progress) {
         final float minProgress = 0.0f;
+        final float maxProgress = 360.0f;
         if (progress < minProgress) progress = minProgress;
-
+        if (progress > maxProgress) progress = maxProgress;
         return (float)progress;
     }
 
@@ -117,8 +118,8 @@ public class Circle extends View {
         protected void applyTransformation(float interpolatedTime, Transformation transformation) {
             float angle = oldAngle + ((newAngle - oldAngle) * interpolatedTime);
             this.setDuration(duration);
-            Circle.this.setAngle(angle);
-            Circle.this.requestLayout();
+            ProgressRing.this.setAngle(angle);
+            ProgressRing.this.requestLayout();
         }
     }
 }

@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/progressCircle" />
 
-        <it.sofk.slurp.ui.controls.Circle
+        <it.sofk.slurp.ui.controls.ProgressRing
             android:id="@+id/progressCircle"
             android:layout_width="140dp"
             android:layout_height="140dp"
