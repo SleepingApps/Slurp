@@ -60,23 +60,27 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         holder.binding.progressCircle.setProgress(progress);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
-            food.setEatenPortions(food.getEatenPortions() + 0.5);
+            FoodDTO newFood = new FoodDTO(food.getName(),
+                    food.getEatenPortions() + 0.5,
+                    food.getMaxPortions());
 
             double newProgress = 360.0 / 5.0 * food.getEatenPortions();
             holder.binding.progressCircle.setProgress(newProgress);
 
-            if (clickListener != null) clickListener.onPlusClick(food);
+            if (clickListener != null) clickListener.onPlusClick(newFood);
         });
 
         holder.binding.foodItemMinus.setOnClickListener((View) -> {
             if (food.getEatenPortions() == 0) return;
 
-            food.setEatenPortions(food.getEatenPortions() - 0.5);
+            FoodDTO newFood = new FoodDTO(food.getName(),
+                    food.getEatenPortions() - 0.5,
+                    food.getMaxPortions());
 
             double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
             holder.binding.progressCircle.setProgress(newProgress);
 
-            if (clickListener != null) clickListener.onMinusClick(food);
+            if (clickListener != null) clickListener.onMinusClick(newFood);
         });
     }
 
