@@ -61,7 +61,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             food.setEatenPortions(food.getEatenPortions() + 0.5);
-            holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
 
             double newProgress = 360.0 / 5.0 * food.getEatenPortions();
             holder.binding.progressCircle.setProgress(newProgress);
@@ -73,10 +72,9 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
             if (food.getEatenPortions() == 0) return;
 
             food.setEatenPortions(food.getEatenPortions() - 0.5);
-            double newProgress = 360.0 / 5.0 * food.getEatenPortions();
+
+            double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
             holder.binding.progressCircle.setProgress(newProgress);
-            holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
-            holder.binding.maxPortions.setText("/" + food.getEatenPortions());
 
             if (clickListener != null) clickListener.onMinusClick(food);
         });
