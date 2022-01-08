@@ -79,7 +79,6 @@ public abstract class FoodDao {
             update(f);
         }
     }
-
     @Query("SELECT food_instance.* " +
             "FROM food_instance, food_type " +
             "WHERE food_type.samePortion IN (SELECT food_type.samePortion FROM food_type WHERE name = :foodType ) AND " +
@@ -90,34 +89,10 @@ public abstract class FoodDao {
     @Query("SELECT food_instance.* FROM food_instance, food_type WHERE foodType = name AND samePortion = :name")
     public abstract List<FoodInstance> getFoodInstancesFromAlternativeName(String name);
 
-    @Query("SELECT * FROM food_instance")
-    public abstract LiveData<List<FoodInstance>> getFoods();
-
     @Query("SELECT food_instance.* FROM food_instance, food_type WHERE frequency = :frequency AND food_instance.foodType = food_type.name AND date = :date")
     public abstract LiveData<List<FoodInstance>> getFoods(Frequency frequency, LocalDate date);
-    
-    @Query("SELECT * FROM food_instance WHERE foodType = :foodType AND date = :date")
-    public abstract LiveData<FoodInstance> getFood(String foodType, LocalDate date);
-
-    @Query("SELECT * FROM food_type WHERE frequency = :frequency")
-    public abstract LiveData<List<FoodType>> getFoodTypes(Frequency frequency);
-
-    @Query("SELECT DISTINCT alternativeName FROM same_portion, food_type WHERE samePortion = alternativeName AND frequency = :frequency")
-    public abstract LiveData<List<String>> getFoodNames(Frequency frequency);
 
     @Query("SELECT * FROM food_type")
     public abstract LiveData<List<FoodType>> getFoodTypes();
 
-    @Query("SELECT * FROM food_type WHERE name = :name")
-    public abstract FoodType getFoodType(String name);
-
-    @Query("SELECT * FROM FoodGroup WHERE name = :name")
-    public abstract FoodGroup getFoodGroup(String name);
-
-    @Query("SELECT Portion.numberOf " +
-            "FROM Portion, food_type " +
-            "WHERE Portion.foodType = food_type.name AND " +
-            "food_type.samePortion = :equivalentName AND " +
-            "Portion.caloricIntake = :caloricIntake")
-    public abstract Integer maxPortion(String equivalentName, CaloricIntake caloricIntake);
 }
