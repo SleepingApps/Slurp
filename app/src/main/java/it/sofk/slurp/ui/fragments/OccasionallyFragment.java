@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +15,14 @@ import android.view.ViewGroup;
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
-import it.sofk.slurp.databinding.FragmentWeeklyBinding;
+import it.sofk.slurp.databinding.FragmentOccasionallyBinding;
+import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.ui.adapters.OccasionallyFragmentAdapter;
 
 public class OccasionallyFragment extends Fragment implements OccasionallyFragmentAdapter.ClickListener {
 
-    private FragmentWeeklyBinding binding;
+    private FragmentOccasionallyBinding binding;
     private ViewModel viewModel;
     private OccasionallyFragmentAdapter occasionallyFragmentAdapter;
 
@@ -34,26 +35,27 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
         occasionallyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoodIstances(Frequency.OCCASIONALLY).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.OCCASIONALLY).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentWeeklyBinding.inflate(inflater);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        binding.weeklyRecyclerview.setLayoutManager(gridLayoutManager);
-        binding.weeklyRecyclerview.setAdapter(occasionallyFragmentAdapter);
+        binding = FragmentOccasionallyBinding.inflate(inflater);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        binding.occasionallyRecyclerview.setLayoutManager(layout);
+        binding.occasionallyRecyclerview.setAdapter(occasionallyFragmentAdapter);
+        ((SimpleItemAnimator) binding.occasionallyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 
         return binding.getRoot();
     }
 
     @Override
-    public void onPlusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onPlusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 
     @Override
-    public void onMinusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onMinusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 }

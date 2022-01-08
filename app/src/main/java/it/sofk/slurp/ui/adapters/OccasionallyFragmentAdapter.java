@@ -12,6 +12,7 @@ import java.util.List;
 
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FoodItemBinding;
+import it.sofk.slurp.dto.FoodDTO;
 
 public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<OccasionallyFragmentAdapter.ViewHolder> {
 
@@ -20,15 +21,16 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
 
     private ClickListener clickListener;
 
-    private final AsyncListDiffer<FoodInstance> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodInstance>() {
+    private final AsyncListDiffer<FoodDTO> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
         @Override
-        public boolean areItemsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem.getDate().equals(newItem.getDate()) && oldItem.getFoodType().equals(newItem.getFoodType());
+        public boolean areItemsTheSame(@NonNull FoodDTO oldItem, @NonNull FoodDTO newItem) {
+            return oldItem.getName().equals(newItem.getName());
         }
+
         @Override
-        public boolean areContentsTheSame(@NonNull FoodInstance oldItem, @NonNull FoodInstance newItem) {
-            return oldItem.getFoodType().equals(newItem.getFoodType())
-                    && oldItem.getDate().equals(newItem.getDate());
+        public boolean areContentsTheSame(@NonNull FoodDTO oldItem, @NonNull FoodDTO newItem) {
+            return oldItem.getMaxPortions() == newItem.getMaxPortions()
+                    && oldItem.getEatenPortions() == newItem.getEatenPortions();
         }
     });
 
@@ -46,34 +48,35 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodInstance foodInstance = listDiffer.getCurrentList().get(position);
+        FoodDTO food = listDiffer.getCurrentList().get(position);
+
+
+        holder.binding.foodItemTitle.setText(food.getName());
+        holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
+        holder.binding.maxPortions.setText("/" + food.getMaxPortions());
 
         holder.binding.progressCircle.setColors(foregroundColor, backgroundColor);
-        holder.binding.foodItemTitle.setText(foodInstance.getFoodType().toUpperCase());
-
-        double progress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
+        double progress = 360.0 / 5.0 * food.getEatenPortions();
         holder.binding.progressCircle.setProgress(progress);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
-            foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() + 0.5);
-            double newProgress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
-            holder.binding.progressCircle.setProgress(newProgress);
-            holder.binding.eatenPortions.setText(String.valueOf(foodInstance.getPortionConsumed()));
-            holder.binding.maxPortions.setText("/" + foodInstance.getPortionConsumed());
+            food.setEatenPortions(food.getEatenPortions() + 0.5);
 
-            if (clickListener != null) clickListener.onPlusClick(foodInstance);
+            double newProgress = 360.0 / 5.0 * food.getEatenPortions();
+            holder.binding.progressCircle.setProgress(newProgress);
+
+            if (clickListener != null) clickListener.onPlusClick(food);
         });
 
         holder.binding.foodItemMinus.setOnClickListener((View) -> {
-            if (foodInstance.getPortionConsumed() == 0) return;
+            if (food.getEatenPortions() == 0) return;
 
-            foodInstance.setPortionConsumed(foodInstance.getPortionConsumed() - 0.5);
-            double newProgress = 360.0 / 5.0 * foodInstance.getPortionConsumed();
+            food.setEatenPortions(food.getEatenPortions() - 0.5);
+
+            double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
             holder.binding.progressCircle.setProgress(newProgress);
-            holder.binding.eatenPortions.setText(String.valueOf(foodInstance.getPortionConsumed()));
-            holder.binding.maxPortions.setText("/" + foodInstance.getPortionConsumed());
 
-            if (clickListener != null) clickListener.onMinusClick(foodInstance);
+            if (clickListener != null) clickListener.onMinusClick(food);
         });
     }
 
@@ -82,7 +85,7 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
         return listDiffer.getCurrentList().size();
     }
 
-    public void submitData(List<FoodInstance> data) {
+    public void submitData(List<FoodDTO> data) {
         listDiffer.submitList(data);
     }
 
@@ -102,7 +105,7 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
     }
 
     public interface ClickListener {
-        void onPlusClick(FoodInstance foodInstance);
-        void onMinusClick(FoodInstance foodInstance);
+        void onPlusClick(FoodDTO food);
+        void onMinusClick(FoodDTO food);
     }
 }

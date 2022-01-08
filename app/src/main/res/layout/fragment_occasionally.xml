@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.OccasionallyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/weekly_recyclerview"
+        android:id="@+id/occasionally_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

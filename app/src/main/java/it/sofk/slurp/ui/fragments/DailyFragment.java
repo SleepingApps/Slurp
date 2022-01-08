@@ -4,9 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
@@ -14,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
-import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;

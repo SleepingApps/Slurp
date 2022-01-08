@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
 import it.sofk.slurp.databinding.FragmentWeeklyBinding;
+import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.ui.adapters.WeeklyFragmentAdapter;
 
@@ -35,26 +37,27 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
         weeklyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoodIstances(Frequency.WEEKLY).observe(requireActivity(), weeklyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.WEEKLY).observe(requireActivity(), weeklyFragmentAdapter::submitData);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentWeeklyBinding.inflate(inflater);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        binding.weeklyRecyclerview.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        binding.weeklyRecyclerview.setLayoutManager(layout);
         binding.weeklyRecyclerview.setAdapter(weeklyFragmentAdapter);
+        ((SimpleItemAnimator) binding.weeklyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 
         return binding.getRoot();
     }
 
     @Override
-    public void onPlusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onPlusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 
     @Override
-    public void onMinusClick(FoodInstance foodInstance) {
-        viewModel.update(foodInstance);
+    public void onMinusClick(FoodDTO food) {
+        viewModel.update(food);
     }
 }
