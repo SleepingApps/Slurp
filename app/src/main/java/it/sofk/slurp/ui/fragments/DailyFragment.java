@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         binding.dailyRecyclerview.setLayoutManager(layout);
         binding.dailyRecyclerview.setAdapter(dailyFragmentAdapter);
+        ((SimpleItemAnimator) binding.dailyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 
         return binding.getRoot();
     }
