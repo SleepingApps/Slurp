@@ -308,6 +308,8 @@ public abstract class Database extends RoomDatabase {
                 UserDao userDao = INSTANCE.userDao();
 
                 User user = new User(CaloricIntake.CAL_2000);
+                user.setHeight(0d);
+                user.setWeight(0d);
                 userDao.insert(user);
             });
 
