@@ -27,10 +27,9 @@ public class Portion {
     @NonNull
     private CaloricIntake caloricIntake;
 
-    @NonNull
-    private Integer numberOf;
+    private double numberOf;
 
-    public Portion(@NonNull String foodType, @NonNull CaloricIntake caloricIntake, @NonNull Integer numberOf) {
+    public Portion(@NonNull String foodType, @NonNull CaloricIntake caloricIntake, double numberOf) {
         this.foodType = foodType;
         this.caloricIntake = caloricIntake;
         this.numberOf = numberOf;
@@ -54,12 +53,11 @@ public class Portion {
         this.caloricIntake = caloricIntake;
     }
 
-    @NonNull
-    public Integer getNumberOf() {
+    public double getNumberOf() {
         return numberOf;
     }
 
-    public void setNumberOf(@NonNull Integer numberOf) {
+    public void setNumberOf(double numberOf) {
         this.numberOf = numberOf;
     }
 }
