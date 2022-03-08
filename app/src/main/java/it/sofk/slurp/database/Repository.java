@@ -9,7 +9,6 @@ import java.util.List;
 
 import it.sofk.slurp.database.dao.FoodDao;
 import it.sofk.slurp.database.dao.UserDao;
-import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,11 +26,26 @@ ViewModel extends AndroidViewModel {
 
     private LiveData<List<FoodType>> foodTypes;
 
+    private MutableLiveData<Boolean> weekStarted = new MutableLiveData<>();
+
 
     public ViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         foodTypes = repository.getFoodTypes();
+        weekStarted.setValue(false);
+    }
+
+    public void setWeekStarted(boolean weekStarted){
+        this.weekStarted.setValue(weekStarted);
+    }
+
+    public boolean isWeekStarted(){
+        return this.weekStarted.getValue();
+    }
+
+    public LiveData<Boolean> getWeekStarted(){
+        return weekStarted;
     }
 
     @Deprecated

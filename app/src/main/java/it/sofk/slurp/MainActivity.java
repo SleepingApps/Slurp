@@ -1,35 +1,27 @@
 package it.sofk.slurp;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.annotation.SuppressLint;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.LocalDate;
-
 import it.sofk.slurp.database.ViewModel;
-import it.sofk.slurp.database.entity.FoodInstance;
-import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.databinding.ActivityMainBinding;
-import it.sofk.slurp.enumeration.Frequency;
+import it.sofk.slurp.ui.viewmodels.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     ActivityMainBinding binding;
     NavController navController;
-    ViewModel viewModel;
+    MainActivityViewModel viewModel;
+    ViewModel viewModelShared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +35,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         setContentView(binding.getRoot());
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
-        viewModel.getFoodTypes().observe(this, foodTypes -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                for(FoodType foodType : foodTypes) viewModel.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        viewModelShared = new ViewModelProvider(this).get(ViewModel.class);
+        viewModelShared.getWeekStarted().observe(this, weekStarted -> {
+            if(weekStarted.equals(Boolean.TRUE)){
+                navController.navigate(R.id.foodFragment);
+            }
         });
+        viewModel.getFoodInstances().observe(this, foodInstances -> {
+            if(foodInstances != null);
+                viewModelShared.setWeekStarted(true);
+        });
+        if(viewModelShared.isWeekStarted()){
+            navController.navigate(R.id.foodFragment);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -55,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_food:
-                navController.navigate(R.id.foodFragment);
+                if(viewModelShared.isWeekStarted())
+                    navController.navigate(R.id.foodFragment);
+                else
+                    navController.navigate(R.id.startWeekFragment);
                 break;
             case R.id.menu_profile:
                 navController.navigate(R.id.profileFragment);
@@ -63,4 +67,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return true;
     }
+
 }

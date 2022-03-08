@@ -10,8 +10,6 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import it.sofk.slurp.database.entity.FoodGroup;

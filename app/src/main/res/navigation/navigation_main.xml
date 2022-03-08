@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/foodFragment">
+    app:startDestination="@id/startWeekFragment">
 
     <fragment
         android:id="@+id/foodFragment"
@@ -15,4 +15,9 @@
         android:name="it.sofk.slurp.ui.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/startWeekFragment"
+        android:name="it.sofk.slurp.ui.fragments.StartWeekFragment"
+        android:label="fragment_start_week"
+        tools:layout="@layout/fragment_start_week" />
 </navigation>
