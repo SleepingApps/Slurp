@@ -10,7 +10,6 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -302,7 +301,7 @@ public abstract class Database extends RoomDatabase {
                 for(FoodGroup foodGroup : foodGroupList) dao.insert(foodGroup);
                 for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
-                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+                //for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
                 for(Portion portion : portions) dao.insert(portion);
 
                 UserDao userDao = INSTANCE.userDao();

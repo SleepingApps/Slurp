@@ -33,7 +33,7 @@ ViewModel extends AndroidViewModel {
         super(application);
         repository = new Repository(application);
         foodTypes = repository.getFoodTypes();
-        weekStarted.setValue(false);
+        weekStarted.setValue(true);
     }
 
     public void setWeekStarted(boolean weekStarted){

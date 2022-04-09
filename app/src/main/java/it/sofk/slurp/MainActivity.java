@@ -37,18 +37,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
         viewModelShared = new ViewModelProvider(this).get(ViewModel.class);
-        viewModelShared.getWeekStarted().observe(this, weekStarted -> {
-            if(weekStarted.equals(Boolean.TRUE)){
-                navController.navigate(R.id.foodFragment);
+        viewModel.getFoodInstances().observe(this, foodInstances -> {
+            if(foodInstances.size() == 0) {
+                viewModelShared.setWeekStarted(false);
+                navController.navigate(R.id.startWeekFragment);
             }
         });
-        viewModel.getFoodInstances().observe(this, foodInstances -> {
-            if(foodInstances != null && !viewModelShared.getWeekStarted().getValue())
-                    viewModelShared.setWeekStarted(true);
+        viewModelShared.getWeekStarted().observe(this, weekStarted -> {
+            if(weekStarted) {
+                navController.navigate(R.id.foodFragment);
+            }else{
+                navController.navigate(R.id.startWeekFragment);
+            }
         });
-        if(viewModelShared.isWeekStarted()){
-            navController.navigate(R.id.foodFragment);
-        }
+
     }
 
     @SuppressLint("NonConstantResourceId")
