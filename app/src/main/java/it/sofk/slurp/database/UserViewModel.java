@@ -38,15 +38,21 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     public void updateWeight(double weight){
-        repository.updateWeight(weight);
+        User newUser = user.getValue();
+        newUser.setWeight(weight);
+        repository.update(newUser);
     }
 
     public void updateHeight(double height){
-        repository.updateHeight(height);
+        User newUser = user.getValue();
+        newUser.setHeight(height);
+        repository.update(newUser);
     }
 
     public void updateCaloricIntake(CaloricIntake caloricIntake){
-        repository.updateCaloricIntake(caloricIntake);
+        User newUser = user.getValue();
+        newUser.setCaloricIntake(caloricIntake);
+        repository.update(newUser);
     }
 
 }

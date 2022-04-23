@@ -36,6 +36,10 @@ public class Repository {
         return user;
     }
 
+    public void update(User user){
+        Database.databaseWriteExecutor.execute(() -> userDao.update(user));
+    }
+
     public void updateWeight(double weight){
         User user = getUser().getValue();
         user.setWeight(weight);
