@@ -1,5 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -16,8 +17,7 @@ import it.sofk.slurp.dto.FoodDTO;
 
 public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAdapter.ViewHolder> {
 
-    private final int foregroundColor;
-    private final int backgroundColor;
+    private final int foregroundColor, progressColor;
 
     private ClickListener clickListener;
 
@@ -34,9 +34,9 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         }
     });
 
-    public WeeklyFragmentAdapter(int foregroundColor, int backgroundColor) {
+    public WeeklyFragmentAdapter(int progressColor, int foregroundColor) {
+        this.progressColor = progressColor;
         this.foregroundColor = foregroundColor;
-        this.backgroundColor = backgroundColor;
     }
 
     @NonNull
@@ -55,17 +55,15 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
 
-        holder.binding.progressCircle.setColors(foregroundColor, backgroundColor);
-        double progress = 360.0 / 5.0 * food.getEatenPortions();
-        holder.binding.progressCircle.setProgress(progress);
+        holder.binding.progressCircle.initialise(foregroundColor, progressColor, Color.RED, (float)food.getMaxPortions());
+        holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
                     food.getMaxPortions());
 
-            double newProgress = 360.0 / 5.0 * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onPlusClick(newFood);
         });
@@ -77,8 +75,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
                     food.getEatenPortions() - 0.5,
                     food.getMaxPortions());
 
-            double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });

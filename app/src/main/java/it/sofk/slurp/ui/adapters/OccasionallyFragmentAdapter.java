@@ -1,5 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,15 +10,14 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
-import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.FoodDTO;
 
 public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<OccasionallyFragmentAdapter.ViewHolder> {
 
-    private final int foregroundColor;
-    private final int backgroundColor;
+    private final int foregroundColor, progressColor;
 
     private ClickListener clickListener;
 
@@ -34,9 +34,9 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
         }
     });
 
-    public OccasionallyFragmentAdapter(int foregroundColor, int backgroundColor) {
+    public OccasionallyFragmentAdapter(int progressColor, int foregroundColor) {
+        this.progressColor = progressColor;
         this.foregroundColor = foregroundColor;
-        this.backgroundColor = backgroundColor;
     }
 
     @NonNull
@@ -53,19 +53,17 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
 
         holder.binding.foodItemTitle.setText(food.getName());
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
-        holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+        Objects.requireNonNull(holder).binding.maxPortions.setText("/" + food.getMaxPortions());
 
-        holder.binding.progressCircle.setColors(foregroundColor, backgroundColor);
-        double progress = 360.0 / 5.0 * food.getEatenPortions();
-        holder.binding.progressCircle.setProgress(progress);
+        holder.binding.progressCircle.initialise(foregroundColor, progressColor, Color.RED, (float)food.getMaxPortions());
+        holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
                     food.getMaxPortions());
 
-            double newProgress = 360.0 / 5.0 * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onPlusClick(food);
         });
@@ -77,8 +75,7 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
                     food.getEatenPortions() - 0.5,
                     food.getMaxPortions());
 
-            double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onMinusClick(food);
         });

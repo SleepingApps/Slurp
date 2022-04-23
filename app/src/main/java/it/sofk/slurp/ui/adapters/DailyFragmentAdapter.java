@@ -1,5 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -16,8 +17,7 @@ import it.sofk.slurp.dto.FoodDTO;
 
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
-    private final int foregroundColor;
-    private final int backgroundColor;
+    private final int foregroundColor, progressColor;
 
     private ClickListener clickListener;
 
@@ -34,9 +34,9 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
     });
 
-    public DailyFragmentAdapter(int foregroundColor, int backgroundColor) {
+    public DailyFragmentAdapter(int progressColor, int foregroundColor) {
+        this.progressColor = progressColor;
         this.foregroundColor = foregroundColor;
-        this.backgroundColor = backgroundColor;
     }
 
     @NonNull
@@ -50,22 +50,19 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodDTO food = listDiffer.getCurrentList().get(position);
 
-
         holder.binding.foodItemTitle.setText(food.getName());
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
 
-        holder.binding.progressCircle.setColors(foregroundColor, backgroundColor);
-        double progress = 360.0 / 5.0 * food.getEatenPortions();
-        holder.binding.progressCircle.setProgress(progress);
+        holder.binding.progressCircle.initialise(foregroundColor, progressColor, Color.RED, (float)food.getMaxPortions());
+        holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
                     food.getMaxPortions());
 
-            double newProgress = 360.0 / 5.0 * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onPlusClick(newFood);
         });
@@ -78,7 +75,7 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
                     food.getMaxPortions());
 
             double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress(newProgress);
+            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });
@@ -102,7 +99,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
             this.binding = binding;
         }
     }
-
 
     public void setClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;

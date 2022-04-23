@@ -9,97 +9,127 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import androidx.annotation.NonNull;
+
 public class ProgressRing extends View {
 
+    private Paint foreground;
+    private Paint outOfBounds;
+    private Paint progress;
+
+    private float currentAngle;
+    private float maxProgress;
     private int strokeWidth = 25;
-    private Paint foregroundPaint, backgroundPaint, outOfBoundsPaint;
-    private float angle;
-    private boolean isOutOfBounds;
 
     public ProgressRing(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        foregroundPaint = new Paint();
-        foregroundPaint.setAntiAlias(true);
-        foregroundPaint.setStyle(Paint.Style.STROKE);
-        foregroundPaint.setStrokeWidth(strokeWidth);
-        foregroundPaint.setColor(Color.RED);
-
-        backgroundPaint = new Paint();
-        backgroundPaint.setAntiAlias(true);
-        backgroundPaint.setStyle(Paint.Style.STROKE);
-        backgroundPaint.setStrokeWidth(strokeWidth);
-        backgroundPaint.setColor(Color.BLACK);
-
-        outOfBoundsPaint = new Paint();
-        outOfBoundsPaint.setAntiAlias(true);
-        outOfBoundsPaint.setStyle(Paint.Style.STROKE);
-        outOfBoundsPaint.setStrokeWidth(strokeWidth);
-        outOfBoundsPaint.setColor(Color.RED);
+        initialise();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (isOutOfBounds) {
+        if (isOutOfBounds()) {
             canvas.drawArc(strokeWidth, strokeWidth,
                     getWidth()-strokeWidth, getHeight()-strokeWidth,
-                    0, 360, false, outOfBoundsPaint);
+                    0, 360, false, outOfBounds);
         }
         else {
             canvas.drawArc(strokeWidth, strokeWidth,
                     getWidth()-strokeWidth, getHeight()-strokeWidth,
-                    0, 360, false, backgroundPaint);
+                    0, 360, false, foreground);
 
             canvas.drawArc(strokeWidth, strokeWidth,
                     getWidth()-strokeWidth, getHeight()-strokeWidth,
-                    0, angle, false, foregroundPaint);
+                    0, currentAngle, false, progress);
         }
     }
 
-    public void setColors(int foregroundColor, int backgroundColor) {
-        foregroundPaint = new Paint();
-        foregroundPaint.setAntiAlias(true);
-        foregroundPaint.setStyle(Paint.Style.STROKE);
-        foregroundPaint.setStrokeWidth(strokeWidth);
-        foregroundPaint.setColor(foregroundColor);
+    private void initialise() {
+        this.foreground = new Paint();
+        this.foreground.setColor(Color.BLACK);
+        this.outOfBounds = new Paint();
+        this.outOfBounds.setColor(Color.RED);
+        this.progress = new Paint();
+        this.progress.setColor(Color.BLUE);
 
-        backgroundPaint = new Paint();
-        backgroundPaint.setAntiAlias(true);
-        backgroundPaint.setStyle(Paint.Style.STROKE);
-        backgroundPaint.setStrokeWidth(strokeWidth);
-        backgroundPaint.setColor(backgroundColor);
+        this.maxProgress = 100;
+        this.strokeWidth = 25;
+    }
 
+    private boolean isOutOfBounds() {
+        return currentAngle > 360;
+    }
+
+    public void initialise(int foregroundColor,
+                           int progressColor,
+                           int outOfBoundsColor,
+                           int maxProgress,
+                           int strokeWidth) {
+        this.foreground = new Paint();
+        this.foreground.setColor(foregroundColor);
+        this.outOfBounds = new Paint();
+        this.outOfBounds.setColor(outOfBoundsColor);
+        this.progress = new Paint();
+        this.progress.setColor(progressColor);
+
+        setPaintStyle();
+
+        this.maxProgress = maxProgress;
+        this.strokeWidth = strokeWidth;
+    }
+
+    public void initialise(@NonNull int foregroundColor,
+                           @NonNull int progressColor,
+                           @NonNull int outOfBoundsColor,
+                           float maxProgress) {
+        this.foreground = new Paint();
+        this.foreground.setColor(foregroundColor);
+        this.outOfBounds = new Paint();
+        this.outOfBounds.setColor(outOfBoundsColor);
+        this.progress = new Paint();
+        this.progress.setColor(progressColor);
+        setPaintStyle();
+
+        this.maxProgress = maxProgress;
+        this.strokeWidth = 25;
+    }
+
+    private void setPaintStyle() {
+        progress.setAntiAlias(true);
+        progress.setStyle(Paint.Style.STROKE);
+        progress.setStrokeWidth(strokeWidth);
+
+        foreground.setAntiAlias(true);
+        foreground.setStyle(Paint.Style.STROKE);
+        foreground.setStrokeWidth(strokeWidth);
+
+        outOfBounds.setAntiAlias(true);
+        outOfBounds.setStyle(Paint.Style.STROKE);
+        outOfBounds.setStrokeWidth(strokeWidth);
         this.requestLayout();
     }
 
+    public void setProgress(float progress, boolean animation) {
+        float newAngle = (float)(360.0 / maxProgress) * progress;
+
+        if (!animation) {
+            this.currentAngle = newAngle;
+            this.requestLayout();
+            return;
+        }
+
+        ProgressAnimation progressAnimation =  new ProgressAnimation(this.currentAngle, newAngle, 0);
+        this.startAnimation(progressAnimation);
+    }
+
     protected void setAngle(float angle) {
-        this.angle = angle;
+        this.currentAngle = angle;
     }
 
     protected float getAngle() {
-        return angle;
-    }
-
-    private float validateBoundary(double progress) {
-        final float minProgress = 0.0f;
-        final float maxProgress = 360.0f;
-        if (progress < minProgress) progress = minProgress;
-        if (progress > maxProgress) progress = maxProgress;
-        return (float)progress;
-    }
-
-    private float converToAngle(float progress) {
-        return 360.0f / 100.0f * progress;
-    }
-
-    public void setProgress(double progress) {
-        float validatedProgress = validateBoundary(progress);
-        isOutOfBounds = progress > 360.0;
-
-        ProgressAnimation animation =  new ProgressAnimation(this.angle, validatedProgress, 200);
-        this.startAnimation(animation);
+        return currentAngle;
     }
 
     protected class ProgressAnimation extends Animation {
@@ -118,7 +148,7 @@ public class ProgressRing extends View {
         protected void applyTransformation(float interpolatedTime, Transformation transformation) {
             float angle = oldAngle + ((newAngle - oldAngle) * interpolatedTime);
             this.setDuration(duration);
-            ProgressRing.this.setAngle(angle);
+            ProgressRing.this.setAngle(newAngle);
             ProgressRing.this.requestLayout();
         }
     }
