@@ -24,7 +24,7 @@ import it.sofk.slurp.enumeration.Frequency;
 @Dao
 public abstract class FoodDao {
 
-    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions " +
+    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
             "FROM same_portion, food_type, food_instance, Portion " +
             "WHERE food_type.samePortion = same_portion.alternativeName " +
             "AND Portion.foodType = food_type.name " +
@@ -34,9 +34,20 @@ public abstract class FoodDao {
             "AND Portion.caloricIntake = :caloricIntake")
     public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate date, CaloricIntake caloricIntake);
 
+    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
+            "FROM same_portion, food_type, food_instance, Portion " +
+            "WHERE food_type.samePortion = same_portion.alternativeName " +
+            "AND Portion.foodType = food_type.name " +
+            "AND food_type.name = food_instance.foodType " +
+            "AND food_type.frequency = :frequency " +
+            "AND food_instance.date >= :startDate " +
+            "AND food_instance.date <= :endDate " +
+            "AND Portion.caloricIntake = :caloricIntake")
+    public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate startDate, LocalDate endDate, CaloricIntake caloricIntake);
+
     @Transaction
     public void updateDTO(FoodDTO food){
-        updateFromAlternativeName(food.getName(), food.getEatenPortions());
+        updateFromAlternativeName(food.getName(), food.getEatenPortions(), food.getDate());
     }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -61,8 +72,8 @@ public abstract class FoodDao {
     public abstract void update(FoodInstance foodInstance);
 
     @Transaction
-    public void updateFromAlternativeName(String name, double number){
-        List<FoodInstance> f = getFoodInstancesFromAlternativeName(name);
+    public void updateFromAlternativeName(String name, double number, LocalDate date){
+        List<FoodInstance> f = getFoodInstancesFromAlternativeName(name, date);
         for (FoodInstance food : f) {
             food.setPortionConsumed(number);
             update2(food);
@@ -84,8 +95,8 @@ public abstract class FoodDao {
             "   food_instance.foodType = food_type.name")
     public abstract List<FoodInstance> getFoodInstancesWithSamePortion(String foodType, LocalDate date);
 
-    @Query("SELECT food_instance.* FROM food_instance, food_type WHERE foodType = name AND samePortion = :name")
-    public abstract List<FoodInstance> getFoodInstancesFromAlternativeName(String name);
+    @Query("SELECT food_instance.* FROM food_instance, food_type WHERE foodType = name AND samePortion = :name AND date = :date")
+    public abstract List<FoodInstance> getFoodInstancesFromAlternativeName(String name, LocalDate date);
 
     @Query("SELECT food_instance.* FROM food_instance, food_type WHERE frequency = :frequency AND food_instance.foodType = food_type.name AND date = :date")
     public abstract LiveData<List<FoodInstance>> getFoods(Frequency frequency, LocalDate date);

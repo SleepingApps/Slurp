@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import java.time.LocalDate;
+
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FragmentDailyBinding;
@@ -33,7 +35,7 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoods(Frequency.DAILY).observe(requireActivity(), dailyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.DAILY, LocalDate.now()).observe(requireActivity(), dailyFragmentAdapter::submitData);
     }
 
     @Override

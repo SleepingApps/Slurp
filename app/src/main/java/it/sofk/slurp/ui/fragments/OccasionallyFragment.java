@@ -1,6 +1,9 @@
 package it.sofk.slurp.ui.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -8,13 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import java.time.LocalDate;
 
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
-import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FragmentOccasionallyBinding;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
@@ -35,7 +35,7 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
         occasionallyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoods(Frequency.OCCASIONALLY).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.OCCASIONALLY, LocalDate.now()).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
     }
 
     @Override

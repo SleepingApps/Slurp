@@ -14,6 +14,7 @@ import java.util.List;
 
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
+import it.sofk.slurp.database.entity.User;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
@@ -27,12 +28,14 @@ ViewModel extends AndroidViewModel {
     private LiveData<List<FoodType>> foodTypes;
 
     private MutableLiveData<Boolean> weekStarted = new MutableLiveData<>();
+    private LiveData<User> user;
 
 
     public ViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
         foodTypes = repository.getFoodTypes();
+        user = repository.getUser();
         weekStarted.setValue(true);
     }
 
@@ -71,6 +74,14 @@ ViewModel extends AndroidViewModel {
 
     public LiveData<List<FoodDTO>> getFoods(Frequency frequency) {
         return repository.getFoods(frequency, LocalDate.now(), CaloricIntake.CAL_2000);
+    }
+
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate date) {
+        return repository.getFoods(frequency, date, CaloricIntake.CAL_2000);
+    }
+
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate startDate, LocalDate endDate) {
+        return repository.getFoods(frequency, startDate, endDate, CaloricIntake.CAL_2000);
     }
 
     public void update(FoodDTO food){
