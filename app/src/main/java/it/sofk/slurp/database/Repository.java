@@ -77,9 +77,15 @@ public class Repository {
     public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate date, CaloricIntake caloricIntake){
         return foodDao.getFoodDTO(frequency, date, caloricIntake);
     }
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate date){
+        return foodDao.getFoodDTO(frequency, date);
+    }
 
     public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate startDate, LocalDate endDate, CaloricIntake caloricIntake){
         return foodDao.getFoodDTO(frequency, startDate, endDate, caloricIntake);
+    }
+    public LiveData<List<FoodDTO>> getFoods(Frequency frequency, LocalDate startDate, LocalDate endDate){
+        return foodDao.getFoodDTO(frequency, startDate, endDate);
     }
 
     public void update(FoodDTO foodDTO){
