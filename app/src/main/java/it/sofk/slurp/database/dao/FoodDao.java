@@ -30,6 +30,28 @@ public abstract class FoodDao {
             "AND Portion.foodType = food_type.name " +
             "AND food_type.name = food_instance.foodType " +
             "AND food_type.frequency = :frequency " +
+            "AND food_instance.date >= :startDate " +
+            "AND food_instance.date <= :endDate " +
+            "AND Portion.caloricIntake = (SELECT caloricIntake FROM User WHERE id = 0)")
+    public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate startDate, LocalDate endDate);
+
+
+    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
+            "FROM same_portion, food_type, food_instance, Portion " +
+            "WHERE food_type.samePortion = same_portion.alternativeName " +
+            "AND Portion.foodType = food_type.name " +
+            "AND food_type.name = food_instance.foodType " +
+            "AND food_type.frequency = :frequency " +
+            "AND food_instance.date = :date " +
+            "AND Portion.caloricIntake = (SELECT caloricIntake FROM User WHERE id = 0)")
+    public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate date);
+
+    @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
+            "FROM same_portion, food_type, food_instance, Portion " +
+            "WHERE food_type.samePortion = same_portion.alternativeName " +
+            "AND Portion.foodType = food_type.name " +
+            "AND food_type.name = food_instance.foodType " +
+            "AND food_type.frequency = :frequency " +
             "AND food_instance.date = :date " +
             "AND Portion.caloricIntake = :caloricIntake")
     public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate date, CaloricIntake caloricIntake);

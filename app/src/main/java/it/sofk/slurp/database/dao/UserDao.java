@@ -7,6 +7,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.enumeration.CaloricIntake;
 
 @Dao
 public interface UserDao {
@@ -19,4 +20,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM User WHERE id = 0")
     LiveData<User> getUser();
+
+    @Query("SELECT caloricIntake FROM User WHERE id = 0")
+    LiveData<CaloricIntake> getActualCaloricIntake();
 }
