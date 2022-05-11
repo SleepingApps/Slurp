@@ -30,8 +30,7 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getResources().getColor(R.color.purple_200, requireActivity().getTheme()),
-                getResources().getColor(R.color.purple_500, requireActivity().getTheme()));
+        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getActivity());
         weeklyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);

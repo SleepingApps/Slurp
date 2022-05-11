@@ -1,5 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import it.sofk.slurp.dto.FoodDTO;
 
 public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAdapter.ViewHolder> {
 
-    private final int foregroundColor, progressColor;
+    private final Activity activity;
 
     private ClickListener clickListener;
 
@@ -34,9 +35,8 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         }
     });
 
-    public WeeklyFragmentAdapter(int progressColor, int foregroundColor) {
-        this.progressColor = progressColor;
-        this.foregroundColor = foregroundColor;
+    public WeeklyFragmentAdapter(Activity activity) {
+        this.activity = activity;
     }
 
     @NonNull
@@ -55,13 +55,13 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
 
-        holder.binding.progressCircle.initialise(foregroundColor, progressColor, Color.RED, (float)food.getMaxPortions());
+        holder.binding.progressCircle.initialise(activity, (int)food.getMaxPortions());
         holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
-                    food.getMaxPortions());
+                    food.getMaxPortions(), food.getDate());
 
             holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
@@ -73,7 +73,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
 
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() - 0.5,
-                    food.getMaxPortions());
+                    food.getMaxPortions(), food.getDate());
 
             holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 

@@ -1,5 +1,6 @@
 package it.sofk.slurp.ui.controls;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +12,8 @@ import android.view.animation.Transformation;
 
 import androidx.annotation.NonNull;
 
+import it.sofk.slurp.R;
+
 public class ProgressRing extends View {
 
     private Paint foreground;
@@ -19,7 +22,7 @@ public class ProgressRing extends View {
 
     private float currentAngle;
     private float maxProgress;
-    private int strokeWidth = 25;
+    private int strokeWidth;
 
     public ProgressRing(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,6 +50,7 @@ public class ProgressRing extends View {
     }
 
     private void initialise() {
+
         this.foreground = new Paint();
         this.foreground.setColor(Color.BLACK);
         this.outOfBounds = new Paint();
@@ -55,45 +59,26 @@ public class ProgressRing extends View {
         this.progress.setColor(Color.BLUE);
 
         this.maxProgress = 100;
-        this.strokeWidth = 25;
+        this.strokeWidth = 12;
     }
 
     private boolean isOutOfBounds() {
         return currentAngle > 360;
     }
 
-    public void initialise(int foregroundColor,
-                           int progressColor,
-                           int outOfBoundsColor,
-                           int maxProgress,
-                           int strokeWidth) {
+    public void initialise(Activity activity,
+                           int maxProgress) {
         this.foreground = new Paint();
-        this.foreground.setColor(foregroundColor);
+        this.foreground.setColor(getResources().getColor(R.color.purple_200, activity.getTheme()));
         this.outOfBounds = new Paint();
-        this.outOfBounds.setColor(outOfBoundsColor);
+        this.outOfBounds.setColor(Color.RED);
         this.progress = new Paint();
-        this.progress.setColor(progressColor);
+        this.progress.setColor(getResources().getColor(R.color.purple_500, activity.getTheme()));
 
         setPaintStyle();
 
         this.maxProgress = maxProgress;
-        this.strokeWidth = strokeWidth;
-    }
-
-    public void initialise(@NonNull int foregroundColor,
-                           @NonNull int progressColor,
-                           @NonNull int outOfBoundsColor,
-                           float maxProgress) {
-        this.foreground = new Paint();
-        this.foreground.setColor(foregroundColor);
-        this.outOfBounds = new Paint();
-        this.outOfBounds.setColor(outOfBoundsColor);
-        this.progress = new Paint();
-        this.progress.setColor(progressColor);
-        setPaintStyle();
-
-        this.maxProgress = maxProgress;
-        this.strokeWidth = 25;
+        this.strokeWidth = 12;
     }
 
     private void setPaintStyle() {

@@ -20,4 +20,9 @@
         android:name="it.sofk.slurp.ui.fragments.StartWeekFragment"
         android:label="fragment_start_week"
         tools:layout="@layout/fragment_start_week" />
+    <fragment
+        android:id="@+id/foodItemFragment"
+        android:name="it.sofk.slurp.ui.fragments.FoodItemFragment"
+        android:label="fragment_food_item"
+        tools:layout="@layout/fragment_food_item" />
 </navigation>

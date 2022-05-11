@@ -30,6 +30,8 @@ ViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> weekStarted = new MutableLiveData<>();
     private LiveData<User> user;
 
+    private MutableLiveData<FoodDTO> selectedFood = new MutableLiveData<>();
+
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -88,4 +90,7 @@ ViewModel extends AndroidViewModel {
         repository.update(food);
     }
 
+    public MutableLiveData<FoodDTO> getSelectedFood() {
+        return selectedFood;
+    }
 }

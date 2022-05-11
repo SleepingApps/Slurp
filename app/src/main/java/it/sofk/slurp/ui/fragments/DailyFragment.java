@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
@@ -30,12 +34,12 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dailyFragmentAdapter = new DailyFragmentAdapter(getResources().getColor(R.color.purple_200, requireActivity().getTheme()),
-                getResources().getColor(R.color.purple_500, requireActivity().getTheme()));
+        dailyFragmentAdapter = new DailyFragmentAdapter(getActivity());
         dailyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoods(Frequency.DAILY, LocalDate.now()).observe(requireActivity(), dailyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.DAILY, LocalDate.now()).observe(requireActivity(),
+                foodDTOS -> dailyFragmentAdapter.submitData(foodDTOS));
     }
 
     @Override
@@ -47,6 +51,16 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         ((SimpleItemAnimator) binding.dailyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onClick(FoodDTO food) {
+
+        viewModel.getSelectedFood().setValue(food);
+
+        NavHostFragment navFragMain = (NavHostFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.nav_frag_main);
+        navFragMain.getNavController().navigate(R.id.foodItemFragment);
     }
 
     @Override

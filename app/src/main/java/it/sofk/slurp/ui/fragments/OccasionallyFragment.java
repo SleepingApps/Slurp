@@ -30,8 +30,7 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        occasionallyFragmentAdapter = new OccasionallyFragmentAdapter(getResources().getColor(R.color.purple_200, requireActivity().getTheme()),
-                getResources().getColor(R.color.purple_500, requireActivity().getTheme()));
+        occasionallyFragmentAdapter = new OccasionallyFragmentAdapter(getActivity());
         occasionallyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
