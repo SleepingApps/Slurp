@@ -31,6 +31,7 @@ ViewModel extends AndroidViewModel {
 
     private MutableLiveData<FoodDTO> selectedFood = new MutableLiveData<>();
 
+    public int foodFragmentViewPagerPosition = -1;
 
     public ViewModel(@NonNull Application application) {
         super(application);
