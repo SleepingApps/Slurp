@@ -8,11 +8,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.dao.HistoryDao;
 import it.sofk.slurp.database.dao.UserDao;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.database.entity.Week;
 import it.sofk.slurp.dto.FoodDTO;
+import it.sofk.slurp.dto.WeekListItem;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
@@ -20,6 +23,7 @@ public class Repository {
 
     private FoodDao foodDao;
     private UserDao userDao;
+    private HistoryDao historyDao;
     private LiveData<List<FoodType>> foodTypes;
     private LiveData<User> user;
 
@@ -28,6 +32,7 @@ public class Repository {
         Database database = Database.getInstance(application);
         foodDao = database.foodDao();
         userDao = database.userDao();
+        historyDao = database.historyDao();
         foodTypes = foodDao.getFoodTypes();
         user = userDao.getUser();
     }
@@ -90,5 +95,13 @@ public class Repository {
 
     public void update(FoodDTO foodDTO){
         Database.databaseWriteExecutor.execute(() -> foodDao.updateDTO(foodDTO));
+    }
+
+    public void addWeek(LocalDate startDate){
+        Database.databaseWriteExecutor.execute(() -> historyDao.addWeek(new Week(startDate)));
+    }
+
+    public LiveData<List<WeekListItem>> getWeeks(){
+        return historyDao.getWeeks();
     }
 }

@@ -49,7 +49,9 @@ public class StartWeekFragment extends Fragment implements View.OnClickListener 
                         viewModel.insert(new FoodInstance(foodType.getName(), day));
                         day = day.plusDays(1);
                     }
+
                 }
+                viewModel.addWeek(LocalDate.now());
             });
             viewModelShared.setWeekStarted(Boolean.TRUE);
 

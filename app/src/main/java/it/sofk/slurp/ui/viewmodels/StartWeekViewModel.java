@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import it.sofk.slurp.database.Repository;
@@ -31,4 +32,7 @@ public class StartWeekViewModel extends AndroidViewModel {
         repository.insert(foodInstance);
     }
 
+    public void addWeek(LocalDate startDate){
+        repository.addWeek(startDate);
+    }
 }

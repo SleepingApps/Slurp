@@ -13,11 +13,13 @@ import androidx.lifecycle.ViewModelProvider;
 import it.sofk.slurp.database.UserViewModel;
 import it.sofk.slurp.databinding.FragmentProfileBinding;
 import it.sofk.slurp.enumeration.CaloricIntake;
+import it.sofk.slurp.ui.viewmodels.HistoryViewModel;
 
 public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener {
 
     private FragmentProfileBinding binding;
     private UserViewModel userViewModel;
+    private HistoryViewModel historyViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,11 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
             if(user.getHeight() != 0) binding.editTextHeight.setText(String.valueOf(user.getHeight()));
             if(user.getWeight() != 0)binding.editTextWeight.setText(String.valueOf(user.getWeight()));
             binding.seekBarCaloricIntake.setProgress(user.caloricIntake.i - 1);
+        });
+
+        historyViewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
+        historyViewModel.getWeeks().observe(requireActivity(), weekListItems -> {
+            
         });
 
         binding.editTextWeight.setOnFocusChangeListener(this);

@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.sofk.slurp.database.dao.FoodDao;
+import it.sofk.slurp.database.dao.HistoryDao;
 import it.sofk.slurp.database.dao.UserDao;
 import it.sofk.slurp.database.entity.Examples;
 import it.sofk.slurp.database.entity.FoodGroup;
@@ -24,6 +25,7 @@ import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
 import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.database.entity.Week;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.enumeration.MacroGroup;
@@ -35,13 +37,15 @@ import it.sofk.slurp.enumeration.MacroGroup;
         Examples.class,
         Portion.class,
         SamePortion.class,
-        User.class
+        User.class,
+        Week.class
 }, version = 1)
 @TypeConverters({Converters.class})
 public abstract class Database extends RoomDatabase {
 
     public abstract FoodDao foodDao();
     public abstract UserDao userDao();
+    public abstract HistoryDao historyDao();
 
     private static volatile Database INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
