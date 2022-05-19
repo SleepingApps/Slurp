@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#0057C1</color>
-    <color name="purple_500">#0073FF</color>
-    <color name="purple_700">#0073FF</color>
+    <color name="purple_200">#6590C5</color> <!-- Da nessua parte -->
+    <color name="purple_500">#1C82FF</color> <!-- Barra del titolo & accent color -->
+    <color name="purple_700">#0073FF</color> <!-- Barra delle notifche -->
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>

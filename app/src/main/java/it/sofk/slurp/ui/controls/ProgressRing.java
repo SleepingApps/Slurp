@@ -21,8 +21,8 @@ public class ProgressRing extends View {
     private Paint progress;
 
     private float currentAngle;
-    private float maxProgress;
-    private int strokeWidth;
+    private float maxProgress = 100;
+    private int strokeWidth = 15;
 
     public ProgressRing(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,9 +57,6 @@ public class ProgressRing extends View {
         this.outOfBounds.setColor(Color.RED);
         this.progress = new Paint();
         this.progress.setColor(Color.BLUE);
-
-        this.maxProgress = 100;
-        this.strokeWidth = 12;
     }
 
     private boolean isOutOfBounds() {
@@ -69,16 +66,15 @@ public class ProgressRing extends View {
     public void initialise(Activity activity,
                            int maxProgress) {
         this.foreground = new Paint();
-        this.foreground.setColor(getResources().getColor(R.color.purple_200, activity.getTheme()));
+        this.foreground.setColor(getResources().getColor(R.color.purple_500, activity.getTheme()));
         this.outOfBounds = new Paint();
         this.outOfBounds.setColor(Color.RED);
         this.progress = new Paint();
-        this.progress.setColor(getResources().getColor(R.color.purple_500, activity.getTheme()));
+        this.progress.setColor(getResources().getColor(R.color.purple_200, activity.getTheme()));
 
         setPaintStyle();
 
         this.maxProgress = maxProgress;
-        this.strokeWidth = 12;
     }
 
     private void setPaintStyle() {
