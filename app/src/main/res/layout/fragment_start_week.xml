@@ -5,12 +5,14 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.StartWeekFragment" >
+    android:background="@drawable/starting_background"
+    tools:context=".ui.fragments.StartWeekFragment">
 
     <Button
         android:id="@+id/btnStartWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#7A1818"
         android:text="Start Week"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
