@@ -1,7 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.FoodDTO;
 

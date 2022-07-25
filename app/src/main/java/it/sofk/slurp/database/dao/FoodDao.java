@@ -12,6 +12,7 @@ import androidx.room.Update;
 import java.time.LocalDate;
 import java.util.List;
 
+import it.sofk.slurp.database.entity.Examples;
 import it.sofk.slurp.database.entity.FoodGroup;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
@@ -43,7 +44,7 @@ public abstract class FoodDao {
             "AND food_type.name = food_instance.foodType " +
             "AND food_type.frequency = :frequency " +
             "AND food_instance.date = :date " +
-            "AND Portion.caloricIntake = (SELECT caloricIntake FROM User WHERE id = 0)")
+            "AND Portion.caloricIntake IN (SELECT caloricIntake FROM User WHERE id = 0)")
     public abstract LiveData<List<FoodDTO>> getFoodDTO(Frequency frequency, LocalDate date);
 
     @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
@@ -86,6 +87,9 @@ public abstract class FoodDao {
 
     @Insert
     public abstract void insert(SamePortion samePortion);
+
+    @Insert
+    public abstract void insert(Examples example);
 
     @Delete
     public abstract void delete(FoodInstance foodInstance);

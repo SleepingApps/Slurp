@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -299,14 +300,131 @@ public abstract class Database extends RoomDatabase {
                 portions.add(new Portion("Acqua", CaloricIntake.CAL_2000, 8));
                 portions.add(new Portion("Acqua", CaloricIntake.CAL_2500, 10));
 
+                List<Examples> examplesList = new ArrayList<>();
+
+                examplesList.add(new Examples("Pane", "1 panino piccolo"));
+                examplesList.add(new Examples("Pane", "½ ciabattina/francesino/ ferrarese"));
+                examplesList.add(new Examples("Pane", "1 rosetta piccola"));
+                examplesList.add(new Examples("Pane", "1 fetta media di pagnotta/filone"));
+                examplesList.add(new Examples("Pane", "1/5 baguette"));
+
+                examplesList.add(new Examples("Pasta, riso, mais, farro, orzo, ecc.", "4 cucchiai di riso/farro/orzo"));
+                examplesList.add(new Examples("Pasta, riso, mais, farro, orzo, ecc.", "6-8 cucchiai di pastina"));
+
+                examplesList.add(new Examples("Sostituti del pane", "3-4 fette biscottate"));
+                examplesList.add(new Examples("Sostituti del pane", "1 pacchetto di cracker"));
+
+                examplesList.add(new Examples("Prodotti da forno dolci", "1 brioche"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "1 croissant"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "1 cornetto"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "1 fetta di ciambellone"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "1 fetta di crostata"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "2-3 biscotti frollini"));
+                examplesList.add(new Examples("Prodotti da forno dolci", "4-5 biscotti secchi"));
+
+                examplesList.add(new Examples("Cereali per la prima colazione", "6-8 cucchiai rasi di fiocchi di mais semplici"));
+                examplesList.add(new Examples("Cereali per la prima colazione", "5-6 cucchiai rasi di altri cereali dolcificati"));
+                examplesList.add(new Examples("Cereali per la prima colazione", "3 cucchiai rasi di muesli o altri aggregati"));
+
+                examplesList.add(new Examples("Patate", "2 patate piccole"));
+
+                examplesList.add(new Examples("Frutta fresca", "1 frutto medio (mela, pera, arancia, ecc.)"));
+                examplesList.add(new Examples("Frutta fresca", "2 frutti piccoli (albicocche, susine, mandarini, ecc.)"));
+                examplesList.add(new Examples("Frutta fresca", "150g di frutta pronta al consumo"));
+
+                examplesList.add(new Examples("Frutta essiccata/disidratata non zuccherata", "2 cucchiai rasi di uvetta"));
+                examplesList.add(new Examples("Frutta essiccata/disidratata non zuccherata", "2 prugne secche"));
+
+                examplesList.add(new Examples("Verdure fresche", "2-3 pomodori"));
+                examplesList.add(new Examples("Verdure fresche", "3-4 carote"));
+                examplesList.add(new Examples("Verdure fresche", "1 peperone"));
+                examplesList.add(new Examples("Verdure fresche", "1 finocchio"));
+                examplesList.add(new Examples("Verdure fresche", "2 carciofi"));
+                examplesList.add(new Examples("Verdure fresche", "2-3 zucchine"));
+                examplesList.add(new Examples("Verdure fresche", "7-10 ravanelli"));
+                examplesList.add(new Examples("Verdure fresche", "1-2 cipolle"));
+                examplesList.add(new Examples("Verdure fresche", "½ piatto di spinaci o bieta"));
+                examplesList.add(new Examples("Verdure fresche", "½ piatto di broccoli"));
+                examplesList.add(new Examples("Verdure fresche", "½ piatto di cavolfiori"));
+                examplesList.add(new Examples("Verdure fresche", "½ piatto di melanzane"));
+
+                examplesList.add(new Examples("Insalate a foglia", "1 scodella o ciotola grande (da 500ml)"));
+
+                examplesList.add(new Examples("Carne rossa", "1 fettina"));
+                examplesList.add(new Examples("Carne rossa", "1 svizzera (hamburger)"));
+                examplesList.add(new Examples("Carne rossa", "4-5 pezzi di spezzatino"));
+
+                examplesList.add(new Examples("Carne bianca", "1 fetta di petto di pollo o tacchino"));
+                examplesList.add(new Examples("Carne bianca", "1 piccola coscia di pollo"));
+
+                examplesList.add(new Examples("Pesce", "1 piccolo pesce"));
+                examplesList.add(new Examples("Pesce", "1 filetto medio"));
+                examplesList.add(new Examples("Pesce", "3 gamberoni"));
+                examplesList.add(new Examples("Pesce", "20 gamberetti"));
+                examplesList.add(new Examples("Pesce", "25 cozze"));
+
+                examplesList.add(new Examples("Pesce conservato", "1 scatoletta piccola di tonno o sgombro sott’olio o in salamoia"));
+                examplesList.add(new Examples("Pesce conservato", "4-5 fette sottili di salmone affumicato"));
+                examplesList.add(new Examples("Pesce conservato", "½ filetto baccalà"));
+
+                examplesList.add(new Examples("Uova", "1 uovo medio"));
+
+                examplesList.add(new Examples("Legumi freschi, surgelati, ammollati o in scatola", "mezzo piatto"));
+
+                examplesList.add(new Examples("Legumi secchi", "3-4 cucchiai medi"));
+
+                examplesList.add(new Examples("Latte", "1 bicchiere piccolo"));
+                examplesList.add(new Examples("Latte", "½ tazza media o una tazza da cappuccino"));
+
+                examplesList.add(new Examples("Yogurt", "1 vasetto"));
+
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "1 bocconcino piccolo di mozzarella"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Ricotta"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Stracchino"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Provola"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Camembert"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Feta"));
+                examplesList.add(new Examples("Formaggi fino al 25% di grassi", "Caciottina fresca"));
+
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Gorgonzola"));
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Caciotta"));
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Groviera"));
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Parmigiano"));
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Caprini"));
+                examplesList.add(new Examples("Formaggi con più del 25% di grassi", "Pecorini"));
+
+                examplesList.add(new Examples("Olio di oliva", "1 cucchiaio"));
+
+                examplesList.add(new Examples("Oli vegetali", "Mais"));
+                examplesList.add(new Examples("Oli vegetali", "Arachidi"));
+                examplesList.add(new Examples("Oli vegetali", "Girasole"));
+
+                examplesList.add(new Examples("Burro", "½ noce"));
+                examplesList.add(new Examples("Burro", "1 confezione alberghiera"));
+
+                examplesList.add(new Examples("Grassi di origine animale", "Lardo"));
+                examplesList.add(new Examples("Grassi di origine animale", "Strutto"));
+                examplesList.add(new Examples("Grassi di origine animale", "Sugna"));
+                examplesList.add(new Examples("Grassi di origine animale", "Panna"));
+
+                examplesList.add(new Examples("Grassi di origine vegetale", "Margarina"));
+                examplesList.add(new Examples("Grassi di origine vegetale", "Alternative vegetali alla panna"));
+
+                examplesList.add(new Examples("Frutta secca a guscio", "7-8 noci"));
+                examplesList.add(new Examples("Frutta secca a guscio", "15-20 mandorle/ nocciole"));
+                examplesList.add(new Examples("Frutta secca a guscio", "3 cucchiai rasi di arachidi o pinoli o semi di girasole"));
+
+                examplesList.add(new Examples("Acqua", "1 bicchiere medio"));
 
                 FoodDao dao = INSTANCE.foodDao();
 
                 for(FoodGroup foodGroup : foodGroupList) dao.insert(foodGroup);
                 for(SamePortion samePortion : samePortionList) dao.insert(samePortion);
                 for(FoodType foodType : foodTypeList) dao.insert(foodType);
-                //for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
+                for(FoodType foodType : foodTypeList) dao.insert(new FoodInstance(foodType.getName(), LocalDate.now()));
                 for(Portion portion : portions) dao.insert(portion);
+                for(Examples example : examplesList) dao.insert(example);
+
 
                 UserDao userDao = INSTANCE.userDao();
 
