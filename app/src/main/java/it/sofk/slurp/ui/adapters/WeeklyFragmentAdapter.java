@@ -54,7 +54,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         holder.binding.foodimg.setBackgroundResource(foodHelper.image);
         holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
-        holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+        holder.binding.maxPortions.setText("/" + food.getMaxPortions());;
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
