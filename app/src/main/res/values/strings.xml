@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Slurp</string>
-    <string name="menu_item_food">Food</string>
-    <string name="menu_item_profile">Profile</string>
+    <string name="menu_item_food">FOOD</string>
+    <string name="menu_item_profile">PROFILE</string>
     <string name="menu_item_daily">Daily</string>
     <string name="menu_item_weekly">Weekly</string>
     <string name="menu_item_occasionally">Occasionally</string>

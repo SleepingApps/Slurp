@@ -4,6 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/LucaF/StudioProjects/Slurp/app/src/main/res/layout/fragment_profile.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_button.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_food_image.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_menu.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_nav_menu.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_portion_counter.xml" value="0.2355" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_tab.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_tab_item.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_top_menu.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/background_whiteish.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/drawable/menu_background.xml" value="0.2495" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/background_nav_menu.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/food_item.xml" value="0.35379061371841153" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/fragment_daily.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/fragment_food.xml" value="0.25" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/layout/fragment_start_week.xml" value="0.1" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/menu/menu_navigation_food.xml" value="0.25" />
+        <entry key="..\:/Users/raphe/Repos/Slurp/app/src/main/res/menu/menu_navigation_main.xml" value="0.25" />
       </map>
     </option>
   </component>
@@ -50,7 +68,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

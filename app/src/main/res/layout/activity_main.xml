@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_navigation_main" />
+        app:menu="@menu/menu_navigation_main"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_frag_main"

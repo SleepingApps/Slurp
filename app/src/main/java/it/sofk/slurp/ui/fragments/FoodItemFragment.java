@@ -17,7 +17,6 @@ import java.util.List;
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FragmentFoodItemBinding;
-import it.sofk.slurp.databinding.FragmentProfileBinding;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
 
@@ -40,8 +39,6 @@ public class FoodItemFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         viewModel.getSelectedFood().observe(requireActivity(), foodDTO -> {
-            binding.progressRing.initialise(requireActivity(), (int)foodDTO.getMaxPortions());
-            binding.progressRing.setProgress((float)foodDTO.getEatenPortions(), false);
         });
     }
 

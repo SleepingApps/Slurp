@@ -41,7 +41,6 @@ public class FoodFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFoodBinding.inflate(inflater);
-
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         holder = new Holder();
         if (viewModel.foodFragmentViewPagerPosition != -1) {

@@ -55,15 +55,10 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         Objects.requireNonNull(holder).binding.maxPortions.setText("/" + food.getMaxPortions());
 
-        holder.binding.progressCircle.initialise(activity, (int)food.getMaxPortions());
-        holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
-
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
                     food.getMaxPortions(), food.getDate());
-
-            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onPlusClick(newFood);
         });
@@ -74,8 +69,6 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() - 0.5,
                     food.getMaxPortions(), food.getDate());
-
-            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });

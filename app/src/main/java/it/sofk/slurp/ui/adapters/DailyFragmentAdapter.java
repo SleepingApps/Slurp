@@ -1,6 +1,7 @@
 package it.sofk.slurp.ui.adapters;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.FoodDTO;
+import it.sofk.slurp.ui.extra.FoodHelper;
 
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
@@ -47,24 +50,18 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FoodDTO food = listDiffer.getCurrentList().get(position);
+        FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
+        holder.binding.foodimg.setBackgroundResource(foodHelper.image);
+        holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
-
-        holder.binding.progressCircle.initialise(activity, (int)food.getMaxPortions());
-        holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), false);
-
-        holder.binding.getRoot().setOnClickListener((View) -> {
-            if (clickListener != null) clickListener.onClick(food);
-        });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() + 0.5,
                     food.getMaxPortions(), food.getDate());
-
-            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onPlusClick(newFood);
         });
@@ -75,9 +72,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
             FoodDTO newFood = new FoodDTO(food.getName(),
                     food.getEatenPortions() - 0.5,
                     food.getMaxPortions(), food.getDate());
-
-            double newProgress = 360.0 / food.getMaxPortions() * food.getEatenPortions();
-            holder.binding.progressCircle.setProgress((float)food.getEatenPortions(), true);
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });
