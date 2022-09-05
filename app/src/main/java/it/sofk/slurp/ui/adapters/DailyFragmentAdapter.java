@@ -1,8 +1,7 @@
 package it.sofk.slurp.ui.adapters;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,16 +9,16 @@ import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.ui.extra.FoodHelper;
+import it.sofk.slurp.ui.extra.FoodItemResizer;
 
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
-
-    private final Activity activity;
 
     private ClickListener clickListener;
 
@@ -36,10 +35,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
     });
 
-    public DailyFragmentAdapter(Activity activity) {
-        this.activity = activity;
-    }
-
     @NonNull
     @Override
     public DailyFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,6 +44,11 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if (position == 0) {
+            holder.binding.getRoot().setVisibility(View.INVISIBLE);
+            holder.binding.getRoot().setMaxHeight(102);
+            return;
+        }
         FoodDTO food = listDiffer.getCurrentList().get(position);
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
@@ -57,6 +57,13 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+
+        holder.binding.getRoot().setOnClickListener((View) -> {
+            if (holder.resizer.isExpanded())
+                holder.resizer.shrink();
+            else
+                holder.resizer.expand();
+        });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
@@ -83,16 +90,21 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     }
 
     public void submitData(List<FoodDTO> data) {
-        listDiffer.submitList(data);
+        List<FoodDTO> newData = new ArrayList<>();
+        newData.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
+        newData.addAll(data);
+        listDiffer.submitList(newData);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public final FoodItemBinding binding;
+        public final FoodItemResizer resizer;
 
         public ViewHolder(@NonNull FoodItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            resizer = new FoodItemResizer(binding);
         }
     }
 
@@ -101,7 +113,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     }
 
     public interface ClickListener {
-        void onClick(FoodDTO food);
         void onPlusClick(FoodDTO food);
         void onMinusClick(FoodDTO food);
     }
