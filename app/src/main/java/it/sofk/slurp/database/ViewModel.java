@@ -41,6 +41,11 @@ ViewModel extends AndroidViewModel {
         weekStarted.setValue(true);
     }
 
+    public List<String> getExamples(FoodDTO foodDTO){
+        String equivalentName = foodDTO.getName();
+        return repository.getExamples(equivalentName);
+    }
+
     public void setWeekStarted(boolean weekStarted){
         this.weekStarted.setValue(weekStarted);
     }

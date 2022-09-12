@@ -25,6 +25,11 @@ import it.sofk.slurp.enumeration.Frequency;
 @Dao
 public abstract class FoodDao {
 
+    @Query("SELECT example " +
+            "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
+            "WHERE food_type.samePortion = :equivalentName")
+    public abstract List<String> getExamples(String equivalentName);
+
     @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
             "FROM same_portion, food_type, food_instance, Portion " +
             "WHERE food_type.samePortion = same_portion.alternativeName " +

@@ -37,6 +37,10 @@ public class Repository {
         user = userDao.getUser();
     }
 
+    public List<String> getExamples(String equivalentName){
+        return foodDao.getExamples(equivalentName);
+    }
+
     public LiveData<User> getUser(){
         return user;
     }
