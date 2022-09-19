@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
@@ -25,16 +28,20 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
     private FragmentWeeklyBinding binding;
     private ViewModel viewModel;
     private WeeklyFragmentAdapter weeklyFragmentAdapter;
+    public static final FoodDTO spaceHolder = new FoodDTO("spaceHolder", 0.1,0.0, LocalDate.now());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getActivity());
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
+
+        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getActivity(), viewModel);
         weeklyFragmentAdapter.setClickListener(this);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(), weeklyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(), foodDTOS -> {
+            weeklyFragmentAdapter.submitData(foodDTOS);
+        });
     }
 
     @Override
@@ -44,7 +51,6 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
         binding.weeklyRecyclerview.setLayoutManager(layout);
         binding.weeklyRecyclerview.setAdapter(weeklyFragmentAdapter);
         ((SimpleItemAnimator) binding.weeklyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
-
         return binding.getRoot();
     }
 

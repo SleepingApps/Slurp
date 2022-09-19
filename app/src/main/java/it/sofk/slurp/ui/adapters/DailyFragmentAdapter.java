@@ -104,7 +104,7 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         public ViewHolder(@NonNull FoodItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-            resizer = new FoodItemResizer(binding);
+            this.resizer = new FoodItemResizer(binding);
         }
     }
 

@@ -2,23 +2,30 @@ package it.sofk.slurp.ui.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.ui.extra.FoodHelper;
+import it.sofk.slurp.ui.extra.FoodItemResizer;
+import it.sofk.slurp.ui.fragments.WeeklyFragment;
 
 public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAdapter.ViewHolder> {
 
     private final Activity activity;
-
+    private ViewModel viewModel;
     private ClickListener clickListener;
 
     private final AsyncListDiffer<FoodDTO> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
@@ -34,8 +41,9 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         }
     });
 
-    public WeeklyFragmentAdapter(Activity activity) {
+    public WeeklyFragmentAdapter(Activity activity, ViewModel viewModel) {
         this.activity = activity;
+        this.viewModel = viewModel;
     }
 
     @NonNull
@@ -47,14 +55,32 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodDTO food = listDiffer.getCurrentList().get(position);
+        List<FoodDTO> list = listDiffer.getCurrentList();
+        FoodDTO food = list.get(position);
+
+        if (holder.getAdapterPosition() == 0) {
+            holder.setIsRecyclable(false);
+            holder.binding.getRoot().setVisibility(View.INVISIBLE);
+            holder.binding.getRoot().setMaxHeight(103);
+            return;
+        }
+
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
-        holder.binding.foodimg.setBackgroundResource(foodHelper.image);
-        holder.binding.ellipse.setPaint(foodHelper.color);
+        if (foodHelper != null) {
+            holder.binding.foodimg.setBackgroundResource(foodHelper.image);
+            holder.binding.ellipse.setPaint(foodHelper.color);
+        }
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
-        holder.binding.maxPortions.setText("/" + food.getMaxPortions());;
+        holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+
+        holder.binding.getRoot().setOnClickListener((View) -> {
+            if (holder.resizer.isExpanded())
+                holder.resizer.shrink();
+            else
+                holder.resizer.expand();
+        });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
             FoodDTO newFood = new FoodDTO(food.getName(),
@@ -81,22 +107,21 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
     }
 
     public void submitData(List<FoodDTO> data) {
-        for (FoodDTO food : data) {
-            System.out.println(food.getName());
-        }
+        data.add(0, WeeklyFragment.spaceHolder);
         listDiffer.submitList(data);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public final FoodItemBinding binding;
+        public final FoodItemResizer resizer;
 
         public ViewHolder(@NonNull FoodItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            this.resizer = new FoodItemResizer(binding);
         }
     }
-
 
     public void setClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
