@@ -41,7 +41,7 @@ ViewModel extends AndroidViewModel {
         weekStarted.setValue(true);
     }
 
-    public List<String> getExamples(FoodDTO foodDTO){
+    public LiveData<List<String>> getExamples(FoodDTO foodDTO){
         String equivalentName = foodDTO.getName();
         return repository.getExamples(equivalentName);
     }
