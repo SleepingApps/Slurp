@@ -18,6 +18,7 @@ import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
+import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
@@ -25,10 +26,10 @@ import it.sofk.slurp.enumeration.Frequency;
 @Dao
 public abstract class FoodDao {
 
-    @Query("SELECT example " +
+    @Query("SELECT food_type.samePortion as food, food_type.name ,Examples.example " +
             "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
-            "WHERE food_type.samePortion = :equivalentName")
-    public abstract LiveData<List<String>> getExamples(String equivalentName);
+            "WHERE food_type.frequency = :frequency ")
+    public abstract LiveData<List<ExampleDTO>> getExamples(Frequency frequency);
 
     @Query("SELECT DISTINCT alternativeName as name, food_instance.portionConsumed as eatenPortions, Portion.numberOf as maxPortions, food_instance.date as date " +
             "FROM same_portion, food_type, food_instance, Portion " +

@@ -15,6 +15,7 @@ import java.util.List;
 import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;
+import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.Frequency;
 
@@ -41,9 +42,8 @@ ViewModel extends AndroidViewModel {
         weekStarted.setValue(true);
     }
 
-    public LiveData<List<String>> getExamples(FoodDTO foodDTO){
-        String equivalentName = foodDTO.getName();
-        return repository.getExamples(equivalentName);
+    public LiveData<List<ExampleDTO>> getExamples(Frequency frequency){
+        return repository.getExamples(frequency);
     }
 
     public void setWeekStarted(boolean weekStarted){

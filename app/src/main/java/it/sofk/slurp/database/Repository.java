@@ -14,6 +14,7 @@ import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;
 import it.sofk.slurp.database.entity.Week;
+import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.dto.WeekListItem;
 import it.sofk.slurp.enumeration.CaloricIntake;
@@ -37,8 +38,8 @@ public class Repository {
         user = userDao.getUser();
     }
 
-    public LiveData<List<String>> getExamples(String equivalentName){
-        return foodDao.getExamples(equivalentName);
+    public LiveData<List<ExampleDTO>> getExamples(Frequency frequency){
+        return foodDao.getExamples(frequency);
     }
 
     public LiveData<User> getUser(){
