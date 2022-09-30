@@ -36,7 +36,7 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
 
-        weeklyFragmentAdapter = new WeeklyFragmentAdapter(getActivity(), viewModel);
+        weeklyFragmentAdapter = new WeeklyFragmentAdapter();
         weeklyFragmentAdapter.setClickListener(this);
 
         viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(), foodDTOS -> {

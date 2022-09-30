@@ -53,6 +53,8 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
+        if (position % 2 == 0)
+            holder.binding.textView8.setText("asdsadddddddddddddddddddddddddddddddddddddd");
         holder.binding.foodimg.setBackgroundResource(foodHelper.image);
         holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));

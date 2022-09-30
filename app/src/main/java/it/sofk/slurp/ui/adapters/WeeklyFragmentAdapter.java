@@ -24,8 +24,6 @@ import it.sofk.slurp.ui.fragments.WeeklyFragment;
 
 public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAdapter.ViewHolder> {
 
-    private final Activity activity;
-    private ViewModel viewModel;
     private ClickListener clickListener;
 
     private final AsyncListDiffer<FoodDTO> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
@@ -40,11 +38,6 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
                     && oldItem.getEatenPortions() == newItem.getEatenPortions();
         }
     });
-
-    public WeeklyFragmentAdapter(Activity activity, ViewModel viewModel) {
-        this.activity = activity;
-        this.viewModel = viewModel;
-    }
 
     @NonNull
     @Override
