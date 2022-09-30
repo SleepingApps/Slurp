@@ -84,6 +84,7 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });
+        //s
     }
 
     @Override
