@@ -13,14 +13,12 @@ import it.sofk.slurp.databinding.FoodItemBinding;
 
 public class FoodItemResizer {
 
-    private FoodItemBinding binding;
-    private static int COMPACT_SIZE = 0;
-    private int expandedSize = -1, compactSize = -1;
+    private final FoodItemBinding binding;
+    private int compactSize = -1;
     private boolean expanded;
 
     public FoodItemResizer(FoodItemBinding binding) {
         this.binding = binding;
-        FoodItemResizer.COMPACT_SIZE = getDP(148);
     }
 
     public boolean isExpanded() {
@@ -66,19 +64,10 @@ public class FoodItemResizer {
         return fullSize;
     }
 
-    public int getDP(int pixels) {
-        Resources resources = binding.getRoot().getContext().getResources();
-        int dp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                pixels,
-                resources.getDisplayMetrics());
-        return dp;
-    }
-
     private ValueAnimator getSizeAnimator(int startSize, int finalSize) {
         ValueAnimator animator = ValueAnimator.ofInt(startSize, finalSize).setDuration(200);
         animator.addUpdateListener(animation -> {
-            Integer value = (Integer) animation.getAnimatedValue();
-            binding.getRoot().getLayoutParams().height = value;
+            binding.getRoot().getLayoutParams().height = (Integer) animation.getAnimatedValue();
             binding.getRoot().requestLayout();
         });
         return animator;
