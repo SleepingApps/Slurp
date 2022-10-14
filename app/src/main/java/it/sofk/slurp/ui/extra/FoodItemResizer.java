@@ -55,8 +55,8 @@ public class FoodItemResizer {
     }
 
     private int getItemCompleteSize() {
-        int fullSize = binding.ellipse.getMeasuredHeight()
-                + binding.textView8.getMeasuredHeight() + 45;
+        int fullSize = binding.getRoot().getMeasuredHeight()
+                + binding.textView8.getMeasuredHeight();
 
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.textView8.getLayoutParams();
         fullSize += params.topMargin + params.bottomMargin;
