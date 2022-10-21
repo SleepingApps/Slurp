@@ -26,7 +26,7 @@ import it.sofk.slurp.enumeration.Frequency;
 @Dao
 public abstract class FoodDao {
 
-    @Query("SELECT food_type.samePortion as food, food_type.name ,Examples.example " +
+    @Query("SELECT food_type.samePortion as foodName, food_type.name as foodType ,Examples.example " +
             "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
             "WHERE food_type.frequency = :frequency ")
     public abstract LiveData<List<ExampleDTO>> getExamples(Frequency frequency);
