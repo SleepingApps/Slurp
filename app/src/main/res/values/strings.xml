@@ -21,4 +21,10 @@
     <string name="default_data">01 Gennaio 1900</string>
     <string name="text_saparator">-</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="basso_title">BASSO</string>
+    <string name="basso_info">1500 kcal</string>
+    <string name="medio_title">MEDIO</string>
+    <string name="medio_info">2000 kcal</string>
+    <string name="alto_title">ALTO</string>
+    <string name="alto_info">2500 kcal</string>
 </resources>
