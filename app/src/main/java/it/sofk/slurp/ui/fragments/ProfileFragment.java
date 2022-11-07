@@ -17,7 +17,7 @@ import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.ui.adapters.HistoryAdapter;
 import it.sofk.slurp.ui.viewmodels.HistoryViewModel;
 
-public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChangeListener {
+public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
     private FragmentProfileBinding binding;
     private UserViewModel userViewModel;
@@ -33,6 +33,7 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater);
         binding.seekBarCaloricIntake.setOnSeekBarChangeListener(this);
+        binding.btnResetWeek.setOnClickListener(this);
 
         historyAdapter = new HistoryAdapter();
 
@@ -65,4 +66,12 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == binding.btnResetWeek.getId()){
+            userViewModel.resetWeek();
+        }
+    }
+
 }

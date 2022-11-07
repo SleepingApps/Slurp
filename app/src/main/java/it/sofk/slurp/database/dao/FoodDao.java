@@ -18,6 +18,7 @@ import it.sofk.slurp.database.entity.FoodInstance;
 import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.Portion;
 import it.sofk.slurp.database.entity.SamePortion;
+import it.sofk.slurp.database.entity.Week;
 import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.enumeration.CaloricIntake;
@@ -25,6 +26,20 @@ import it.sofk.slurp.enumeration.Frequency;
 
 @Dao
 public abstract class FoodDao {
+
+    @Transaction
+    public void deleteWeekAndFoodFromDay(LocalDate day){
+        Week lastWeek = selectLastWeek();
+        LocalDate startWeek = lastWeek.startDate;
+        LocalDate endWeek = startWeek.plusDays(7);
+        if(day.isBefore(endWeek) && day.isAfter(startWeek.minusDays(1))){
+            delete(lastWeek);
+            deleteFoodInstancesFromDayInterval(startWeek, endWeek.minusDays(1));
+        }
+    }
+
+    @Query("SELECT Max(Week.startDate) as startDate FROM Week")
+    protected abstract Week selectLastWeek();
 
     @Query("SELECT food_type.samePortion as foodName, food_type.name as foodType ,Examples.example " +
             "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
@@ -99,6 +114,12 @@ public abstract class FoodDao {
 
     @Delete
     public abstract void delete(FoodInstance foodInstance);
+
+    @Query("DELETE FROM food_instance WHERE date <= :endDay AND date >= :startDay")
+    public abstract void deleteFoodInstancesFromDayInterval(LocalDate startDay, LocalDate endDay);
+
+    @Delete
+    public abstract void delete(Week week);
 
     @Update
     public abstract void update(FoodInstance foodInstance);

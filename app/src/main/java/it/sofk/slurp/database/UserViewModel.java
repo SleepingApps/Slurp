@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.time.LocalDate;
+
 import it.sofk.slurp.database.entity.User;
 import it.sofk.slurp.enumeration.CaloricIntake;
 
@@ -55,4 +57,8 @@ public class UserViewModel extends AndroidViewModel {
         repository.update(newUser);
     }
 
+    public void resetWeek(){
+        LocalDate today = LocalDate.now();
+        repository.deleteWeek(today);
+    }
 }

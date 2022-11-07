@@ -38,6 +38,10 @@ public class Repository {
         user = userDao.getUser();
     }
 
+    public void deleteWeek(LocalDate day) {
+        Database.databaseWriteExecutor.execute(() -> foodDao.deleteWeekAndFoodFromDay(day));
+    }
+
     public LiveData<List<ExampleDTO>> getExamples(Frequency frequency){
         return foodDao.getExamples(frequency);
     }
