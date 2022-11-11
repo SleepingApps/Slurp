@@ -40,14 +40,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         viewModel.getFoodInstances().observe(this, foodInstances -> {
             if(foodInstances.size() == 0) {
                 viewModelShared.setWeekStarted(false);
-                navController.navigate(R.id.startWeekFragment);
+                if(binding.navViewMain.getMenu().getItem(0).isChecked())
+                    navController.navigate(R.id.startWeekFragment);
             }
         });
         viewModelShared.getWeekStarted().observe(this, weekStarted -> {
-            if(weekStarted) {
-                navController.navigate(R.id.foodFragment);
-            }else{
-                navController.navigate(R.id.startWeekFragment);
+            if (binding.navViewMain.getMenu().getItem(0).isChecked()){
+                if (weekStarted) {
+                    navController.navigate(R.id.foodFragment);
+                } else {
+                    navController.navigate(R.id.startWeekFragment);
+                }
             }
         });
 
