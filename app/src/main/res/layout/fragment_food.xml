@@ -13,22 +13,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/foodMenu" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/foodMenu"
         android:layout_width="0dp"
         android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/background_tab"
+        android:background="@color/accent_200"
+        android:paddingBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/food_viewpager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicator="@drawable/background_tab_item"
-        app:tabIndicatorColor="@color/accent_500"
-        app:tabIndicatorGravity="stretch"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicator="@drawable/background_tab_indicator"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="2dp"
         app:tabSelectedTextColor="@color/black">
 
         <com.google.android.material.tabs.TabItem

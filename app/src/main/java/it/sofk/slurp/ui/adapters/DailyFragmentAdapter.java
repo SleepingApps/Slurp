@@ -14,15 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.sofk.slurp.databinding.FoodItemBinding;
+import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.ui.extra.FoodHelper;
 import it.sofk.slurp.ui.extra.FoodItemResizer;
+import it.sofk.slurp.ui.extra.FoodPortion;
 
 public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdapter.ViewHolder> {
 
     private ClickListener clickListener;
 
-    private final AsyncListDiffer<FoodDTO> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
+    private final AsyncListDiffer<FoodDTO> foodList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
         @Override
         public boolean areItemsTheSame(@NonNull FoodDTO oldItem, @NonNull FoodDTO newItem) {
             return oldItem.getName().equals(newItem.getName());
@@ -35,6 +37,18 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
     });
 
+    private final AsyncListDiffer<ExampleDTO> examplesList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<ExampleDTO>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull ExampleDTO oldItem, @NonNull ExampleDTO newItem) {
+            return oldItem == newItem;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull ExampleDTO oldItem, @NonNull ExampleDTO newItem) {
+            return oldItem.getExample().equals(newItem.getExample());
+        }
+    });
+
     @NonNull
     @Override
     public DailyFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,21 +58,27 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position == 0) {
+        if (position == foodList.getCurrentList().size()-1) {
             holder.binding.getRoot().setVisibility(View.INVISIBLE);
-            holder.binding.getRoot().setMaxHeight(102);
+            holder.binding.getRoot().setMaxHeight(80);
             return;
         }
-        FoodDTO food = listDiffer.getCurrentList().get(position);
+
+        FoodDTO food = foodList.getCurrentList().get(position);
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
-        if (position % 2 == 0)
-            holder.binding.textView8.setText("asdsadddddddddddddddddddddddddddddddddddddd");
+        holder.binding.foodDesc.setText(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()));
+
         holder.binding.foodimg.setBackgroundResource(foodHelper.image);
         holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
         holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+
+        if (holder.resizer.isExpanded()) {
+            int completeSize = holder.resizer.getItemCompleteSize();
+            holder.binding.getRoot().getLayoutParams().height = completeSize;
+        }
 
         holder.binding.getRoot().setOnClickListener((View) -> {
             if (holder.resizer.isExpanded())
@@ -84,19 +104,20 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
             if (clickListener != null) clickListener.onMinusClick(newFood);
         });
-        //s
     }
 
     @Override
     public int getItemCount() {
-        return listDiffer.getCurrentList().size();
+        return foodList.getCurrentList().size();
     }
 
-    public void submitData(List<FoodDTO> data) {
-        List<FoodDTO> newData = new ArrayList<>();
-        newData.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
-        newData.addAll(data);
-        listDiffer.submitList(newData);
+    public void submitFood(List<FoodDTO> data) {
+        data.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
+        foodList.submitList(data);
+    }
+
+    public void submitExamples(List<ExampleDTO> data) {
+        examplesList.submitList(data);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

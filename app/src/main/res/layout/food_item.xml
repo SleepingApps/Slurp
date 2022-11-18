@@ -8,8 +8,8 @@
     android:layout_height="148dp"
     android:background="@drawable/background_food_item"
     android:elevation="1dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="4dp"
     android:layout_marginEnd="14dp"
     android:layout_marginStart="14dp"
     android:paddingTop="16dp"
@@ -135,15 +135,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/food_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="8dp"
         android:alpha="0"
-        android:text="qwertyuiopasdfghjklzxcvbnmqwqwertyuiopasdfghjklzxcvbnmqwqwertyuiopasdfghjklzxcvbnmqwqwertyuiopasdfghjklzxcvbnmqwqwertyuiopasdfghjklzxcvbnmqw"
+        android:text=""
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/roba_caso"

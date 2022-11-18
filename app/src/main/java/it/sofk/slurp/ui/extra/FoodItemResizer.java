@@ -3,8 +3,6 @@ package it.sofk.slurp.ui.extra;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
-import android.content.res.Resources;
-import android.util.TypedValue;
 import android.view.animation.LinearInterpolator;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,7 +12,8 @@ import it.sofk.slurp.databinding.FoodItemBinding;
 public class FoodItemResizer {
 
     private final FoodItemBinding binding;
-    private int compactSize = -1;
+    public int compactSize = -1;
+    public int expandedSize = -1;
     private boolean expanded;
 
     public FoodItemResizer(FoodItemBinding binding) {
@@ -29,9 +28,11 @@ public class FoodItemResizer {
         if (compactSize == -1)
             compactSize = binding.getRoot().getHeight();
 
-        int fullSize = getItemCompleteSize();
+        if (expandedSize == -1)
+            expandedSize = getItemCompleteSize();
 
-        ValueAnimator animator = getSizeAnimator(binding.getRoot().getHeight(), fullSize);
+
+        ValueAnimator animator = getSizeAnimator(binding.getRoot().getHeight(), expandedSize);
         AnimatorSet set = getAnimatorSet(animator);
         set.start();
         binding.getRoot().setElevation(6);
@@ -54,11 +55,15 @@ public class FoodItemResizer {
         alphaSet.start();
     }
 
-    private int getItemCompleteSize() {
+    public int getItemCompleteSize() {
         int fullSize = binding.getRoot().getMeasuredHeight()
-                + binding.textView8.getMeasuredHeight();
+                + binding.foodDesc.getMeasuredHeight();
 
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.textView8.getLayoutParams();
+        fullSize = binding.foodDesc.getLineCount() * binding.foodDesc.getLineHeight();
+
+        fullSize += binding.getRoot().getHeight() - 10;
+
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.foodDesc.getLayoutParams();
         fullSize += params.topMargin + params.bottomMargin;
 
         return fullSize;
@@ -77,8 +82,8 @@ public class FoodItemResizer {
         ValueAnimator animator = ValueAnimator.ofFloat(startAlpha, finalAlpha).setDuration(80);
         animator.addUpdateListener(animation -> {
             Float value = (Float) animation.getAnimatedValue();
-            binding.textView8.setAlpha(value);
-            binding.textView8.requestLayout();
+            binding.foodDesc.setAlpha(value);
+            binding.foodDesc.requestLayout();
         });
         return animator;
     }

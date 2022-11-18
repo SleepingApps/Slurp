@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#DAB600</color> <!-- Da nessua parte -->
-    <color name="purple_500">#1C82FF</color> <!-- Barra del titolo & accent color -->
+    <color name="purple_200">#FF0018</color> <!-- Da nessua parte -->
+    <color name="purple_500">#FF0019</color> <!-- Barra del titolo & accent color -->
     <color name="purple_700">#0073FF</color> <!-- Barra delle notifche -->
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="accent_200">#5BA2E1</color>
-    <color name="accent_500">#088AFD</color>
+    <color name="accent_200">#5A86EB</color>
+    <color name="accent_500">#1241A6</color>
 </resources>

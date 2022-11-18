@@ -16,11 +16,13 @@ import it.sofk.slurp.databinding.FragmentProfileBinding;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.ui.adapters.HistoryAdapter;
 import it.sofk.slurp.ui.viewmodels.HistoryViewModel;
+import it.sofk.slurp.ui.viewmodels.MainActivityViewModel;
 
 public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
     private FragmentProfileBinding binding;
     private UserViewModel userViewModel;
+    private MainActivityViewModel mainViewModel;
     private HistoryViewModel historyViewModel;
     private HistoryAdapter historyAdapter;
 
@@ -41,6 +43,7 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
         userViewModel.getUserInformation().observe(requireActivity(), user -> {
             binding.seekBarCaloricIntake.setProgress(user.caloricIntake.i - 1);
         });
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
 
         historyViewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
         historyViewModel.getWeeks().observe(requireActivity(), historyAdapter::submitData);

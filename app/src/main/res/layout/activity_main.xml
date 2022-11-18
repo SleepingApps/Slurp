@@ -13,6 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/background_bottom_nav"
         app:menu="@menu/menu_navigation_main"/>
 
     <androidx.fragment.app.FragmentContainerView
@@ -21,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view_main"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_view_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
