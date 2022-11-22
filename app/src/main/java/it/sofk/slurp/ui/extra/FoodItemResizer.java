@@ -3,6 +3,8 @@ package it.sofk.slurp.ui.extra;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import android.view.animation.LinearInterpolator;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,7 +28,7 @@ public class FoodItemResizer {
 
     public void expand() {
         if (compactSize == -1)
-            compactSize = binding.getRoot().getHeight();
+            compactSize = getDP(148);
 
         if (expandedSize == -1)
             expandedSize = getItemCompleteSize();
@@ -56,15 +58,12 @@ public class FoodItemResizer {
     }
 
     public int getItemCompleteSize() {
-        int fullSize = binding.getRoot().getMeasuredHeight()
-                + binding.foodDesc.getMeasuredHeight();
-
-        fullSize = binding.foodDesc.getLineCount() * binding.foodDesc.getLineHeight();
-
-        fullSize += binding.getRoot().getHeight() - 10;
-
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) binding.foodDesc.getLayoutParams();
-        fullSize += params.topMargin + params.bottomMargin;
+        int fullSize = compactSize;
+        {
+            fullSize += binding.foodDesc.getLineCount() * binding.foodDesc.getLineHeight();
+            ConstraintLayout.LayoutParams foodDescLayoutParams = (ConstraintLayout.LayoutParams) binding.foodDesc.getLayoutParams();
+            fullSize += foodDescLayoutParams.topMargin + foodDescLayoutParams.bottomMargin;
+        }
 
         return fullSize;
     }
@@ -93,5 +92,12 @@ public class FoodItemResizer {
         set.play(animator);
         set.setInterpolator(new LinearInterpolator());
         return set;
+    }
+
+    public int getDP(int pixels) {
+        Resources resources = binding.getRoot().getContext().getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                pixels,
+                resources.getDisplayMetrics());
     }
 }
