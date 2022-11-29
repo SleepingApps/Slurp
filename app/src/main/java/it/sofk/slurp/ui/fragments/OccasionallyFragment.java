@@ -30,16 +30,21 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        occasionallyFragmentAdapter = new OccasionallyFragmentAdapter(getActivity());
+        occasionallyFragmentAdapter = new OccasionallyFragmentAdapter();
         occasionallyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.getFoods(Frequency.OCCASIONALLY, LocalDate.now()).observe(requireActivity(), occasionallyFragmentAdapter::submitData);
+        viewModel.getFoods(Frequency.OCCASIONALLY, LocalDate.now()).observe(requireActivity(),
+                foodDTOS -> occasionallyFragmentAdapter.submitFood(foodDTOS));
+
+        viewModel.getExamples(Frequency.OCCASIONALLY).observe(requireActivity(),
+                exampleDTOS -> occasionallyFragmentAdapter.submitExamples(exampleDTOS));
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOccasionallyBinding.inflate(inflater);
+
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         binding.occasionallyRecyclerview.setLayoutManager(layout);
         binding.occasionallyRecyclerview.setAdapter(occasionallyFragmentAdapter);

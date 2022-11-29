@@ -39,18 +39,22 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
         weeklyFragmentAdapter = new WeeklyFragmentAdapter();
         weeklyFragmentAdapter.setClickListener(this);
 
-        viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(), foodDTOS -> {
-            weeklyFragmentAdapter.submitData(foodDTOS);
-        });
+        viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(),
+                foodDTOS -> weeklyFragmentAdapter.submitFood(foodDTOS));
+
+        viewModel.getExamples(Frequency.WEEKLY).observe(requireActivity(),
+                exampleDTOS -> weeklyFragmentAdapter.submitExamples(exampleDTOS));
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentWeeklyBinding.inflate(inflater);
+
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         binding.weeklyRecyclerview.setLayoutManager(layout);
         binding.weeklyRecyclerview.setAdapter(weeklyFragmentAdapter);
         ((SimpleItemAnimator) binding.weeklyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
+
         return binding.getRoot();
     }
 

@@ -11,20 +11,22 @@ import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 import it.sofk.slurp.databinding.FoodItemBinding;
+import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
+import it.sofk.slurp.ui.extra.FoodHelper;
 import it.sofk.slurp.ui.extra.FoodItemResizer;
+import it.sofk.slurp.ui.extra.FoodPortion;
 
 public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<OccasionallyFragmentAdapter.ViewHolder> {
 
-    private final Activity activity;
-
     private ClickListener clickListener;
 
-    private final AsyncListDiffer<FoodDTO> listDiffer = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
+    private final AsyncListDiffer<FoodDTO> foodList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
         @Override
         public boolean areItemsTheSame(@NonNull FoodDTO oldItem, @NonNull FoodDTO newItem) {
             return oldItem.getName().equals(newItem.getName());
@@ -37,9 +39,17 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
         }
     });
 
-    public OccasionallyFragmentAdapter(Activity activity) {
-        this.activity = activity;
-    }
+    private final AsyncListDiffer<ExampleDTO> examplesList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<ExampleDTO>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull ExampleDTO oldItem, @NonNull ExampleDTO newItem) {
+            return oldItem == newItem;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull ExampleDTO oldItem, @NonNull ExampleDTO newItem) {
+            return oldItem.getExample().equals(newItem.getExample());
+        }
+    });
 
     @NonNull
     @Override
@@ -50,16 +60,27 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        FoodDTO food = listDiffer.getCurrentList().get(position);
-        if (position == 0) {
+        if (position == foodList.getCurrentList().size()-1) {
             holder.binding.getRoot().setVisibility(View.INVISIBLE);
-            holder.binding.getRoot().setMaxHeight(102);
+            holder.binding.getRoot().setMaxHeight(80);
             return;
         }
 
+        FoodDTO food = foodList.getCurrentList().get(position);
+        FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
+
         holder.binding.foodItemTitle.setText(food.getName());
+        holder.binding.foodDesc.setText(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()));
+
+        holder.binding.foodimg.setBackgroundResource(foodHelper.image);
+        holder.binding.ellipse.setPaint(foodHelper.color);
         holder.binding.eatenPortions.setText(String.valueOf(food.getEatenPortions()));
-        Objects.requireNonNull(holder).binding.maxPortions.setText("/" + food.getMaxPortions());
+        holder.binding.maxPortions.setText("/" + food.getMaxPortions());
+
+        if (holder.resizer.isExpanded()) {
+            int completeSize = holder.resizer.getItemCompleteSize();
+            holder.binding.getRoot().getLayoutParams().height = completeSize;
+        }
 
         holder.binding.getRoot().setOnClickListener((View) -> {
             if (holder.resizer.isExpanded())
@@ -89,11 +110,16 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
 
     @Override
     public int getItemCount() {
-        return listDiffer.getCurrentList().size();
+        return foodList.getCurrentList().size();
     }
 
-    public void submitData(List<FoodDTO> data) {
-        listDiffer.submitList(data);
+    public void submitFood(List<FoodDTO> data) {
+        data.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
+        foodList.submitList(data);
+    }
+
+    public void submitExamples(List<ExampleDTO> data) {
+        examplesList.submitList(data);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,7 +133,6 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
             this.resizer = new FoodItemResizer(binding);
         }
     }
-
 
     public void setClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
