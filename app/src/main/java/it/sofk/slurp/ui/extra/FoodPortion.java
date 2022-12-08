@@ -35,7 +35,6 @@ public class FoodPortion {
             }
         }
 
-
         return description.substring(0, description.length()-1);
     }
 }

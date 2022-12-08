@@ -27,8 +27,7 @@ public class FoodItemFragment extends Fragment {
     FragmentFoodItemBinding binding;
     ViewModel viewModel;
 
-    public FoodItemFragment() {
-    }
+    public FoodItemFragment() { }
 
     public static FoodItemFragment newInstance(String param1, String param2) {
         return new FoodItemFragment();

@@ -62,12 +62,6 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position == foodList.getCurrentList().size()-1) {
-            holder.binding.getRoot().setVisibility(View.INVISIBLE);
-            holder.binding.getRoot().setMaxHeight(80);
-            return;
-        }
-
         FoodDTO food = foodList.getCurrentList().get(position);
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
@@ -116,7 +110,6 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
     }
 
     public void submitFood(List<FoodDTO> data) {
-        data.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
         foodList.submitList(data);
     }
 

@@ -35,7 +35,6 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         viewModel.getFoods(Frequency.DAILY, LocalDate.now()).observe(requireActivity(),
                 foodDTOS -> dailyFragmentAdapter.submitFood(foodDTOS));
-
         viewModel.getExamples(Frequency.DAILY).observe(requireActivity(),
                 exampleDTOS -> dailyFragmentAdapter.submitExamples(exampleDTOS));
     }

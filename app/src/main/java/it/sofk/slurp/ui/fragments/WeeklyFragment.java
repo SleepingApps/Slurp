@@ -28,20 +28,17 @@ public class WeeklyFragment extends Fragment implements WeeklyFragmentAdapter.Cl
     private FragmentWeeklyBinding binding;
     private ViewModel viewModel;
     private WeeklyFragmentAdapter weeklyFragmentAdapter;
-    public static final FoodDTO spaceHolder = new FoodDTO("spaceHolder", 0.1,0.0, LocalDate.now());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-
         weeklyFragmentAdapter = new WeeklyFragmentAdapter();
         weeklyFragmentAdapter.setClickListener(this);
 
+        viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         viewModel.getFoods(Frequency.WEEKLY, LocalDate.now()).observe(requireActivity(),
                 foodDTOS -> weeklyFragmentAdapter.submitFood(foodDTOS));
-
         viewModel.getExamples(Frequency.WEEKLY).observe(requireActivity(),
                 exampleDTOS -> weeklyFragmentAdapter.submitExamples(exampleDTOS));
     }

@@ -24,7 +24,8 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     private ClickListener clickListener;
 
-    private final AsyncListDiffer<FoodDTO> foodList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<FoodDTO>() {
+    private final AsyncListDiffer<FoodDTO> foodList = new AsyncListDiffer(this,
+            new DiffUtil.ItemCallback<FoodDTO>() {
         @Override
         public boolean areItemsTheSame(@NonNull FoodDTO oldItem, @NonNull FoodDTO newItem) {
             return oldItem.getName().equals(newItem.getName());
@@ -37,7 +38,8 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
         }
     });
 
-    private final AsyncListDiffer<ExampleDTO> examplesList = new AsyncListDiffer(this, new DiffUtil.ItemCallback<ExampleDTO>() {
+    private final AsyncListDiffer<ExampleDTO> examplesList = new AsyncListDiffer(this,
+            new DiffUtil.ItemCallback<ExampleDTO>() {
         @Override
         public boolean areItemsTheSame(@NonNull ExampleDTO oldItem, @NonNull ExampleDTO newItem) {
             return oldItem == newItem;
@@ -58,12 +60,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (position == foodList.getCurrentList().size()-1) {
-            holder.binding.getRoot().setVisibility(View.INVISIBLE);
-            holder.binding.getRoot().setMaxHeight(80);
-            return;
-        }
-
         FoodDTO food = foodList.getCurrentList().get(position);
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
@@ -112,7 +108,6 @@ public class DailyFragmentAdapter extends RecyclerView.Adapter<DailyFragmentAdap
     }
 
     public void submitFood(List<FoodDTO> data) {
-        data.add(new FoodDTO("none", 0.0,0.0, LocalDate.now()));
         foodList.submitList(data);
     }
 
