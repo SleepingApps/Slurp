@@ -14,5 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/food_item"
+        android:clipToPadding="false"
         android:paddingBottom="64dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
