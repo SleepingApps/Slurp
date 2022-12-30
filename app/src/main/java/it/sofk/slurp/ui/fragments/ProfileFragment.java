@@ -6,12 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import it.sofk.slurp.database.UserViewModel;
+import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FragmentProfileBinding;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.ui.adapters.HistoryAdapter;
@@ -22,13 +26,27 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
 
     private FragmentProfileBinding binding;
     private UserViewModel userViewModel;
-    private MainActivityViewModel mainViewModel;
+    private MainActivityViewModel viewModel;
+
+    private ViewModel viewModelShared;
     private HistoryViewModel historyViewModel;
     private HistoryAdapter historyAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                boolean weekStarted = viewModelShared.getWeekStarted().getValue();
+                if (!weekStarted) return;
+
+                NavController controller = Navigation.findNavController(binding.getRoot());
+                controller.popBackStack();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -39,11 +57,12 @@ public class ProfileFragment extends Fragment implements SeekBar.OnSeekBarChange
 
         historyAdapter = new HistoryAdapter();
 
+        viewModelShared = new ViewModelProvider(requireActivity()).get(ViewModel.class);
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getUserInformation().observe(requireActivity(), user -> {
             binding.seekBarCaloricIntake.setProgress(user.caloricIntake.i - 1);
         });
-        mainViewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(MainActivityViewModel.class);
 
         historyViewModel = new ViewModelProvider(requireActivity()).get(HistoryViewModel.class);
         historyViewModel.getWeeks().observe(requireActivity(), historyAdapter::submitData);
