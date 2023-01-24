@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="accent_200">#D8F3FF</color>
-    <color name="accent_500">#1241A6</color>
+    <color name="accent_200">#E49D44</color>
+    <color name="accent_500">#000000</color>
+    <color name="background_popup_item_today">#EF8686</color>
 </resources>

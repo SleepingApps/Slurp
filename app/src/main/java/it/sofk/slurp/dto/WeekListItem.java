@@ -6,6 +6,11 @@ public class WeekListItem {
 
     private LocalDate startDate, endDate;
 
+    public WeekListItem(LocalDate startDate) {
+        this.startDate = startDate;
+        this.endDate = startDate.plusDays(6);
+    }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
         this.endDate = startDate.plusDays(6);

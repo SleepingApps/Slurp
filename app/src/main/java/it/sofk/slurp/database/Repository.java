@@ -113,4 +113,8 @@ public class Repository {
     public LiveData<List<WeekListItem>> getWeeks(){
         return historyDao.getWeeks();
     }
+
+    public LiveData<WeekListItem> getCurrentWeek(){
+        return foodDao.getCurrentWeek();
+    }
 }

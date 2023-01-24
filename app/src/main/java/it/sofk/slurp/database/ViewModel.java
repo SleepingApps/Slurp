@@ -17,6 +17,7 @@ import it.sofk.slurp.database.entity.FoodType;
 import it.sofk.slurp.database.entity.User;
 import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
+import it.sofk.slurp.dto.WeekListItem;
 import it.sofk.slurp.enumeration.Frequency;
 
 public class
@@ -32,6 +33,8 @@ ViewModel extends AndroidViewModel {
 
     private MutableLiveData<FoodDTO> selectedFood = new MutableLiveData<>();
 
+    private LiveData<WeekListItem> currentWeek;
+
     public int foodFragmentViewPagerPosition = -1;
 
     public ViewModel(@NonNull Application application) {
@@ -40,6 +43,11 @@ ViewModel extends AndroidViewModel {
         foodTypes = repository.getFoodTypes();
         user = repository.getUser();
         weekStarted.setValue(true);
+        currentWeek = repository.getCurrentWeek();
+    }
+
+    public LiveData<WeekListItem> getCurrentWeek(){
+        return currentWeek;
     }
 
     public LiveData<List<ExampleDTO>> getExamples(Frequency frequency){

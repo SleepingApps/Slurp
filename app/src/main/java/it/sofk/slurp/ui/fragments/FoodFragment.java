@@ -2,32 +2,32 @@ package it.sofk.slurp.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RadioButton;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
-import it.sofk.slurp.databinding.FragmentDailyBinding;
 import it.sofk.slurp.databinding.FragmentFoodBinding;
-import it.sofk.slurp.enumeration.Frequency;
 import it.sofk.slurp.ui.adapters.FoodFragmentAdapter;
+import it.sofk.slurp.ui.callback.DialogFoodFragmentCallBack;
+import it.sofk.slurp.ui.extra.DialogPopupDays;
 
-public class FoodFragment extends Fragment {
+public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack {
 
     private FragmentFoodBinding binding;
     private ViewModel viewModel;
@@ -42,7 +42,7 @@ public class FoodFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFoodBinding.inflate(inflater);
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        holder = new Holder();
+        holder = new Holder(this);
         if (viewModel.foodFragmentViewPagerPosition != -1) {
             binding.foodViewpager.setCurrentItem(viewModel.foodFragmentViewPagerPosition);
         }
@@ -50,17 +50,31 @@ public class FoodFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /*
+    Questa funzione deve cambiare i foodDTO con quelli del giorno dati dalla funzione
+     */
+    @Override
+    public void onSelectedDayFromDialog(LocalDate day) {
+        Log.i("TEST", day.toString());
+        //TODO
+
+    }
+
     private class Holder extends ViewPager2.OnPageChangeCallback implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener  {
 
-        Holder() {
+        private DialogFoodFragmentCallBack callBack;
+
+        Holder(DialogFoodFragmentCallBack callBack) {
             binding.foodViewpager.setAdapter(new FoodFragmentAdapter(FoodFragment.this.requireActivity()));
             binding.foodViewpager.registerOnPageChangeCallback(this);
 
             binding.foodMenu.addOnTabSelectedListener(this);
+            this.callBack = callBack;
         }
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
+
             binding.foodViewpager.setCurrentItem(tab.getPosition());
         }
 
@@ -68,9 +82,27 @@ public class FoodFragment extends Fragment {
         public void onTabUnselected(TabLayout.Tab tab) {
 
         }
+        
+        boolean lastWasDaily = false;
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
+            if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily) {
+                viewModel.getCurrentWeek().observe(requireActivity(), week -> {
+                    List<LocalDate> days = new ArrayList<>();
+                    for (LocalDate day = week.getStartDate(); day.isBefore(week.getEndDate().plusDays(1)); day = day.plusDays(1)) {
+                        days.add(day);
+                    }
+                    DialogPopupDays popup = new DialogPopupDays(getContext(), days, callBack);
+                    popup.show(getActivity().getSupportFragmentManager(), "");
+                });
+            }
+            if(binding.foodViewpager.getCurrentItem() == 0){
+                lastWasDaily = true;
+            }
+            else{
+                lastWasDaily = false;
+            }
 
         }
 

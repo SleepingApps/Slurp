@@ -21,6 +21,7 @@ import it.sofk.slurp.database.entity.SamePortion;
 import it.sofk.slurp.database.entity.Week;
 import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
+import it.sofk.slurp.dto.WeekListItem;
 import it.sofk.slurp.enumeration.CaloricIntake;
 import it.sofk.slurp.enumeration.Frequency;
 
@@ -40,6 +41,9 @@ public abstract class FoodDao {
 
     @Query("SELECT Max(Week.startDate) as startDate FROM Week")
     protected abstract Week selectLastWeek();
+
+    @Query("SELECT Max(Week.startDate) as startDate FROM Week")
+    public abstract LiveData<WeekListItem> getCurrentWeek();
 
     @Query("SELECT food_type.samePortion as foodName, food_type.name as foodType ,Examples.example " +
             "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
