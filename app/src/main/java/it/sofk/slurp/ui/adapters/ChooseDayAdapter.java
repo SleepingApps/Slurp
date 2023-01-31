@@ -78,7 +78,7 @@ public class ChooseDayAdapter extends RecyclerView.Adapter<ChooseDayAdapter.View
         @Override
         public void onClick(View v) {
             LocalDate day = listDiffer.getCurrentList().get(this.getAdapterPosition());
-            callBack.onSelectedDayFromAdapter(day);
+            callBack.onSelectedDayFromAdapter(day, getAdapterPosition() + 1);
         }
     }
 

@@ -4,5 +4,5 @@ import java.time.LocalDate;
 
 public interface DialogFoodFragmentCallBack {
 
-    void onSelectedDayFromDialog(LocalDate day);
+    void onSelectedDayFromDialog(LocalDate day, int number);
 }

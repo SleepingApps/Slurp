@@ -4,5 +4,5 @@ import java.time.LocalDate;
 
 public interface AdapterDialogCallBack {
 
-    void onSelectedDayFromAdapter(LocalDate day);
+    void onSelectedDayFromAdapter(LocalDate day, int number);
 }

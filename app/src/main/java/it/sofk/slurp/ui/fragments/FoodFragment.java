@@ -54,7 +54,8 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
     Questa funzione deve cambiare i foodDTO con quelli del giorno dati dalla funzione
      */
     @Override
-    public void onSelectedDayFromDialog(LocalDate day) {
+    public void onSelectedDayFromDialog(LocalDate day, int number) {
+        binding.foodMenu.getTabAt(0).setText("Giorno " + number + " ▾");
         Log.i("TEST", day.toString());
         //TODO
 
@@ -98,10 +99,19 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
                 });
             }
             if(binding.foodViewpager.getCurrentItem() == 0){
+                if(lastWasDaily == false)
+                    binding.foodMenu.getTabAt(0).setText(binding.foodMenu.getTabAt(0).getText() + " ▾");
                 lastWasDaily = true;
+
             }
             else{
+                if(lastWasDaily == true){
+                    String t = (String) binding.foodMenu.getTabAt(0).getText();
+                    binding.foodMenu.getTabAt(0).setText(t.subSequence(0, t.length() - 2));
+                }
                 lastWasDaily = false;
+
+
             }
 
         }

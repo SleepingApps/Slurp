@@ -51,9 +51,9 @@ public class DialogPopupDays extends DialogFragment implements AdapterDialogCall
 
 
     @Override
-    public void onSelectedDayFromAdapter(LocalDate day) {
+    public void onSelectedDayFromAdapter(LocalDate day, int number) {
         this.dismiss();
-        callBack.onSelectedDayFromDialog(day);
+        callBack.onSelectedDayFromDialog(day, number);
     }
 
     @Override
