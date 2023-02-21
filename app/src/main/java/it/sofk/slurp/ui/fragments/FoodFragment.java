@@ -64,6 +64,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
     private class Holder extends ViewPager2.OnPageChangeCallback implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener  {
 
         private DialogFoodFragmentCallBack callBack;
+        private boolean lastWasDaily = false;
 
         Holder(DialogFoodFragmentCallBack callBack) {
             binding.foodViewpager.setAdapter(new FoodFragmentAdapter(FoodFragment.this.requireActivity()));
@@ -75,16 +76,26 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
         @Override
         public void onTabSelected(TabLayout.Tab tab) {
-
             binding.foodViewpager.setCurrentItem(tab.getPosition());
+
+            if(binding.foodViewpager.getCurrentItem() == 0){
+                if(lastWasDaily == false)
+                    binding.foodMenu.getTabAt(0).setText(binding.foodMenu.getTabAt(0).getText() + " ▾");
+                lastWasDaily = true;
+            }
+            else{
+                if(lastWasDaily == true){
+                    String t = (String) binding.foodMenu.getTabAt(0).getText();
+                    binding.foodMenu.getTabAt(0).setText(t.subSequence(0, t.length() - 2));
+                }
+                lastWasDaily = false;
+            }
         }
 
         @Override
         public void onTabUnselected(TabLayout.Tab tab) {
 
         }
-        
-        boolean lastWasDaily = false;
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
@@ -98,22 +109,6 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
                     popup.show(getActivity().getSupportFragmentManager(), "");
                 });
             }
-            if(binding.foodViewpager.getCurrentItem() == 0){
-                if(lastWasDaily == false)
-                    binding.foodMenu.getTabAt(0).setText(binding.foodMenu.getTabAt(0).getText() + " ▾");
-                lastWasDaily = true;
-
-            }
-            else{
-                if(lastWasDaily == true){
-                    String t = (String) binding.foodMenu.getTabAt(0).getText();
-                    binding.foodMenu.getTabAt(0).setText(t.subSequence(0, t.length() - 2));
-                }
-                lastWasDaily = false;
-
-
-            }
-
         }
 
         @Override
@@ -131,16 +126,19 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
                 case R.id.menu_daily:
                     viewModel.foodFragmentViewPagerPosition = 0;
                     binding.foodViewpager.setCurrentItem(0);
+                    Log.i("SLIDE", "Daily");
                     return true;
 
                 case R.id.menu_weekly:
                     viewModel.foodFragmentViewPagerPosition = 1;
                     binding.foodViewpager.setCurrentItem(1);
+                    Log.i("SLIDE", "Week");
                     return true;
 
                 case R.id.menu_occasionally:
                     viewModel.foodFragmentViewPagerPosition = 2;
                     binding.foodViewpager.setCurrentItem(2);
+                    Log.i("SLIDE", "Occ");
                     return true;
             }
 
