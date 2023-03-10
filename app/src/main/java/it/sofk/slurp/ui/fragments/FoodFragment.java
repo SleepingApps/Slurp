@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
             binding.foodViewpager.setCurrentItem(viewModel.foodFragmentViewPagerPosition);
         }
 
+
         return binding.getRoot();
     }
 
@@ -65,6 +67,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
         private DialogFoodFragmentCallBack callBack;
         private boolean lastWasDaily = false;
+        private boolean isTheFirstTime = true;
 
         Holder(DialogFoodFragmentCallBack callBack) {
             binding.foodViewpager.setAdapter(new FoodFragmentAdapter(FoodFragment.this.requireActivity()));
@@ -72,6 +75,15 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
             binding.foodMenu.addOnTabSelectedListener(this);
             this.callBack = callBack;
+
+            viewModel.getCurrentWeek().observe(requireActivity(), week -> {
+                if (week != null) {
+                    long numberOfWeek = ChronoUnit.DAYS.between(LocalDate.now(), week.getStartDate()) + 1;
+                    binding.foodMenu.getTabAt(0).setText("Giorno " + numberOfWeek + " ▾");
+                    lastWasDaily = true;
+
+                }
+            });
         }
 
         @Override
@@ -99,7 +111,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
-            if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily) {
+            if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily && !isTheFirstTime){
                 viewModel.getCurrentWeek().observe(requireActivity(), week -> {
                     List<LocalDate> days = new ArrayList<>();
                     for (LocalDate day = week.getStartDate(); day.isBefore(week.getEndDate().plusDays(1)); day = day.plusDays(1)) {
@@ -109,6 +121,8 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
                     popup.show(getActivity().getSupportFragmentManager(), "");
                 });
             }
+            if(isTheFirstTime)
+                isTheFirstTime = false;
         }
 
         @Override
