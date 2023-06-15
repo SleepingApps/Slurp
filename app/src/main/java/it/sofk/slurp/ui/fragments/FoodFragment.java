@@ -77,7 +77,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
             this.callBack = callBack;
 
             viewModel.getCurrentWeek().observe(requireActivity(), week -> {
-                if (week != null) {
+                if (week != null && week.getStartDate() != null && week.getEndDate() != null) {
                     long numberOfWeek = ChronoUnit.DAYS.between(LocalDate.now(), week.getStartDate()) + 1;
                     binding.foodMenu.getTabAt(0).setText("Giorno " + numberOfWeek + " ▾");
                     lastWasDaily = true;
@@ -111,16 +111,17 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
-            if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily && !isTheFirstTime){
-                viewModel.getCurrentWeek().observe(requireActivity(), week -> {
+            viewModel.getCurrentWeek().observe(requireActivity(), week -> {
+                if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily && !isTheFirstTime) {
                     List<LocalDate> days = new ArrayList<>();
                     for (LocalDate day = week.getStartDate(); day.isBefore(week.getEndDate().plusDays(1)); day = day.plusDays(1)) {
                         days.add(day);
                     }
                     DialogPopupDays popup = new DialogPopupDays(getContext(), days, callBack);
                     popup.show(getActivity().getSupportFragmentManager(), "");
-                });
-            }
+                }
+            });
+
             if(isTheFirstTime)
                 isTheFirstTime = false;
         }
