@@ -8,7 +8,8 @@ public class WeekListItem {
 
     public WeekListItem(LocalDate startDate) {
         this.startDate = startDate;
-        this.endDate = startDate.plusDays(6);
+        if(startDate != null)
+            this.endDate = startDate.plusDays(6);
     }
 
     public void setStartDate(LocalDate startDate) {
