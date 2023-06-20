@@ -109,10 +109,12 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
 
         }
 
+        boolean isTriggeredByThisEvent = false;
         @Override
         public void onTabReselected(TabLayout.Tab tab) {
+            isTriggeredByThisEvent = true;
             viewModel.getCurrentWeek().observe(requireActivity(), week -> {
-                if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily && !isTheFirstTime) {
+                if(binding.foodViewpager.getCurrentItem() == 0 && lastWasDaily && !isTheFirstTime && isTriggeredByThisEvent) {
                     List<LocalDate> days = new ArrayList<>();
                     for (LocalDate day = week.getStartDate(); day.isBefore(week.getEndDate().plusDays(1)); day = day.plusDays(1)) {
                         days.add(day);
@@ -121,7 +123,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
                     popup.show(getActivity().getSupportFragmentManager(), "");
                 }
             });
-
+            isTriggeredByThisEvent = false;
             if(isTheFirstTime)
                 isTheFirstTime = false;
         }
