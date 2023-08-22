@@ -1,6 +1,7 @@
 package it.sofk.slurp.ui.adapters;
 
 import android.app.Activity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
-        holder.binding.foodDesc.setText(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()));
+        holder.binding.foodDesc.setText(Html.fromHtml(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()), Html.FROM_HTML_MODE_COMPACT));
 
         holder.binding.foodimg.setBackgroundResource(foodHelper.image);
         holder.binding.ellipse.setPaint(foodHelper.color);

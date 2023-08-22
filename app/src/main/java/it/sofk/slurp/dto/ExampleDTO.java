@@ -4,12 +4,21 @@ public class ExampleDTO {
 
     private String foodName;
     private String foodType;
+    private int standardPortion;
     private String example;
 
     public ExampleDTO(String foodName, String foodType, String example) {
         this.foodName = foodName;
         this.foodType = foodType;
         this.example = example;
+    }
+
+    public int getStandardPortion() {
+        return standardPortion;
+    }
+
+    public void setStandardPortion(int standardPortion) {
+        this.standardPortion = standardPortion;
     }
 
     public String getFoodName() {
