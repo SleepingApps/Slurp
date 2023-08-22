@@ -34,7 +34,7 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
         occasionallyFragmentAdapter.setClickListener(this);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
-        viewModel.occasionallyFoodDTO.observe(requireActivity(),
+        viewModel.getFoods(Frequency.OCCASIONALLY, LocalDate.now()).observe(requireActivity(),
                 foodDTOS -> occasionallyFragmentAdapter.submitFood(foodDTOS));
         viewModel.getExamples(Frequency.OCCASIONALLY).observe(requireActivity(),
                 exampleDTOS -> occasionallyFragmentAdapter.submitExamples(exampleDTOS));

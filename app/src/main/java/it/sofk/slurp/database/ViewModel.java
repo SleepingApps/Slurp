@@ -39,7 +39,7 @@ ViewModel extends AndroidViewModel {
     public int foodFragmentViewPagerPosition = -1;
 
     public MutableLiveData<LocalDate> currentDate;
-    public LiveData<List<FoodDTO>> dailyFoodDTO, weeklyFoodDTO, occasionallyFoodDTO;
+    public LiveData<List<FoodDTO>> dailyFoodDTO;
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -51,10 +51,6 @@ ViewModel extends AndroidViewModel {
         currentDate = new MutableLiveData<>(LocalDate.now());
         dailyFoodDTO  = Transformations.switchMap(currentDate,
                 date -> repository.getFoods(Frequency.DAILY, date));
-        weeklyFoodDTO  = Transformations.switchMap(currentDate,
-                date -> repository.getFoods(Frequency.WEEKLY, date));
-        occasionallyFoodDTO  = Transformations.switchMap(currentDate,
-                date -> repository.getFoods(Frequency.OCCASIONALLY, date));
     }
 
     public LiveData<WeekListItem> getCurrentWeek(){
