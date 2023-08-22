@@ -58,9 +58,7 @@ public class FoodFragment extends Fragment implements DialogFoodFragmentCallBack
     @Override
     public void onSelectedDayFromDialog(LocalDate day, int number) {
         binding.foodMenu.getTabAt(0).setText("Giorno " + number + " ▾");
-        Log.i("TEST", day.toString());
-        //TODO
-
+        viewModel.currentDate.setValue(day.plusDays(number));
     }
 
     private class Holder extends ViewPager2.OnPageChangeCallback implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, TabLayout.OnTabSelectedListener  {
