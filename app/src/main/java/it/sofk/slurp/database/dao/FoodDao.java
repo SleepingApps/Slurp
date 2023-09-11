@@ -45,7 +45,7 @@ public abstract class FoodDao {
     @Query("SELECT Max(Week.startDate) as startDate FROM Week")
     public abstract LiveData<WeekListItem> getCurrentWeek();
 
-    @Query("SELECT food_type.samePortion as foodName, food_type.name as foodType ,Examples.example " +
+    @Query("SELECT food_type.samePortion as foodName, food_type.name as foodType, food_type.standardPortion , Examples.example " +
             "FROM Examples JOIN food_type ON Examples.foodType = food_type.name " +
             "WHERE food_type.frequency = :frequency ")
     public abstract LiveData<List<ExampleDTO>> getExamples(Frequency frequency);

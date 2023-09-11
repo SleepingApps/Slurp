@@ -1,21 +1,29 @@
 package it.sofk.slurp.ui.adapters;
 
+import android.app.Activity;
+import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.ExampleDTO;
 import it.sofk.slurp.dto.FoodDTO;
 import it.sofk.slurp.ui.extra.FoodHelper;
 import it.sofk.slurp.ui.extra.FoodItemResizer;
 import it.sofk.slurp.ui.extra.FoodPortion;
+import it.sofk.slurp.ui.fragments.WeeklyFragment;
 
 public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAdapter.ViewHolder> {
 
@@ -59,7 +67,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         FoodHelper foodHelper = FoodHelper.GetFoodHelper(food.getName());
 
         holder.binding.foodItemTitle.setText(food.getName());
-        holder.binding.foodDesc.setText(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()));
+        holder.binding.foodDesc.setText(Html.fromHtml(FoodPortion.CreateAndGetDescription(food, examplesList.getCurrentList()), Html.FROM_HTML_MODE_COMPACT));
 
         holder.binding.foodimg.setBackgroundResource(foodHelper.image);
         holder.binding.ellipse.setPaint(foodHelper.color);
@@ -72,14 +80,10 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         }
 
         holder.binding.getRoot().setOnClickListener((View) -> {
-            if (clickListener == null) return;
-
-            if (holder.resizer.isExpanded()) {
-                clickListener.onItemShrinkage(position, holder);
-            }
-            else {
-                clickListener.onItemExpansion(position, holder);
-            }
+            if (holder.resizer.isExpanded())
+                holder.resizer.shrink();
+            else
+                holder.resizer.expand();
         });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
@@ -133,7 +137,5 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
     public interface ClickListener {
         void onPlusClick(FoodDTO food);
         void onMinusClick(FoodDTO food);
-        void onItemExpansion(int itemIndex, ViewHolder viewHolder);
-        void onItemShrinkage(int itemIndex, ViewHolder viewHolder);
     }
 }
