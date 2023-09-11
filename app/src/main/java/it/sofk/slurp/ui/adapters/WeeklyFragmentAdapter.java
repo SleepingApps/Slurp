@@ -80,10 +80,14 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
         }
 
         holder.binding.getRoot().setOnClickListener((View) -> {
-            if (holder.resizer.isExpanded())
-                holder.resizer.shrink();
-            else
-                holder.resizer.expand();
+            if (clickListener == null) return;
+
+            if (holder.resizer.isExpanded()) {
+                clickListener.onItemShrinkage(position, holder);
+            }
+            else {
+                clickListener.onItemExpansion(position, holder);
+            }
         });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
@@ -137,5 +141,7 @@ public class WeeklyFragmentAdapter extends RecyclerView.Adapter<WeeklyFragmentAd
     public interface ClickListener {
         void onPlusClick(FoodDTO food);
         void onMinusClick(FoodDTO food);
+        void onItemExpansion(int itemIndex, ViewHolder viewHolder);
+        void onItemShrinkage(int itemIndex, ViewHolder viewHolder);
     }
 }
