@@ -1,5 +1,8 @@
 package it.sofk.slurp.ui.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import java.time.LocalDate;
 
-import it.sofk.slurp.R;
 import it.sofk.slurp.database.ViewModel;
 import it.sofk.slurp.databinding.FragmentOccasionallyBinding;
 import it.sofk.slurp.dto.FoodDTO;
@@ -25,6 +29,8 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
     private FragmentOccasionallyBinding binding;
     private ViewModel viewModel;
     private OccasionallyFragmentAdapter occasionallyFragmentAdapter;
+    private LinearLayoutManager layout;
+    private RecyclerView.SmoothScroller smoothScroller;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,14 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentOccasionallyBinding.inflate(inflater);
 
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        layout = new LinearLayoutManager(getContext());
         binding.occasionallyRecyclerview.setLayoutManager(layout);
         binding.occasionallyRecyclerview.setAdapter(occasionallyFragmentAdapter);
+        smoothScroller = new LinearSmoothScroller(this.getContext()) {
+            @Override protected int getVerticalSnapPreference() {
+                return LinearSmoothScroller.SNAP_TO_ANY;
+            }
+        };
         ((SimpleItemAnimator) binding.occasionallyRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
 
         return binding.getRoot();
@@ -60,5 +71,24 @@ public class OccasionallyFragment extends Fragment implements OccasionallyFragme
     @Override
     public void onMinusClick(FoodDTO food) {
         viewModel.update(food);
+    }
+
+    @Override
+    public void onItemExpansion(int itemIndex, OccasionallyFragmentAdapter.ViewHolder viewHolder) {
+        AnimatorSet animator = viewHolder.resizer.expandAnimator();
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                smoothScroller.setTargetPosition(itemIndex);
+                layout.startSmoothScroll(smoothScroller);
+            }
+        });
+        animator.start();
+    }
+
+    @Override
+    public void onItemShrinkage(int itemIndex, OccasionallyFragmentAdapter.ViewHolder viewHolder) {
+        AnimatorSet animator = viewHolder.resizer.shrinkAnimator();
+        animator.start();
     }
 }

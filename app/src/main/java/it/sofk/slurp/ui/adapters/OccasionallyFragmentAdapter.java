@@ -1,9 +1,6 @@
 package it.sofk.slurp.ui.adapters;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,9 +8,7 @@ import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import it.sofk.slurp.databinding.FoodItemBinding;
 import it.sofk.slurp.dto.ExampleDTO;
@@ -77,10 +72,14 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
         }
 
         holder.binding.getRoot().setOnClickListener((View) -> {
-            if (holder.resizer.isExpanded())
-                holder.resizer.shrink();
-            else
-                holder.resizer.expand();
+            if (clickListener == null) return;
+
+            if (holder.resizer.isExpanded()) {
+                clickListener.onItemShrinkage(position, holder);
+            }
+            else {
+                clickListener.onItemExpansion(position, holder);
+            }
         });
 
         holder.binding.foodItemPlus.setOnClickListener((View) -> {
@@ -134,5 +133,7 @@ public class OccasionallyFragmentAdapter extends RecyclerView.Adapter<Occasional
     public interface ClickListener {
         void onPlusClick(FoodDTO food);
         void onMinusClick(FoodDTO food);
+        void onItemExpansion(int itemIndex, ViewHolder viewHolder);
+        void onItemShrinkage(int itemIndex, ViewHolder viewHolder);
     }
 }
