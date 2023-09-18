@@ -3,7 +3,9 @@ package it.sofk.slurp.ui.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +26,30 @@ import it.sofk.slurp.ui.adapters.DailyFragmentAdapter;
 
 public class DailyFragment extends Fragment implements DailyFragmentAdapter.ClickListener {
 
+    public class LinearLayoutManagerWrapper extends LinearLayoutManager {
+
+        public LinearLayoutManagerWrapper(Context context) {
+            super(context);
+        }
+
+        public LinearLayoutManagerWrapper(Context context, int orientation, boolean reverseLayout) {
+            super(context, orientation, reverseLayout);
+        }
+
+        public LinearLayoutManagerWrapper(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+            super(context, attrs, defStyleAttr, defStyleRes);
+        }
+
+        @Override
+        public boolean supportsPredictiveItemAnimations() {
+            return false;
+        }
+    }
+
     private FragmentDailyBinding binding;
     private ViewModel viewModel;
     private DailyFragmentAdapter dailyFragmentAdapter;
-    private LinearLayoutManager layout;
+    private LinearLayoutManagerWrapper layout;
     private RecyclerView.SmoothScroller smoothScroller;
 
     @Override
@@ -48,8 +70,10 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDailyBinding.inflate(inflater);
 
-        layout = new LinearLayoutManager(getContext());
+        layout = new LinearLayoutManagerWrapper(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.dailyRecyclerview.setLayoutManager(layout);
+
+
         binding.dailyRecyclerview.setAdapter(dailyFragmentAdapter);
         smoothScroller = new LinearSmoothScroller(this.getContext()) {
             @Override protected int getVerticalSnapPreference() {
@@ -81,12 +105,12 @@ public class DailyFragment extends Fragment implements DailyFragmentAdapter.Clic
                 layout.startSmoothScroll(smoothScroller);
             }
         });
-        animator.start();
+        //animator.start();
     }
 
     @Override
     public void onItemShrinkage(int itemIndex, DailyFragmentAdapter.ViewHolder viewHolder) {
         AnimatorSet animator = viewHolder.resizer.shrinkAnimator();
-        animator.start();
+        //animator.start();
     }
 }
